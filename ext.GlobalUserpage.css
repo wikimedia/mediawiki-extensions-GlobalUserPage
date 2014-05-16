@@ -1,0 +1,5 @@
+.noarticletext,
+.mw-editsection,
+.mw-warning-with-logexcerpt /* "This page has been previously deleted" */ {
+	display: none;
+}
