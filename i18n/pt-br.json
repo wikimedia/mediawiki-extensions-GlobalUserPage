@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cainamarques"
+		]
+	},
+	"globaluserpage-desc": "Busca automaticamente páginas de usuário de [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-notice": "Esta página foi obtida do endereço [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] e pode ser editada lá.",
+	"globaluserpage-edit-tab": "Editar em ShoutWiki Hub"
+}

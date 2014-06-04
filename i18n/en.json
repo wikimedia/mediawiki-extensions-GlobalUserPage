@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kunal Mehta"
+		]
+	},
+	"globaluserpage-desc": "Automatically fetches user pages from [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-notice": "This page was downloaded from [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] and can be edited there.",
+	"globaluserpage-edit-tab": "Edit on ShoutWiki Hub",
+	"globaluserpage-preferences": "Use [[s:Help:Global user pages|global user page]]"
+}
