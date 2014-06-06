@@ -45,7 +45,7 @@ $wgAutoloadClasses['GlobalUserpage'] = $dir . '/GlobalUserpage.body.php';
 $wgAutoloadClasses['GlobalUserpageHooks'] = $dir . '/GlobalUserpage.hooks.php';
 
 // i18n
-$wgExtensionMessagesFiles['GlobalUserpage'] = "$dir/GlobalUserpage.i18n.php";
+$wgMessagesDirs['GlobalUserpage'] = __DIR__ . '/i18n';
 
 // Hooks, a.k.a the beef of this extension
 $wgHooks['GetPreferences'][] = 'GlobalUserpageHooks::onGetPreferences';

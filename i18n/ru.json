@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Okras"
+		]
+	},
+	"globaluserpage-desc": "Автоматически извлекает страницы участника с [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-notice": "Эта страница была загружена с [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] и может быть теперь отредактирована.",
+	"globaluserpage-edit-tab": "Редактировать на ShoutWiki Hub"
+}

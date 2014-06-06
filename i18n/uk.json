@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Andriykopanytsia"
+		]
+	},
+	"globaluserpage-desc": "Автоматично витягує сторінки користувача з [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-notice": "Ця сторінка була завантажена з [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] і може бути відредагована.",
+	"globaluserpage-edit-tab": "Редагувати на ShoutWiki Hub"
+}
