@@ -29,6 +29,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 $wgGlobalUserpageCacheExpiry = 60 * 60 * 24 * 7;
 
+/**
+ * API endpoint of the central wiki
+ */
+$wgGlobalUserpageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,

@@ -2,17 +2,16 @@
 
 class GlobalUserpage {
 
-	static $apiURL = 'http://www.shoutwiki.com/w/api.php';
-
 	/**
-	 * Makes an API request to ShoutWiki Hub
+	 * Makes an API request to the central wiki
 	 *
 	 * @param $params array
 	 * @return array
 	 */
 	public static function makeAPIRequest( $params ) {
+		global $wgGlobalUserpageAPIUrl;
 		$params['format'] = 'json';
-		$url = wfAppendQuery( self::$apiURL, $params );
+		$url = wfAppendQuery( $wgGlobalUserpageAPIUrl, $params );
 		$req = MWHttpRequest::factory( $url );
 		$req->execute();
 		$json = $req->getContent();
