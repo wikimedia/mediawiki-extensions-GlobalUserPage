@@ -8,7 +8,7 @@
  *
  * @file
  * @ingroup Extensions
- * @version 0.3
+ * @version 0.4
  * @date 8 April 2014
  * @author Jack Phoenix <jack@countervandalism.net>
  * @license Public domain
@@ -40,11 +40,16 @@ $wgGlobalUserpageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
  */
 $wgDefaultUserOptions['globaluserpage'] = true;
 
+/**
+ * Database name of the central wiki
+ */
+$wgGlobalUserpageDBname = 'shoutwiki';
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserpage',
-	'version' => '0.3',
+	'version' => '0.4',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserpage',
 	'descriptionmsg' => 'globaluserpage-desc',
@@ -60,9 +65,9 @@ $wgMessagesDirs['GlobalUserpage'] = __DIR__ . '/i18n';
 
 // Hooks, a.k.a the beef of this extension
 $wgHooks['GetPreferences'][] = 'GlobalUserpageHooks::onGetPreferences';
-$wgHooks['ShowMissingArticle'][] = 'GlobalUserpageHooks::onShowMissingArticle';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserpageHooks::onSkinTemplateNavigationUniversal';
 $wgHooks['LinkBegin'][] = 'GlobalUserpageHooks::brokenLink';
+$wgHooks['ArticleFromTitle'][] = 'GlobalUserpageHooks::onArticleFromTitle';
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserpage'] = array(
