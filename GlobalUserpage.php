@@ -8,7 +8,7 @@
  *
  * @file
  * @ingroup Extensions
- * @version 0.2
+ * @version 0.3
  * @date 8 April 2014
  * @author Jack Phoenix <jack@countervandalism.net>
  * @license Public domain
@@ -34,11 +34,17 @@ $wgGlobalUserpageCacheExpiry = 60 * 60 * 24 * 7;
  */
 $wgGlobalUserpageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
 
+/**
+ * By default enables global userpage for all users
+ * @see https://www.mediawiki.org/wiki/Manual:$wgDefaultUserOptions
+ */
+$wgDefaultUserOptions['globaluserpage'] = true;
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserpage',
-	'version' => '0.2',
+	'version' => '0.3',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserpage',
 	'descriptionmsg' => 'globaluserpage-desc',
