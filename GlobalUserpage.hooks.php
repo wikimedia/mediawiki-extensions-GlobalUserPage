@@ -2,18 +2,21 @@
 
 class GlobalUserpageHooks {
 	/**
-	 * Adds the user option for using GlobalUserpage to Special:Preferences.
+	 * Adds the user option for using GlobalUserpage to Special:GlobalPreferences.
 	 *
-	 * @param $user User
-	 * @param $preferences Array: Preference descriptions
+	 * @param User $user
+	 * @param array $preferences Preference descriptions
 	 * @return bool
 	 */
-	public static function onGetPreferences( $user, &$preferences ) {
-		$preferences['globaluserpage'] = array(
-			'type' => 'toggle',
-			'label-message' => 'globaluserpage-preferences',
-			'section' => 'personal/info', // not the best place for it, but eh
-		);
+	public static function onGetPreferences( User $user, &$preferences ) {
+		if ( class_exists( 'GlobalPreferences' ) && GlobalPreferences::onGlobalPrefsPage() ) {
+			$preferences['globaluserpage'] = array(
+				'type' => 'toggle',
+				'label-message' => 'globaluserpage-preferences',
+				'section' => 'personal/info', // not the best place for it, but eh
+			);
+		}
+
 		return true;
 	}
 
