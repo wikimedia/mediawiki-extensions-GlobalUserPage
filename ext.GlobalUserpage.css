@@ -1,5 +1,3 @@
-.noarticletext,
-.mw-editsection,
-.mw-warning-with-logexcerpt /* "This page has been previously deleted" */ {
+.mw-editsection /* Only needed for pre-1.24 wikis */ {
 	display: none;
 }
