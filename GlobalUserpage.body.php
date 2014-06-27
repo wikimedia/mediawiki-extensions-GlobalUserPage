@@ -121,7 +121,8 @@ class GlobalUserpage extends Article {
 	protected static function parseWikiText( $title ) {
 		$params = array(
 			'action' => 'parse',
-			'page' => $title
+			'page' => $title,
+			'disableeditsection' => 1,
 		);
 		$data = self::makeAPIRequest( $params );
 		return $data['parse']['text']['*'];
