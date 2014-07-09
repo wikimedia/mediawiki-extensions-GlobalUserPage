@@ -1,6 +1,6 @@
 <?php
 
-class GlobalUserpage extends Article {
+class GlobalUserPage extends Article {
 
 	/**
 	 * @var string
@@ -17,7 +17,7 @@ class GlobalUserpage extends Article {
 
 		$out = $this->getContext()->getOutput();
 		$out->addHTML( $this->getGlobalText() );
-		$out->addModuleStyles( 'ext.GlobalUserpage' );
+		$out->addModuleStyles( 'ext.GlobalUserPage' );
 	}
 
 	/**
@@ -27,9 +27,9 @@ class GlobalUserpage extends Article {
 	 * @return bool
 	 */
 	protected static function canBeGlobal( Title $title ) {
-		global $wgGlobalUserpageDBname;
+		global $wgGlobalUserPageDBname;
 		// Don't run this code for Hub.
-		if ( wfWikiID() === $wgGlobalUserpageDBname ) {
+		if ( wfWikiID() === $wgGlobalUserPageDBname ) {
 			return false;
 		}
 
@@ -57,7 +57,7 @@ class GlobalUserpage extends Article {
 	 * @return bool
 	 */
 	public static function isGlobal( Title $title ) {
-		global $wgGlobalUserpageDBname;
+		global $wgGlobalUserPageDBname;
 
 		if ( !self::canBeGlobal( $title ) ) {
 			return false;
@@ -102,9 +102,9 @@ class GlobalUserpage extends Article {
 	 * @return array
 	 */
 	protected static function makeAPIRequest( $params ) {
-		global $wgGlobalUserpageAPIUrl;
+		global $wgGlobalUserPageAPIUrl;
 		$params['format'] = 'json';
-		$url = wfAppendQuery( $wgGlobalUserpageAPIUrl, $params );
+		$url = wfAppendQuery( $wgGlobalUserPageAPIUrl, $params );
 		$req = MWHttpRequest::factory( $url );
 		$req->execute();
 		$json = $req->getContent();
@@ -155,7 +155,7 @@ class GlobalUserpage extends Article {
 
 		$username = $this->getTitle()->getText();
 
-		global $wgMemc, $wgLanguageCode, $wgGlobalUserpageCacheExpiry;
+		global $wgMemc, $wgLanguageCode, $wgGlobalUserPageCacheExpiry;
 		$key = $this->getGlobalTitleCacheKey( $username );
 		$data = $wgMemc->get( $key );
 		if ( $data ) {
@@ -193,14 +193,14 @@ class GlobalUserpage extends Article {
 				if ( isset( $pages[$langCode] ) ) {
 					$data = $pages[$langCode];
 					$this->globalTitle = $data;
-					$wgMemc->set( $key, $data, $wgGlobalUserpageCacheExpiry );
+					$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
 					break;
 				}
 			}
 			if ( !$data ) {
 				// Cache failure
 				$this->globalTitle = false;
-				$wgMemc->set( $key, '!!NOEXIST!!', $wgGlobalUserpageCacheExpiry );
+				$wgMemc->set( $key, '!!NOEXIST!!', $wgGlobalUserPageCacheExpiry );
 
 			}
 		}
@@ -216,14 +216,14 @@ class GlobalUserpage extends Article {
 	 * @return string
 	 */
 	public function getGlobalText() {
-		global $wgMemc, $wgGlobalUserpageCacheExpiry;
+		global $wgMemc, $wgGlobalUserPageCacheExpiry;
 		$title = $this->getGlobalTitle();
 
 		$key = $this->getGlobalTextCacheKey( $title );
 		$data = $wgMemc->get( $key );
 		if ( $data === false ) {
 			$data = self::parseWikiText( $title );
-			$wgMemc->set( $key, $data, $wgGlobalUserpageCacheExpiry );
+			$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
 		}
 
 		return $data;

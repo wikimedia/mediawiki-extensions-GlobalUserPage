@@ -5,7 +5,7 @@
 			"Shirayuki"
 		]
 	},
-	"globaluserpage-desc": "{{desc|name=GlobalUserpage|url=http://www.shoutwiki.com/wiki/Extension:GlobalUserpage}}",
+	"globaluserpage-desc": "{{desc|name=GlobalUserPage|url=https://www.mediawiki.org/wiki/Extension:GlobalUserPage}}",
 	"globaluserpage-notice": "Message shown above user pages from ShoutWiki Hub. Parameters:\n* $1 - the revision ID of the page that was fetched",
 	"globaluserpage-edit-tab": "Text on tab that replaces \"create\", and links to the edit interface on ShoutWiki Hub",
 	"globaluserpage-preferences": "Shown on Special:Preferences"

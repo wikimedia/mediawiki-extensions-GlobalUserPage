@@ -1,6 +1,6 @@
 <?php
 
-class GlobalUserpageHooks {
+class GlobalUserPageHooks {
 	/**
 	 * Adds the user option for using GlobalUserpage to Special:GlobalPreferences.
 	 *
@@ -28,7 +28,7 @@ class GlobalUserpageHooks {
 	 */
 	public static function onArticleFromTitle( Title &$title, &$page, $context ) {
 		if ( $title->inNamespace( NS_USER ) ) {
-			$page = new GlobalUserpage( $title );
+			$page = new GlobalUserPage( $title );
 		}
 
 		return true;
@@ -46,7 +46,7 @@ class GlobalUserpageHooks {
 		$title = $sktemplate->getTitle();
 
 
-		if ( GlobalUserpage::isGlobal( $title ) ) {
+		if ( GlobalUserPage::isGlobal( $title ) ) {
 			$links['namespaces']['user']['href'] = $title->getFullURL();
 			$links['namespaces']['user']['class'] = 'selected';
 			//$links['namespaces']['user_talk']['class'] = '';
@@ -78,7 +78,7 @@ class GlobalUserpageHooks {
 	 * @return bool
 	 */
 	public static function onArticlePurge( &$article ) {
-		if ( $article instanceof GlobalUserpage ) {
+		if ( $article instanceof GlobalUserPage ) {
 			$article->clearCache();
 		}
 
@@ -97,7 +97,7 @@ class GlobalUserpageHooks {
 	 * @return Boolean
 	 */
 	public static function brokenLink( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
-		if ( GlobalUserpage::isGlobal( $target ) ) {
+		if ( GlobalUserPage::isGlobal( $target ) ) {
 			if ( in_array( 'known', $options ) || $target->isKnown() ) {
 				return true;
 			} else {
@@ -133,7 +133,7 @@ class GlobalUserpageHooks {
 		global $wgMemc;
 		$title = $article->getTitle();
 		$root = $title->getRootTitle();
-		if ( GlobalUserpage::isGlobal( $root ) ) {
+		if ( GlobalUserPage::isGlobal( $root ) ) {
 			if ( !$root->equals( $title ) ) {
 				$subpage = $title->getSubpageText();
 				if ( !Language::isValidCode( $subpage ) || $title->getText() !== "{$root->getText()}/{$subpage}" ) {

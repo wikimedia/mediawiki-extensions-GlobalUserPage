@@ -27,12 +27,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  *
  * default is one week
  */
-$wgGlobalUserpageCacheExpiry = 60 * 60 * 24 * 7;
+$wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7;
 
 /**
  * API endpoint of the central wiki
  */
-$wgGlobalUserpageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
+$wgGlobalUserPageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
 
 /**
  * By default enables global userpage for all users
@@ -43,35 +43,33 @@ $wgDefaultUserOptions['globaluserpage'] = true;
 /**
  * Database name of the central wiki
  */
-$wgGlobalUserpageDBname = 'shoutwiki';
+$wgGlobalUserPageDBname = 'shoutwiki';
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
-	'name' => 'GlobalUserpage',
-	'version' => '0.4',
+	'name' => 'GlobalUserPage',
+	'version' => '0.5',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
-	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserpage',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',
 );
 
-$dir = dirname( __FILE__ );
-
-$wgAutoloadClasses['GlobalUserpage'] = $dir . '/GlobalUserpage.body.php';
-$wgAutoloadClasses['GlobalUserpageHooks'] = $dir . '/GlobalUserpage.hooks.php';
+$wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
+$wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
 
 // i18n
-$wgMessagesDirs['GlobalUserpage'] = __DIR__ . '/i18n';
+$wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
 
 // Hooks, a.k.a the beef of this extension
-$wgHooks['GetPreferences'][] = 'GlobalUserpageHooks::onGetPreferences';
-$wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserpageHooks::onSkinTemplateNavigationUniversal';
-$wgHooks['LinkBegin'][] = 'GlobalUserpageHooks::brokenLink';
-$wgHooks['ArticleFromTitle'][] = 'GlobalUserpageHooks::onArticleFromTitle';
+$wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
+$wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
+$wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
+$wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
 
 // Register the CSS as a module with ResourceLoader
-$wgResourceModules['ext.GlobalUserpage'] = array(
-	'styles' => 'ext.GlobalUserpage.css',
-	'localBasePath' => $dir,
-	'remoteExtPath' => 'GlobalUserpage',
+$wgResourceModules['ext.GlobalUserPage'] = array(
+	'styles' => 'ext.GlobalUserPage.css',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'GlobalUserPage',
 );
