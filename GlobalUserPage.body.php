@@ -8,6 +8,7 @@ class GlobalUserPage extends Article {
 	protected $globalTitle;
 
 	public function showMissingArticle() {
+		global $wgGlobalUserPageLoadRemoteModules;
 		$title = $this->getTitle();
 
 		if ( !self::displayGlobalPage( $title ) ) {
@@ -17,9 +18,27 @@ class GlobalUserPage extends Article {
 
 		$out = $this->getContext()->getOutput();
 		list( $langCode, $touched ) = $this->getRemoteTitle();
-		$html = $this->getRemoteParsedText( $langCode, $touched );
-		$out->addHTML( $html );
+		$parsedOutput = $this->getRemoteParsedText( $langCode, $touched );
+		$out->addHTML( $parsedOutput['text']['*'] );
 		$out->addModuleStyles( 'ext.GlobalUserPage' );
+
+		// Scary ResourceLoader things...
+		if ( $wgGlobalUserPageLoadRemoteModules ) {
+			$rl = $out->getResourceLoader();
+			$map = array(
+				'modules' => 'addModules',
+				'modulestyles' => 'addModuleStyles',
+				'modulescripts' => 'addModuleScripts',
+				//'modulemessages' => 'addModuleMessages', // @todo how does this work?
+			);
+			foreach ( $map as $type => $func ) {
+				foreach ( $parsedOutput[$type] as $module ) {
+					if ( strpos( $module, 'ext.' ) === 0 && $rl->getModule( $module ) !== null ) {
+						$out->$func( $module );
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -314,9 +333,10 @@ class GlobalUserPage extends Article {
 			'title' => $title,
 			'disableeditsection' => 1,
 			'uselang' => $wgLanguageCode,
+			'prop' => 'text|modules'
 		);
 		$data = self::makeAPIRequest( $params );
-		return $data['parse']['text']['*'];
+		return $data['parse'];
 	}
 
 	public function clearEnabledCache() {

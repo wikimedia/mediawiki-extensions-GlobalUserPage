@@ -35,6 +35,13 @@ $wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7;
 $wgGlobalUserPageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
 
 /**
+ * Set this to true to load modules from the
+ * parsed output. Will only load those that start
+ * with "ext."
+ */
+$wgGlobalUserPageLoadRemoteModules = false;
+
+/**
  * By default enables global userpage for all users
  * @see https://www.mediawiki.org/wiki/Manual:$wgDefaultUserOptions
  */
