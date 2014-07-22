@@ -119,10 +119,12 @@ class GlobalUserPage extends Article {
 	 * @return array
 	 */
 	protected static function parseWikiText( $title ) {
+		global $wgLanguageCode;
 		$params = array(
 			'action' => 'parse',
 			'page' => $title,
 			'disableeditsection' => 1,
+			'uselang' => $wgLanguageCode,
 		);
 		$data = self::makeAPIRequest( $params );
 		return $data['parse']['text']['*'];
