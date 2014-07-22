@@ -10,14 +10,247 @@ class GlobalUserPage extends Article {
 	public function showMissingArticle() {
 		$title = $this->getTitle();
 
-		if ( !self::isGlobal( $title ) ) {
+		if ( !self::displayGlobalPage( $title ) ) {
 			parent::showMissingArticle();
 			return;
 		}
 
 		$out = $this->getContext()->getOutput();
-		$out->addHTML( $this->getGlobalText() );
+		list( $langCode, $touched ) = $this->getRemoteTitle();
+		$html = $this->getRemoteParsedText( $langCode, $touched );
+		$out->addHTML( $html );
 		$out->addModuleStyles( 'ext.GlobalUserPage' );
+	}
+
+	/**
+	 * @param int $type DB_SLAVE or DB_MASTER
+	 * @return DatabaseBase
+	 */
+	protected static function getRemoteDB( $type ) {
+		global $wgGlobalUserPageDBname;
+		return wfGetDB( $type, array(), $wgGlobalUserPageDBname );
+	}
+
+	/**
+	 * @param string $username
+	 * @return string
+	 */
+	private static function getEnabledCacheKey( $username ) {
+		return 'globaluserpage:enabled:' . md5( $username );
+	}
+
+	/**
+	 * Given a Title, assuming it doesn't exist, should
+	 * we display a global user page on it
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function displayGlobalPage( Title $title ) {
+		global $wgMemc;
+
+		if ( !self::canBeGlobal( $title ) ) {
+			return false;
+		}
+
+		$user = User::newFromName( $title->getText() );
+
+		if ( !$user || $user->getId() === 0 ) {
+			return false;
+		}
+
+		if ( !$user->getOption( 'globaluserpage' ) ) {
+			return false;
+		}
+
+		// TODO: Add a hook here for things like CentralAuth
+		// to check User:A@foowiki === User:A@centralwiki
+
+		$key = self::getEnabledCacheKey( $user->getName() );
+		$data = $wgMemc->get( $key );
+		if ( $data === false ) {
+			// Ugh, no cache. Open up a database connection to check if at least the root user page exists
+			$dbr = self::getRemoteDB( DB_SLAVE );
+			$row = $dbr->selectRow(
+				'page',
+				array( 'page_id' ),
+				array(
+					'page_title' => $user->getName(),
+					'page_namespace' => NS_USER
+				)
+			);
+			if ( $row === false ) {
+				// We cache `null` to indicate boolean false
+				$data = null;
+			} else {
+				$data = true;
+			}
+
+			$wgMemc->set( $key, $data );
+		}
+
+		return (bool)$data;
+	}
+
+	/**
+	 * Given a Title, is it a source page we might
+	 * be "transcluding" on another site
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isSourcePage( Title $title ) {
+		global $wgGlobalUserPageDBname;
+		if ( wfWikiID() !== $wgGlobalUserPageDBname ) {
+			return false;
+		}
+
+		if ( !$title->inNamespace( NS_USER ) ) {
+			return false;
+		}
+
+		if ( $title->getRootTitle()->equals( $title ) ) {
+			// Root user page
+			return true;
+		}
+
+		// Ensure that the given title has one and only one subpage part
+		$subjTitle = $title->getRootTitle()->getSubpage( $title->getSubpageText() );
+		if ( !$title->equals( $subjTitle ) ) {
+			return false;
+		}
+
+		return Language::isValidCode( $title->getSubpageText() );
+	}
+
+	/**
+	 * Username for the given global user page
+	 *
+	 * @return string
+	 */
+	public function getUsername() {
+		return $this->getTitle()->getText();
+	}
+
+	private function getMapCacheKey(){
+		return 'globaluserpage:map:' . md5( $this->getUsername() );
+	}
+
+	public function updateMap( $langCode, $touched ) {
+		global $wgMemc;
+		$key = $this->getMapCacheKey();
+		$data = $wgMemc->get( $key );
+		if ( $data ) {
+			// If $data === false, don't bother trying to re-cache,
+			// it'll automatically happen the next time it is loaded
+			// if there is cache though, update it!
+			$data[$langCode] = $touched;
+			$wgMemc->set( $key, $data );
+		}
+	}
+
+	public function removeMap( $langCode ) {
+		global $wgMemc;
+		$key = $this->getMapCacheKey();
+		$data = $wgMemc->get( $key );
+		if ( $data ) {
+			// If $data === false, don't bother trying to re-cache,
+			// it'll automatically happen the next time it is loaded
+			// if there is cache though, update it!
+			unset( $data[$langCode] );
+			$wgMemc->set( $key, $data );
+		}
+
+	}
+
+	/**
+	 * Returns title, touched timestamp that points to
+	 * the remote site including language fallback
+	 *
+	 * @todo REGEXP is MySQL-specific
+	 * @throws MWException
+	 * @return array
+	 */
+	public function getRemoteTitle() {
+		global $wgMemc, $wgLanguageCode;
+		$key = $this->getMapCacheKey();
+		$data = $wgMemc->get( $key );
+		if ( $data === false ) {
+			$dbr = self::getRemoteDB( DB_SLAVE );
+			$langCodes = implode( '|', Language::fetchLanguageNames() );
+			$rows = $dbr->select(
+				'page',
+				array( 'page_title', 'page_touched' ),
+				array(
+					'page_title REGEXP ' . $dbr->addQuotes( "{$this->getUsername()}(/($langCodes))?$" ),
+					'page_namespace' => NS_USER,
+				),
+				__METHOD__
+			);
+			$data = array();
+			foreach ( $rows as $row ) {
+				if ( strpos( $row->page_title, '/' ) !== false ) {
+					list( , $langCode ) = explode( '/', $row->page_title );
+				} else {
+					$langCode = 'en'; // Assume main userpage is in English
+				}
+
+				$data[$langCode] = $row->page_touched;
+			}
+			$wgMemc->set( $key, $data );
+		}
+
+		$fallbacks = Language::getFallbacksFor( $wgLanguageCode );
+		foreach( $fallbacks as $fallback ) {
+			if ( isset( $data[$fallback] ) ) {
+				// array( $langCode, $touched );
+				return array( $fallback, $data[$fallback] );
+			}
+		}
+
+		// Should be unreachable if displayGlobalTitle was called first.
+		throw new MWException( __METHOD__ . " could not find a title for {$this->getUsername()}" );
+	}
+
+	/**
+	 * Return the associated language code
+	 *
+	 * @param Title $title
+	 * @return string
+	 */
+	public static function getLangCodeForTitle( Title $title ) {
+		if ( $title->getRootTitle()->equals( $title ) ) {
+			return 'en';
+		} else {
+			return $title->getSubpageText();
+		}
+	}
+
+	private function getUserPageName( $langCode ) {
+		if ( $langCode === 'en ') {
+			return "User:{$this->getUsername()}";
+		} else {
+			return "User:{$this->getUsername()}/{$langCode}";
+		}
+	}
+
+	/**
+	 * @param string $langCode A language code
+	 * @param string $touched
+	 * @return string
+	 */
+	public function getRemoteParsedText( $langCode, $touched ) {
+		global $wgMemc, $wgLanguageCode, $wgGlobalUserPageCacheExpiry;
+
+		// Need $wgLanguageCode in the key since we pass &uselang= to the API.
+		$key = "globaluserpage:parsed:$langCode:$wgLanguageCode:$touched";
+		$data = $wgMemc->get( $key );
+		if ( $data === false ){
+			$data = self::parseWikiText( $this->getUserPageName( $langCode ) );
+			$wgMemc->set( $data, $wgGlobalUserPageCacheExpiry );
+		}
+
+		return $data;
 	}
 
 	/**
@@ -52,50 +285,6 @@ class GlobalUserPage extends Article {
 	}
 
 	/**
-	 * Actually checks the database and user options
-	 * @param Title $title
-	 * @return bool
-	 */
-	public static function isGlobal( Title $title ) {
-		global $wgGlobalUserPageDBname;
-
-		if ( !self::canBeGlobal( $title ) ) {
-			return false;
-		}
-
-		$user = User::newFromName( $title->getText() );
-
-		if ( $user->getId() === 0 ) {
-			return false;
-		}
-
-		if ( !$user->getOption( 'globaluserpage' ) ) {
-			return false;
-		}
-
-		// Ewww, CentralAuth is terrible.
-		/*
-		if ( class_exists( 'CentralAuthUser' ) ) {
-			$caUser = CentralAuthUser::getInstance( $user );
-			if ( !$caUser->isAttached() || !$caUser->attachedOn( $wgGlobalUserpageDBname ) ) {
-				return false;
-			}
-		}*/
-
-		return self::exists( $user );
-	}
-
-	/**
-	 * @param User $user
-	 * @return bool
-	 */
-	protected static function exists( User $user ) {
-		// Would be nice if we didn't have to create a new article, but eh.
-		$page = new self( $user->getUserPage() );
-		return $page->getGlobalTitle() !== false;
-	}
-
-	/**
 	 * Makes an API request to the central wiki
 	 *
 	 * @param $params array
@@ -115,14 +304,14 @@ class GlobalUserPage extends Article {
 	/**
 	 * Use action=parse to get rendered HTML of a page
 	 *
-	 * @param $title string
+	 * @param string $title
 	 * @return array
 	 */
 	protected static function parseWikiText( $title ) {
 		global $wgLanguageCode;
 		$params = array(
 			'action' => 'parse',
-			'page' => $title,
+			'title' => $title,
 			'disableeditsection' => 1,
 			'uselang' => $wgLanguageCode,
 		);
@@ -130,104 +319,22 @@ class GlobalUserPage extends Article {
 		return $data['parse']['text']['*'];
 	}
 
+	public function clearEnabledCache() {
+		global $wgMemc;
+		$wgMemc->delete( self::getEnabledCacheKey( $this->getUsername()) );
+	}
+
 	/**
 	 * Clear all the caches
 	 */
 	public function clearCache() {
 		global $wgMemc;
-		$username = $this->getTitle()->getText();
-		$title = $this->getGlobalTitle();
-		$wgMemc->delete( $this->getGlobalTextCacheKey( $title ) );
-		$wgMemc->delete( $this->getGlobalTitleCacheKey( $username ) );
-	}
+		// Whether to use a global userpage flag
+		$this->clearEnabledCache();
+		// Huge map of $langCode => $touched
+		$wgMemc->delete( $this->getMapCacheKey() );
 
-
-	protected function getGlobalTitleCacheKey( $username ) {
-		global $wgLanguageCode;
-		return "globaluserpage:{$wgLanguageCode}:" . md5( $username );
-	}
-
-	/**
-	 * @return string|bool false if there is no page
-	 */
-	public function getGlobalTitle() {
-		if ( $this->globalTitle !== null ) {
-			return $this->globalTitle;
-		}
-
-		$username = $this->getTitle()->getText();
-
-		global $wgMemc, $wgLanguageCode, $wgGlobalUserPageCacheExpiry;
-		$key = $this->getGlobalTitleCacheKey( $username );
-		$data = $wgMemc->get( $key );
-		if ( $data ) {
-			$this->globalTitle = ( $data == '!!NOEXIST!!' ) ? false : $data;
-		} else {
-			$fallbacks = Language::getFallbacksFor( $wgLanguageCode );
-			array_unshift( $fallbacks, $wgLanguageCode );
-			$titles = array();
-			$title = 'User:' . $username;
-
-			foreach ( $fallbacks as $langCode ) {
-				if ( $langCode === 'en' ) {
-					$titles[$title] = $langCode;
-				} else {
-					$titles[$title . '/' . $langCode] = $langCode;
-				}
-			}
-
-			$params = array(
-				'action' => 'query',
-				'titles' => implode( '|', array_keys( $titles ) )
-			);
-			$data = self::makeAPIRequest( $params );
-			$pages = array();
-
-			foreach ( $data['query']['pages'] as /* $id => */ $info ) {
-				if ( isset( $info['missing'] ) ) {
-					continue;
-				}
-				$lang = $titles[$info['title']];
-				$pages[$lang] = $info['title'];
-			}
-
-			foreach ( $fallbacks as $langCode ) {
-				if ( isset( $pages[$langCode] ) ) {
-					$data = $pages[$langCode];
-					$this->globalTitle = $data;
-					$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
-					break;
-				}
-			}
-			if ( !$data ) {
-				// Cache failure
-				$this->globalTitle = false;
-				$wgMemc->set( $key, '!!NOEXIST!!', $wgGlobalUserPageCacheExpiry );
-
-			}
-		}
-
-		return $data;
-	}
-
-	protected function getGlobalTextCacheKey( $title ) {
-		return 'globaluserpage:' . md5( $title );
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getGlobalText() {
-		global $wgMemc, $wgGlobalUserPageCacheExpiry;
-		$title = $this->getGlobalTitle();
-
-		$key = $this->getGlobalTextCacheKey( $title );
-		$data = $wgMemc->get( $key );
-		if ( $data === false ) {
-			$data = self::parseWikiText( $title );
-			$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
-		}
-
-		return $data;
+		// Note we don't need to clear globaluserpage:parsed:* since that
+		// relies on page_touched, which should update if anything changes
 	}
 }

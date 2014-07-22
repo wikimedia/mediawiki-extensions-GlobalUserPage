@@ -46,7 +46,7 @@ class GlobalUserPageHooks {
 		$title = $sktemplate->getTitle();
 
 
-		if ( GlobalUserPage::isGlobal( $title ) ) {
+		if ( GlobalUserPage::displayGlobalPage( $title ) ) {
 			$links['namespaces']['user']['href'] = $title->getFullURL();
 			$links['namespaces']['user']['class'] = 'selected';
 			//$links['namespaces']['user_talk']['class'] = '';
@@ -97,7 +97,7 @@ class GlobalUserPageHooks {
 	 * @return Boolean
 	 */
 	public static function brokenLink( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
-		if ( GlobalUserPage::isGlobal( $target ) ) {
+		if ( GlobalUserPage::displayGlobalPage( $target ) ) {
 			if ( in_array( 'known', $options ) || $target->isKnown() ) {
 				return true;
 			} else {
@@ -110,8 +110,7 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * Occurs after the save page request has been processed.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/PageContentSaveComplete
+	 * Update caches after a page is saved
 	 *
 	 * @param WikiPage $article
 	 * @param User $user
@@ -125,35 +124,41 @@ class GlobalUserPageHooks {
 	 * @param Status $status
 	 * @param integer $baseRevId
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public static function onPageContentSaveComplete( $article, $user, $content, $summary,
 		$isMinor, $isWatch, $section, $flags, $revision, $status, $baseRevId
 	) {
-		global $wgMemc;
 		$title = $article->getTitle();
-		$root = $title->getRootTitle();
-		if ( GlobalUserPage::isGlobal( $root ) ) {
-			if ( !$root->equals( $title ) ) {
-				$subpage = $title->getSubpageText();
-				if ( !Language::isValidCode( $subpage ) || $title->getText() !== "{$root->getText()}/{$subpage}" ) {
-					return true;
-				}
-			} else {
-				$subpage = 'en';
+		if ( GlobalUserPage::isSourcePage( $title ) ) {
+			$page = new GlobalUserPage( $title->getRootTitle() );
+			$langCode = GlobalUserPage::getLangCodeForTitle( $title );
+			if ( $revision !== null ) {
+				$page->updateMap( $langCode, $title->getTouched() );
 			}
-
-			// First, clear out the rendered text
-			$wgMemc->delete( 'globaluserpage:' . md5( $title->getPrefixedText() ) );
-
-			// TODO:
-			// Imagine we have the following fallback: als --> gsw --> de --> en
-			// Originally, the wiki was using the /en page, since none of the others existed
-			// but now the /gsw page was created. We now need to invalidate the cache for both
-			// als and gsw to point to /gsw instead of /en. I have no clue how to do that, but
-			// we should do that in the future!
 		}
 
 		return true;
+	}
+
+	/**
+	 * Update caches if a page is deleted
+	 *
+	 * @param WikiPage $article
+	 * @return bool
+	 */
+	public static function onArticleDeleteComplete( &$article ) {
+		$title = $article->getTitle();
+		if ( GlobalUserPage::isSourcePage( $title ) ) {
+			$langCode = GlobalUserPage::getLangCodeForTitle( $title );
+			$page = new GlobalUserPage( $title->getRootTitle() );
+			$page->removeMap( $langCode );
+
+			if ( $langCode === 'em' ) {
+				// It's the root userpage, so we need to clear the enabled key
+				$page->clearEnabledCache();
+			}
+		}
+
 	}
 }
