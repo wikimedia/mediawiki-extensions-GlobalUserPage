@@ -25,9 +25,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 /**
  * How long to cache the rendered HTML for
  *
- * default is one week
+ * Note that the extension should invalidate
+ * the cache whenever the base page is touched,
+ * but this is a safeguard against invalidation
+ * issues.
  */
-$wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7;
+$wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7; // One week
 
 /**
  * API endpoint of the central wiki

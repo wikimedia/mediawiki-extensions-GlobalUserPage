@@ -27,7 +27,9 @@ class GlobalUserPageHooks {
 	 * @return bool
 	 */
 	public static function onArticleFromTitle( Title &$title, &$page, $context ) {
-		if ( $title->inNamespace( NS_USER ) ) {
+		if ( $title->inNamespace( NS_USER ) && !$title->exists()
+			&& GlobalUserPage::displayGlobalPage( $title )
+		) {
 			$page = new GlobalUserPage( $title );
 		}
 
@@ -70,21 +72,6 @@ class GlobalUserPageHooks {
 		return true;
 	}
 
-
-	/**
-	 * Use action=purge to clear cache
-	 *
-	 * @param $article Article
-	 * @return bool
-	 */
-	public static function onArticlePurge( &$article ) {
-		if ( $article instanceof GlobalUserPage ) {
-			$article->clearCache();
-		}
-
-		return true;
-	}
-
 	/**
 	 * Turn red User: links into blue ones
 	 *
@@ -107,58 +94,5 @@ class GlobalUserPageHooks {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Update caches after a page is saved
-	 *
-	 * @param WikiPage $article
-	 * @param User $user
-	 * @param Content $content
-	 * @param string $summary
-	 * @param boolean $isMinor
-	 * @param boolean $isWatch
-	 * @param $section null Deprecated
-	 * @param integer $flags
-	 * @param Revision|null $revision
-	 * @param Status $status
-	 * @param integer $baseRevId
-	 *
-	 * @return bool
-	 */
-	public static function onPageContentSaveComplete( $article, $user, $content, $summary,
-		$isMinor, $isWatch, $section, $flags, $revision, $status, $baseRevId
-	) {
-		$title = $article->getTitle();
-		if ( GlobalUserPage::isSourcePage( $title ) ) {
-			$page = new GlobalUserPage( $title->getRootTitle() );
-			$langCode = GlobalUserPage::getLangCodeForTitle( $title );
-			if ( $revision !== null ) {
-				$page->updateMap( $langCode, $title->getTouched() );
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Update caches if a page is deleted
-	 *
-	 * @param WikiPage $article
-	 * @return bool
-	 */
-	public static function onArticleDeleteComplete( &$article ) {
-		$title = $article->getTitle();
-		if ( GlobalUserPage::isSourcePage( $title ) ) {
-			$langCode = GlobalUserPage::getLangCodeForTitle( $title );
-			$page = new GlobalUserPage( $title->getRootTitle() );
-			$page->removeMap( $langCode );
-
-			if ( $langCode === 'em' ) {
-				// It's the root userpage, so we need to clear the enabled key
-				$page->clearEnabledCache();
-			}
-		}
-
 	}
 }
