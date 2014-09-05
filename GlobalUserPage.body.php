@@ -3,7 +3,8 @@
 class GlobalUserPage extends Article {
 
 	public function showMissingArticle() {
-		global $wgGlobalUserPageLoadRemoteModules;
+		global $wgGlobalUserPageLoadRemoteModules, $wgGlobalUserPageFooterKey,
+		       $wgGlobalUserPageDBname;
 		$title = $this->getTitle();
 
 		if ( !self::displayGlobalPage( $title ) ) {
@@ -17,6 +18,14 @@ class GlobalUserPage extends Article {
 		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
 		$out->addHTML( $parsedOutput['text']['*'] );
 		$out->addModuleStyles( 'ext.GlobalUserPage' );
+
+		if ( $wgGlobalUserPageFooterKey ) {
+			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
+				"\n" . $out->msg( $wgGlobalUserPageFooterKey )
+					->params( $this->getUsername(), $this->getRemoteURL() )->parse() .
+				"\n</div>"
+			);
+		}
 
 		// Scary ResourceLoader things...
 		if ( $wgGlobalUserPageLoadRemoteModules ) {
@@ -204,6 +213,44 @@ class GlobalUserPage extends Article {
 		$json = $req->getContent();
 		$decoded = FormatJson::decode( $json, true );
 		return $decoded;
+	}
+
+	/**
+	 * Returns a URL to the user page on the central wiki;
+	 * if MW >= 1.24, this will be the cannonical url, otherwise
+	 * it will be using whatever protocol was specified in
+	 * $wgGlobalUserPageAPIUrl.
+	 *
+	 * @return string
+	 */
+	protected function getRemoteURL() {
+		global $wgMemc;
+		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
+		$data = $wgMemc->get( $key );
+		if ( $data === false ) {
+			$params = array(
+				'action' => 'query',
+				'titles' => 'User:' . $this->getUsername(),
+				'prop' => 'info',
+				'inprop' => 'url',
+				'indexpageids' => '1',
+			);
+			$resp = $this->makeAPIRequest( $params );
+			$pageInfo = $resp['query']['pages'][$resp['query']['pageids'][0]];
+			if ( isset( $pageInfo['canonicalurl'] ) ) {
+				// New in 1.24
+				$data = $pageInfo['canonicalurl'];
+			} else {
+				// This is dependent upon PROTO_CURRENT, which is hardcoded in config,
+				// but it's good enough for back-compat
+				$data = $pageInfo['fullurl'];
+			}
+			// Don't set an expiry since we expect people not to change the
+			// url to their wiki without clearing their caches!
+			$wgMemc->set( $key, $data );
+		}
+
+		return $data;
 	}
 
 	/**
