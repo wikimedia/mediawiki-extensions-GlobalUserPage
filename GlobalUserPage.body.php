@@ -54,24 +54,35 @@ class GlobalUserPage extends Article {
 	 * @return bool
 	 */
 	public static function displayGlobalPage( Title $title ) {
+		static $cache = array();
+		$text = $title->getPrefixedText();
+		// Do some instance caching since this can be
+		// called frequently due do the Linker hook
+		if ( isset( $cache[$text] ) ) {
+			return $cache[$text];
+		}
 		if ( !self::canBeGlobal( $title ) ) {
+			$cache[$text] = false;
 			return false;
 		}
 
 		$user = User::newFromName( $title->getText() );
 
 		if ( !$user || $user->getId() === 0 ) {
+			$cache[$text] = false;
 			return false;
 		}
 
 		if ( !$user->getOption( 'globaluserpage' ) ) {
+			$cache[$text] = false;
 			return false;
 		}
 
 		// TODO: Add a hook here for things like CentralAuth
 		// to check User:A@foowiki === User:A@centralwiki
 
-		return (bool)self::getCentralTouched( $user );
+		$cache[$text] = (bool)self::getCentralTouched( $user );
+		return $cache[$text];
 	}
 
 	/**
@@ -82,7 +93,9 @@ class GlobalUserPage extends Article {
 	 * @return string|bool
 	 */
 	protected static function getCentralTouched( User $user ) {
-		return self::getRemoteDB( DB_SLAVE )->selectField(
+		static $cache = array();
+		if ( !isset( $cache[$user->getName()] ) ) {
+			$cache[$user->getName()] = self::getRemoteDB( DB_SLAVE )->selectField(
 				'page',
 				'page_touched',
 				array(
@@ -91,6 +104,9 @@ class GlobalUserPage extends Article {
 				),
 				__METHOD__
 			);
+		}
+
+		return $cache[$user->getName()];
 	}
 
 	/**
