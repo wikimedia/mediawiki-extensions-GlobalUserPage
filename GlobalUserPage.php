@@ -55,11 +55,21 @@ $wgDefaultUserOptions['globaluserpage'] = true;
  */
 $wgGlobalUserPageDBname = 'shoutwiki';
 
+/**
+ * Optionally add a footer message to the
+ * bottom of every global user page. Should
+ * be set to the name of a message key, or
+ * false if no footer is wanted.
+ *
+ * @var string|bool
+ */
+$wgGlobalUserPageFooterKey = 'globaluserpage-footer';
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserPage',
-	'version' => '0.5',
+	'version' => '0.6',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',
