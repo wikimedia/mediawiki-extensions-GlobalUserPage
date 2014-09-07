@@ -16,7 +16,7 @@ class GlobalUserPage extends Article {
 		$out = $this->getContext()->getOutput();
 		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
 		$out->addHTML( $parsedOutput['text']['*'] );
-		$out->addModuleStyles( 'ext.GlobalUserPage' );
+		$out->addModuleStyles( array( 'ext.GlobalUserPage', 'ext.GlobalUserPage.site' ) );
 
 		if ( $wgGlobalUserPageFooterKey ) {
 			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .

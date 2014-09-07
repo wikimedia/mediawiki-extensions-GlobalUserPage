@@ -65,11 +65,21 @@ $wgGlobalUserPageDBname = 'shoutwiki';
  */
 $wgGlobalUserPageFooterKey = 'globaluserpage-footer';
 
+/**
+ * The name of the ResourceLoaderSource referring
+ * to the central wiki to load MediaWiki:GlobalUserPage.css
+ * from. Setting this variable to false disables that
+ * feature. This requires MediaWiki 1.24 to work properly.
+ *
+ * @var string|bool
+ */
+$wgGlobalUserPageCSSRLSourceName = false;
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserPage',
-	'version' => '0.6',
+	'version' => '0.7',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',
@@ -77,15 +87,17 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
 $wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
+$wgAutoloadClasses['ResourceLoaderGlobalUserPageModule'] = __DIR__ . '/ResourceLoaderGlobalUserPageModule.php';
 
 // i18n
 $wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
 
-// Hooks, a.k.a the beef of this extension
 $wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
 $wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
 $wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
+$wgHooks['BeforePageDisplay'][] = 'GlobalUserPageHooks::onBeforePageDisplay';
+$wgHooks['ResourceLoaderRegisterModules'][] = 'GlobalUserPageHooks::onResourceLoaderRegisterModules';
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserPage'] = array(
