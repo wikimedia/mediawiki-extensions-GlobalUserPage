@@ -37,6 +37,44 @@ class GlobalUserPageHooks {
 	}
 
 	/**
+	 * Loads MediaWiki:GlobalUserPage.css on the central wikis
+	 * root userpages
+	 *
+	 * @param OutputPage $out
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( OutputPage &$out ) {
+		global $wgGlobalUserPageDBname;
+		$title = $out->getTitle();
+		if ( $wgGlobalUserPageDBname === wfWikiID() // On the central wiki,
+			&& $title->inNamespace( NS_USER ) // a user page
+			&& $title->exists() // that exists
+			&& $title->getRootTitle()->equals( $title ) // and is a root page.
+		) {
+			$out->addModuleStyles( 'ext.GlobalUserPage.site' );
+		}
+
+		return true;
+	}
+
+	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
+		global $wgGlobalUserPageCSSRLSourceName, $wgGlobalUserPageDBname;
+
+		$isEnabled = (bool)$wgGlobalUserPageCSSRLSourceName;
+
+		// Always register the module, but if it is disabled via config,
+		// pass it some dummy parameters.
+		$resourceLoader->register( 'ext.GlobalUserPage.site', array(
+			'class' => 'ResourceLoaderGlobalUserPageModule',
+			'wiki' => $isEnabled ? $wgGlobalUserPageDBname : wfWikiID(),
+			'source' => $isEnabled ? $wgGlobalUserPageCSSRLSourceName : 'local',
+			'enabled' => $isEnabled,
+		) );
+
+		return true;
+	}
+
+	/**
 	 * Turn red links into blue in the navigation tabs (Monobook's p-cactions).
 	 *
 	 * @param SkinTemplate $sktemplate

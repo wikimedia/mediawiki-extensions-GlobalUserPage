@@ -3,8 +3,7 @@
 class GlobalUserPage extends Article {
 
 	public function showMissingArticle() {
-		global $wgGlobalUserPageLoadRemoteModules, $wgGlobalUserPageFooterKey,
-		       $wgGlobalUserPageDBname;
+		global $wgGlobalUserPageFooterKey;
 		$title = $this->getTitle();
 
 		if ( !self::displayGlobalPage( $title ) ) {
@@ -17,7 +16,7 @@ class GlobalUserPage extends Article {
 		$out = $this->getContext()->getOutput();
 		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
 		$out->addHTML( $parsedOutput['text']['*'] );
-		$out->addModuleStyles( 'ext.GlobalUserPage' );
+		$out->addModuleStyles( array( 'ext.GlobalUserPage', 'ext.GlobalUserPage.site' ) );
 
 		if ( $wgGlobalUserPageFooterKey ) {
 			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
@@ -28,6 +27,20 @@ class GlobalUserPage extends Article {
 		}
 
 		// Scary ResourceLoader things...
+		$this->loadExtensionModules( $out, $parsedOutput );
+	}
+
+	/**
+	 * Attempts to load modules provided by extensions
+	 * through the ParserOutput on the local wiki, if
+	 * they exist. This entire feature is experimental
+	 * and disabled by default.
+	 *
+	 * @param OutputPage $out
+	 * @param array $parsedOutput
+	 */
+	private function loadExtensionModules( OutputPage $out, array $parsedOutput ) {
+		global $wgGlobalUserPageLoadRemoteModules;
 		if ( $wgGlobalUserPageLoadRemoteModules ) {
 			$rl = $out->getResourceLoader();
 			$map = array(
