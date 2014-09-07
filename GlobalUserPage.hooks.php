@@ -28,7 +28,7 @@ class GlobalUserPageHooks {
 	 */
 	public static function onArticleFromTitle( Title &$title, &$page, $context ) {
 		// If another extension's hook has already run, don't override it
-		if ( get_class( $page ) === 'Article'
+		if ( $page === null
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
 			&& GlobalUserPage::displayGlobalPage( $title )
 		) {
