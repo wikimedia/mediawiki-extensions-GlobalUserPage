@@ -54,6 +54,7 @@ class GlobalUserPage extends Article {
 	 * @return bool
 	 */
 	public static function displayGlobalPage( Title $title ) {
+		global $wgGlobalUserPageDBname;
 		static $cache = array();
 		$text = $title->getPrefixedText();
 		// Do some instance caching since this can be
@@ -78,8 +79,14 @@ class GlobalUserPage extends Article {
 			return false;
 		}
 
-		// TODO: Add a hook here for things like CentralAuth
-		// to check User:A@foowiki === User:A@centralwiki
+		// Allow for authorization extensions to determine
+		// whether User:A@foowiki === User:A@centralwiki.
+		// This hook intentionally functions the same
+		// as the one in Extension:GlobalCssJs.
+		if ( !wfRunHooks( 'LoadGlobalUserPage', array( $user, $wgGlobalUserPageDBname, wfWikiID() ) ) ) {
+			$cache[$text] = false;
+			return false;
+		}
 
 		$cache[$text] = (bool)self::getCentralTouched( $user );
 		return $cache[$text];
