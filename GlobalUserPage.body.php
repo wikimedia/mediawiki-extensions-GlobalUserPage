@@ -15,6 +15,12 @@ class GlobalUserPage extends Article {
 
 		$out = $this->getContext()->getOutput();
 		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
+
+		// If the user page is empty, don't use it
+		if ( !trim( $parsedOutput['text']['*'] ) ) {
+			parent::showMissingArticle();
+			return;
+		}
 		$out->addHTML( $parsedOutput['text']['*'] );
 		$out->addModuleStyles( array( 'ext.GlobalUserPage', 'ext.GlobalUserPage.site' ) );
 
@@ -170,16 +176,15 @@ class GlobalUserPage extends Article {
 
 	/**
 	 * @param string $touched The page_touched for the page
-	 * @param bool $useCache
 	 * @return array
 	 */
-	public function getRemoteParsedText( $touched, $useCache = true ) {
+	public function getRemoteParsedText( $touched ) {
 		global $wgMemc, $wgLanguageCode, $wgGlobalUserPageCacheExpiry;
 
 		// Need $wgLanguageCode in the key since we pass &uselang= to the API.
 		$key = "globaluserpage:parsed:$touched:$wgLanguageCode:{$this->getUsername()}";
 		$data = $wgMemc->get( $key );
-		if ( !$useCache || $data === false ){
+		if ( $data === false ){
 			$data = $this->parseWikiText( $this->getTitle() );
 			$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
 		}
@@ -276,15 +281,19 @@ class GlobalUserPage extends Article {
 	/**
 	 * Use action=parse to get rendered HTML of a page
 	 *
-	 * @param string $title
+	 * @param Title $title
 	 * @return array
 	 */
-	protected function parseWikiText( $title ) {
+	protected function parseWikiText( Title $title ) {
 		global $wgLanguageCode;
+		$unLocalizedName = MWNamespace::getCanonicalName( NS_USER ) . ':' . $title->getText();
+		$wikitext = '{{:' . $unLocalizedName . '}}';
 		$params = array(
 			'action' => 'parse',
-			'page' => $title,
+			'title' => $unLocalizedName,
+			'text' => $wikitext,
 			'disableeditsection' => 1,
+			'disablepp' => 1,
 			'uselang' => $wgLanguageCode,
 			'prop' => 'text|modules'
 		);
