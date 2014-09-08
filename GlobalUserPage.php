@@ -91,6 +91,16 @@ $wgAutoloadClasses['ResourceLoaderGlobalUserPageModule'] = __DIR__ . '/ResourceL
 
 // i18n
 $wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
+// extra message for the central wiki
+$wgExtensionFunctions[] = 'efGlobalUserPage';
+function efGlobalUserPage() {
+	global $wgGlobalUserPageDBname, $wgGlobalUserPageCSSRLSourceName;
+	global $wgMessagesDirs;
+	if ( $wgGlobalUserPageDBname === wfWikiID() && $wgGlobalUserPageCSSRLSourceName ) {
+		$wgMessagesDirs['GlobalUserPageCentral'] = __DIR__ . '/i18n-central';
+	}
+}
+
 
 $wgConfigRegistry['globaluserpage'] = 'GlobalVarConfig::newInstance';
 
