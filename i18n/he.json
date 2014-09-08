@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Guycn2"
+		]
+	},
+	"globaluserpage-desc": "אחזור אוטומטי של דפי משתמש מאתר ויקי מרכזי",
+	"globaluserpage-preferences": "שימוש ב[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage דף משתמש גלובלי]",
+	"globaluserpage-footer": "'''זהו [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage דף משתמש גלובלי].''' הדף המקורי נמצא ב[$2 $2]."
+}

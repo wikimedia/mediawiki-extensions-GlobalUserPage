@@ -4,7 +4,7 @@
 			"Metalhead64"
 		]
 	},
-	"globaluserpage-desc": "Ermöglicht den automatischen Abruf von Benutzerseiten von [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-notice": "Diese Seite wurde von [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] heruntergeladen und kann dort bearbeitet werden.",
-	"globaluserpage-edit-tab": "Auf ShoutWiki Hub bearbeiten"
+	"globaluserpage-desc": "Ermöglicht den automatischen Abruf von Benutzerseiten von einem zentralen Wiki",
+	"globaluserpage-preferences": "Ermöglicht die Verwendung der [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globalen Benutzerseite]",
+	"globaluserpage-footer": "'''Dies ist eine [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globale Benutzerseite].''' Die Originalseite befindet sich unter [$2 $2]."
 }
