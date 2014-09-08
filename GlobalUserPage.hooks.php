@@ -32,7 +32,10 @@ class GlobalUserPageHooks {
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
 			&& GlobalUserPage::displayGlobalPage( $title )
 		) {
-			$page = new GlobalUserPage( $title );
+			$page = new GlobalUserPage(
+				$title,
+				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
+			);
 		}
 
 		return true;

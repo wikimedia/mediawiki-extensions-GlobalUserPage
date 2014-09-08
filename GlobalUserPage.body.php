@@ -2,8 +2,24 @@
 
 class GlobalUserPage extends Article {
 
+	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var BagOStuff
+	 */
+	private $cache;
+
+	public function __construct( Title $title, Config $config ) {
+		global $wgMemc;
+		parent::__construct( $title );
+		$this->config = $config;
+		$this->cache = $wgMemc;
+	}
+
 	public function showMissingArticle() {
-		global $wgGlobalUserPageFooterKey;
 		$title = $this->getTitle();
 
 		if ( !self::displayGlobalPage( $title ) ) {
@@ -24,9 +40,10 @@ class GlobalUserPage extends Article {
 		$out->addHTML( $parsedOutput['text']['*'] );
 		$out->addModuleStyles( array( 'ext.GlobalUserPage', 'ext.GlobalUserPage.site' ) );
 
-		if ( $wgGlobalUserPageFooterKey ) {
+		$footerKey = $this->config->get( 'GlobalUserPageFooterKey' );
+		if ( $footerKey ) {
 			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
-				"\n" . $out->msg( $wgGlobalUserPageFooterKey )
+				"\n" . $out->msg( $footerKey )
 					->params( $this->getUsername(), $this->getRemoteURL() )->parse() .
 				"\n</div>"
 			);
@@ -46,8 +63,7 @@ class GlobalUserPage extends Article {
 	 * @param array $parsedOutput
 	 */
 	private function loadExtensionModules( OutputPage $out, array $parsedOutput ) {
-		global $wgGlobalUserPageLoadRemoteModules;
-		if ( $wgGlobalUserPageLoadRemoteModules ) {
+		if ( $this->config->get( 'GlobalUserPageLoadRemoteModules' ) ) {
 			$rl = $out->getResourceLoader();
 			$map = array(
 				'modules' => 'addModules',
@@ -151,8 +167,7 @@ class GlobalUserPage extends Article {
 	 * @return bool
 	 */
 	public function isSourcePage() {
-		global $wgGlobalUserPageDBname;
-		if ( wfWikiID() !== $wgGlobalUserPageDBname ) {
+		if ( wfWikiID() !== $this->config->get( 'GlobalUserPageDBname' ) ) {
 			return false;
 		}
 
@@ -179,14 +194,14 @@ class GlobalUserPage extends Article {
 	 * @return array
 	 */
 	public function getRemoteParsedText( $touched ) {
-		global $wgMemc, $wgLanguageCode, $wgGlobalUserPageCacheExpiry;
+		$langCode = $this->getContext()->getConfig()->get( 'LanguageCode' );
 
-		// Need $wgLanguageCode in the key since we pass &uselang= to the API.
-		$key = "globaluserpage:parsed:$touched:$wgLanguageCode:{$this->getUsername()}";
-		$data = $wgMemc->get( $key );
+		// Need language code in the key since we pass &uselang= to the API.
+		$key = "globaluserpage:parsed:$touched:$langCode:{$this->getUsername()}";
+		$data = $this->cache->get( $key );
 		if ( $data === false ){
-			$data = $this->parseWikiText( $this->getTitle() );
-			$wgMemc->set( $key, $data, $wgGlobalUserPageCacheExpiry );
+			$data = $this->parseWikiText( $this->getTitle(), $langCode );
+			$this->cache->set( $key, $data, $this->config->get( 'GlobalUserPageCacheExpiry' ) );
 		}
 
 		return $data;
@@ -230,9 +245,8 @@ class GlobalUserPage extends Article {
 	 * @return array
 	 */
 	protected function makeAPIRequest( $params ) {
-		global $wgGlobalUserPageAPIUrl;
 		$params['format'] = 'json';
-		$url = wfAppendQuery( $wgGlobalUserPageAPIUrl, $params );
+		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
 		$req = MWHttpRequest::factory( $url );
 		$req->execute();
 		$json = $req->getContent();
@@ -249,9 +263,8 @@ class GlobalUserPage extends Article {
 	 * @return string
 	 */
 	protected function getRemoteURL() {
-		global $wgMemc;
 		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
-		$data = $wgMemc->get( $key );
+		$data = $this->cache->get( $key );
 		if ( $data === false ) {
 			$params = array(
 				'action' => 'query',
@@ -272,7 +285,7 @@ class GlobalUserPage extends Article {
 			}
 			// Don't set an expiry since we expect people not to change the
 			// url to their wiki without clearing their caches!
-			$wgMemc->set( $key, $data );
+			$this->cache->set( $key, $data );
 		}
 
 		return $data;
@@ -282,10 +295,10 @@ class GlobalUserPage extends Article {
 	 * Use action=parse to get rendered HTML of a page
 	 *
 	 * @param Title $title
+	 * @param string $langCode
 	 * @return array
 	 */
-	protected function parseWikiText( Title $title ) {
-		global $wgLanguageCode;
+	protected function parseWikiText( Title $title, $langCode ) {
 		$unLocalizedName = MWNamespace::getCanonicalName( NS_USER ) . ':' . $title->getText();
 		$wikitext = '{{:' . $unLocalizedName . '}}';
 		$params = array(
@@ -294,7 +307,7 @@ class GlobalUserPage extends Article {
 			'text' => $wikitext,
 			'disableeditsection' => 1,
 			'disablepp' => 1,
-			'uselang' => $wgLanguageCode,
+			'uselang' => $langCode,
 			'prop' => 'text|modules'
 		);
 		$data = $this->makeAPIRequest( $params );

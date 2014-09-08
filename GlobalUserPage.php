@@ -92,6 +92,8 @@ $wgAutoloadClasses['ResourceLoaderGlobalUserPageModule'] = __DIR__ . '/ResourceL
 // i18n
 $wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
 
+$wgConfigRegistry['globaluserpage'] = 'GlobalVarConfig::newInstance';
+
 $wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
 $wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
