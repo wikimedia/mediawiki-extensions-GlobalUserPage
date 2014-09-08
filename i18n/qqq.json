@@ -6,8 +6,6 @@
 		]
 	},
 	"globaluserpage-desc": "{{desc|name=GlobalUserPage|url=https://www.mediawiki.org/wiki/Extension:GlobalUserPage}}",
-	"globaluserpage-notice": "Message shown above user pages from ShoutWiki Hub. Parameters:\n* $1 - the revision ID of the page that was fetched",
-	"globaluserpage-edit-tab": "Text on tab that replaces \"create\", and links to the edit interface on ShoutWiki Hub",
 	"globaluserpage-preferences": "Shown on Special:GlobalPreferences",
 	"globaluserpage-footer": "Footer shown on global user pages. $1 is the user's name, and $2 is a link to the original user page on the central wiki."
 }
