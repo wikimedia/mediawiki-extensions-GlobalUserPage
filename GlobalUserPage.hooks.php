@@ -87,29 +87,13 @@ class GlobalUserPageHooks {
 	 * @return bool
 	 */
 	public static function onSkinTemplateNavigationUniversal( &$sktemplate, &$links ) {
-		$context = $sktemplate->getContext();
 		$title = $sktemplate->getTitle();
 
-
 		if ( GlobalUserPage::displayGlobalPage( $title ) ) {
+			// Removes ?action=edit&redlink=1
 			$links['namespaces']['user']['href'] = $title->getFullURL();
+			// "selected new" --> "selected"
 			$links['namespaces']['user']['class'] = 'selected';
-			//$links['namespaces']['user_talk']['class'] = '';
-			//$links['namespaces']['user_talk']['href'] = 'http://www.shoutwiki.com/wiki/User_talk:' . $title->getText();
-			/*
-			$links['views'] = array(); // Kill the 'Create' button @todo make this suck less
-			$links['views'][] = array(
-				'class' => false,
-				'text' => $context->msg( 'globaluserpage-edit-tab' ),
-				'href' => wfAppendQuery(
-					'http://www.shoutwiki.com/w/index.php',
-					array(
-						'action' => 'edit',
-						'title' => $title->getPrefixedText()
-					)
-				)
-			);
-			*/
 		}
 
 		return true;

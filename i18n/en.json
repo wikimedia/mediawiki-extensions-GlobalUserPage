@@ -5,7 +5,6 @@
 		]
 	},
 	"globaluserpage-desc": "Automatically fetches user pages from [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-edit-tab": "Edit on ShoutWiki Hub",
 	"globaluserpage-preferences": "Use [[s:Help:Global user pages|global user page]]",
 	"globaluserpage-footer": "'''This is a [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global user page].''' The original page is located at [$2 $2]."
 }
