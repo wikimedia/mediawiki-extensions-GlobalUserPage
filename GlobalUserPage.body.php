@@ -161,6 +161,26 @@ class GlobalUserPage extends Article {
 	}
 
 	/**
+	 * Given a Title, is it a source page we might
+	 * be "transcluding" on another site
+	 *
+	 * @return bool
+	 */
+	public function isSourcePage() {
+		if ( wfWikiID() !== $this->config->get( 'GlobalUserPageDBname' ) ) {
+			return false;
+		}
+
+		$title = $this->getTitle();
+		if ( !$title->inNamespace( NS_USER ) ) {
+			return false;
+		}
+
+		// Root user page
+		return $title->getRootTitle()->equals( $title );
+	}
+
+	/**
 	 * Username for the given global user page
 	 *
 	 * @return string
