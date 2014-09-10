@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Matthew Greg"
+		]
+	},
+	"globaluserpage-desc": "Automaticky zbiera užívateľské stránky z hlavnej wiki",
+	"globaluserpage-preferences": "Použiť [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global user page]",
+	"globaluserpage-footer": "\"Toto je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global user page].\" Pôvodná stránka sa nachádza na [$2 $2]."
+}

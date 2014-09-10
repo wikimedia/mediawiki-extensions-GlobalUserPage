@@ -4,6 +4,7 @@
 			"Shirayuki"
 		]
 	},
-	"globaluserpage-notice": "このページは [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] からダウンロードされたため、ShoutWiki Hub で編集できます。",
-	"globaluserpage-edit-tab": "ShoutWiki Hub 上で編集"
+	"globaluserpage-desc": "利用者ページを中央ウィキから自動的に取得する",
+	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage グローバル利用者ページ]を使用",
+	"globaluserpage-footer": "'''このページは[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage グローバル利用者ページ]です。'''元のページは [$2 $2] にあります。"
 }

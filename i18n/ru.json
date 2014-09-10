@@ -4,7 +4,7 @@
 			"Okras"
 		]
 	},
-	"globaluserpage-desc": "Автоматически извлекает страницы участника с [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-notice": "Эта страница была загружена с [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] и может быть теперь отредактирована.",
-	"globaluserpage-edit-tab": "Редактировать на ShoutWiki Hub"
+	"globaluserpage-desc": "Автоматически извлекает страницы участника из центральной вики",
+	"globaluserpage-preferences": "Использовать [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальную страницу участника]",
+	"globaluserpage-footer": "''' Это [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальная страница участника].''' Исходная страница находится по адресу [$2 $2]."
 }

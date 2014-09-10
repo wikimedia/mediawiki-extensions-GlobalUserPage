@@ -4,7 +4,7 @@
 			"Bjankuloski06"
 		]
 	},
-	"globaluserpage-desc": "Автоматски презема страници за корисник од [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-notice": "Страницава е преземена од [http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub] и може тука да се уредува.",
-	"globaluserpage-edit-tab": "Уреди на ShoutWiki Hub"
+	"globaluserpage-desc": "Автоматски дава кориснички страници од централно вики",
+	"globaluserpage-preferences": "Послужете се со [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобална корисничка страница]",
+	"globaluserpage-footer": "'''Ова е  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобална корисничка страница].''' Изворната страница е сместена на [$2 $2]."
 }

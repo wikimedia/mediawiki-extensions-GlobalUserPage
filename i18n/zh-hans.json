@@ -5,6 +5,7 @@
 			"Yfdyh000"
 		]
 	},
-	"globaluserpage-notice": "本页面从[http://www.shoutwiki.com/?oldid=$1 ShoutWiki Hub]下载并可以在此编辑。",
-	"globaluserpage-edit-tab": "在ShoutWiki Hub上编辑"
+	"globaluserpage-desc": "自动从中心wiki获取用户页",
+	"globaluserpage-preferences": "使用[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用户页]",
+	"globaluserpage-footer": "'''这是个[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用户页]。'''原始页面位于[$2 $2]。"
 }

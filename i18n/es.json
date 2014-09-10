@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Benfutbol10"
+			"Benfutbol10",
+			"Macofe"
 		]
 	},
-	"globaluserpage-edit-tab": "Editar en ShoutWiki Hub"
+	"globaluserpage-desc": "Obtiene automáticamente páginas de usuario de un wiki central",
+	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage página de usuario global]",
+	"globaluserpage-footer": "'''Esta es una [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage página de usuario global].''' La página original se encuentra en [$2 $2]."
 }
