@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"FRacco"
 		]
 	},
-	"globaluserpage-desc": "Scarica automaticamente le pagine di utente da un wiki centrale",
+	"globaluserpage-desc": "Scarica automaticamente le pagine utente da un wiki centrale",
 	"globaluserpage-preferences": "Usa [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage pagina utente globale]",
 	"globaluserpage-footer": "'''Questa è una  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage pagina utente globale].''' La pagina originale si trova a [$2 $2]."
 }
