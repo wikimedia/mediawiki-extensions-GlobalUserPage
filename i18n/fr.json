@@ -5,5 +5,7 @@
 			"Ltrlg"
 		]
 	},
-	"globaluserpage-desc": "Extrait automatiquement les pages d’utilisateur d’un wiki central"
+	"globaluserpage-desc": "Extrait automatiquement les pages d’utilisateur d’un wiki central",
+	"globaluserpage-preferences": "Utiliser [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage la page d’utilisateur global]",
+	"globaluserpage-footer": "'''Ceci est une [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage page d’utilisateur global].''' La page d’origine se trouve en [$2 $2]."
 }
