@@ -1,0 +1,3 @@
+{
+	"GlobalUserPage.css": "/* CSS placed here is loaded on remote instances of the user page, and on the central user page itself */"
+}
