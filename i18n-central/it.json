@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"GlobalUserPage.css": "/* Gli stili CSS inseriti qui saranno caricati sia sulle istanze remote della pagina utente, che nella pagina utente centrale */"
+}
