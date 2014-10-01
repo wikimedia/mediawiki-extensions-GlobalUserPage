@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vitorvicentevalente"
+		]
+	},
+	"GlobalUserPage.css": "/* O CSS colocado aqui é carregado em instâncias remotas da página de utilizador e na própria página de utilizador central */"
+}
