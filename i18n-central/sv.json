@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Lokal Profil"
+			"Lokal Profil",
+			"Jopparn"
 		]
 	},
-	"GlobalUserPage.css": "/* CSS som läggs här är laddas på fjärrinstanser av användarsidan, och på den centrala användarsidan */"
+	"GlobalUserPage.css": "/* CSS som läggs här laddas på fjärrinstanser av användarsidan, och på den centrala användarsidan */"
 }
