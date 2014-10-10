@@ -38,13 +38,6 @@ $wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7; // One week
 $wgGlobalUserPageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
 
 /**
- * Set this to true to load modules from the
- * parsed output. Will only load those that start
- * with "ext."
- */
-$wgGlobalUserPageLoadRemoteModules = false;
-
-/**
  * By default enables global userpage for all users
  * @see https://www.mediawiki.org/wiki/Manual:$wgDefaultUserOptions
  */
@@ -79,7 +72,7 @@ $wgGlobalUserPageCSSRLSourceName = false;
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserPage',
-	'version' => '0.8',
+	'version' => '0.9',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',

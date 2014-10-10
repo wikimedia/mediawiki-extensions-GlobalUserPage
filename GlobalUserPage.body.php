@@ -49,33 +49,30 @@ class GlobalUserPage extends Article {
 			);
 		}
 
-		// Scary ResourceLoader things...
-		$this->loadExtensionModules( $out, $parsedOutput );
+		// Load ParserOutput modules...
+		$this->loadModules( $out, $parsedOutput );
 	}
 
 	/**
-	 * Attempts to load modules provided by extensions
-	 * through the ParserOutput on the local wiki, if
-	 * they exist. This entire feature is experimental
-	 * and disabled by default.
+	 * Attempts to load modules through the
+	 * ParserOutput on the local wiki, if
+	 * they exist.
 	 *
 	 * @param OutputPage $out
 	 * @param array $parsedOutput
 	 */
-	private function loadExtensionModules( OutputPage $out, array $parsedOutput ) {
-		if ( $this->config->get( 'GlobalUserPageLoadRemoteModules' ) ) {
-			$rl = $out->getResourceLoader();
-			$map = array(
-				'modules' => 'addModules',
-				'modulestyles' => 'addModuleStyles',
-				'modulescripts' => 'addModuleScripts',
-				//'modulemessages' => 'addModuleMessages', // @todo how does this work?
-			);
-			foreach ( $map as $type => $func ) {
-				foreach ( $parsedOutput[$type] as $module ) {
-					if ( strpos( $module, 'ext.' ) === 0 && $rl->getModule( $module ) !== null ) {
-						$out->$func( $module );
-					}
+	private function loadModules( OutputPage $out, array $parsedOutput ) {
+		$rl = $out->getResourceLoader();
+		$map = array(
+			'modules' => 'addModules',
+			'modulestyles' => 'addModuleStyles',
+			'modulescripts' => 'addModuleScripts',
+			'modulemessages' => 'addModuleMessages',
+		);
+		foreach ( $map as $type => $func ) {
+			foreach ( $parsedOutput[$type] as $module ) {
+				if ( $rl->getModule( $module ) !== null ) {
+					$out->$func( $module );
 				}
 			}
 		}
