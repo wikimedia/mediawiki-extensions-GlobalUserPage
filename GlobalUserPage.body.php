@@ -191,7 +191,7 @@ class GlobalUserPage extends Article {
 	 * @return array
 	 */
 	public function getRemoteParsedText( $touched ) {
-		$langCode = $this->getContext()->getConfig()->get( 'LanguageCode' );
+		$langCode = $this->getContext()->getLanguage()->getCode();
 
 		// Need language code in the key since we pass &uselang= to the API.
 		$key = "globaluserpage:parsed:$touched:$langCode:{$this->getUsername()}";
