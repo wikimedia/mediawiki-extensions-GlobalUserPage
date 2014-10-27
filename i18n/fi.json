@@ -4,7 +4,5 @@
 			"Jack Phoenix <jack@countervandalism.net>"
 		]
 	},
-	"globaluserpage-desc": "Automaattisesti hakee käyttäjäsivut [http://www.shoutwiki.com ShoutWikin englanninkielisestä keskuswikistä]",
-	"globaluserpage-notice": "Tämä sivu ladattiin [http://www.shoutwiki.com/?oldid=$1 ShoutWikin englanninkielisestä keskuswikistä] ja sitä voi muokata siellä.",
-	"globaluserpage-edit-tab": "Muokkaa ShoutWiki Hubissa"
+	"globaluserpage-desc": "Automaattisesti hakee käyttäjäsivut [http://www.shoutwiki.com ShoutWikin englanninkielisestä keskuswikistä]"
 }
