@@ -102,22 +102,25 @@ class GlobalUserPageHooks {
 	/**
 	 * Turn red User: links into blue ones
 	 *
-	 * @param $linker Linker
-	 * @param $target Title
-	 * @param $text String
-	 * @param $customAtrribs Array: array of custom attributes [unused]
-	 * @param $query [unused]
-	 * @param $ret String: return value (link HTML)
-	 * @return Boolean
+	 * @param DummyLinker $linker for b/c
+	 * @param Title $target
+	 * @param string $text
+	 * @param array $customAttribs custom attributes
+	 * @param array $query
+	 * @param array $options
+	 * @param string $ret return value (link HTML)
+	 * @return bool
 	 */
 	public static function brokenLink( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
+		if ( in_array( 'known', $options ) || $target->isKnown() ) {
+			return true;
+		}
+
 		if ( GlobalUserPage::displayGlobalPage( $target ) ) {
-			if ( in_array( 'known', $options ) || $target->isKnown() ) {
-				return true;
-			} else {
-				$ret = Linker::linkKnown( $target, $text );
-				return false;
-			}
+			$options = array_merge(
+				$options,
+				array( 'known', 'noclasses' )
+			);
 		}
 
 		return true;

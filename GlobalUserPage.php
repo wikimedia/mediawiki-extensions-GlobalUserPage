@@ -68,11 +68,19 @@ $wgGlobalUserPageFooterKey = 'globaluserpage-footer';
  */
 $wgGlobalUserPageCSSRLSourceName = false;
 
+/**
+ * Timeout for internal API requests. To use $wgHTTPTimeout,
+ * set this to 'default'
+ *
+ * @var string|int
+ */
+$wgGlobalUserPageTimeout = 10;
+
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserPage',
-	'version' => '0.9',
+	'version' => '0.9.1',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',

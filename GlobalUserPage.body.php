@@ -12,6 +12,16 @@ class GlobalUserPage extends Article {
 	 */
 	private $cache;
 
+	/**
+	 * @var MapCacheLRU
+	 */
+	private static $displayCache;
+
+	/**
+	 * @var MapCacheLRU
+	 */
+	private static $touchedCache;
+
 	public function __construct( Title $title, Config $config ) {
 		global $wgMemc;
 		parent::__construct( $title );
@@ -32,8 +42,9 @@ class GlobalUserPage extends Article {
 		$out = $this->getContext()->getOutput();
 		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
 
-		// If the user page is empty, don't use it
-		if ( !trim( $parsedOutput['text']['*'] ) ) {
+		// If the user page is empty or the API request failed, show the normal
+		// missing article page
+		if ( !$parsedOutput || !trim( $parsedOutput['text']['*'] ) ) {
 			parent::showMissingArticle();
 			return;
 		}
@@ -79,15 +90,6 @@ class GlobalUserPage extends Article {
 	}
 
 	/**
-	 * @param int $type DB_SLAVE or DB_MASTER
-	 * @return DatabaseBase
-	 */
-	protected static function getRemoteDB( $type ) {
-		global $wgGlobalUserPageDBname;
-		return wfGetDB( $type, array(), $wgGlobalUserPageDBname );
-	}
-
-	/**
 	 * Given a Title, assuming it doesn't exist, should
 	 * we display a global user page on it
 	 *
@@ -96,28 +98,33 @@ class GlobalUserPage extends Article {
 	 */
 	public static function displayGlobalPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
-		static $cache = array();
+		if ( !self::$displayCache ) {
+			self::$displayCache = new MapCacheLRU( 100 );
+		}
 		$text = $title->getPrefixedText();
 		// Do some instance caching since this can be
 		// called frequently due do the Linker hook
-		if ( isset( $cache[$text] ) ) {
-			return $cache[$text];
+		if ( self::$displayCache->has( $text ) ) {
+			return self::$displayCache->get( $text );
 		}
 		if ( !self::canBeGlobal( $title ) ) {
-			$cache[$text] = false;
+			self::$displayCache->set( $text, false );
 			return false;
 		}
 
 		$user = User::newFromName( $title->getText() );
 
 		if ( !$user || $user->getId() === 0 ) {
-			$cache[$text] = false;
+			self::$displayCache->set( $text, false );
 			return false;
 		}
 
-		if ( !$user->getOption( 'globaluserpage' ) ) {
-			$cache[$text] = false;
-			return false;
+		// Only check preferences if E:GlobalPreferences is installed
+		if ( class_exists( 'GlobalPreferences' ) ) {
+			if ( !$user->getOption( 'globaluserpage' ) ) {
+				self::$displayCache->set( $text, false );
+				return false;
+			}
 		}
 
 		// Allow for authorization extensions to determine
@@ -125,12 +132,13 @@ class GlobalUserPage extends Article {
 		// This hook intentionally functions the same
 		// as the one in Extension:GlobalCssJs.
 		if ( !wfRunHooks( 'LoadGlobalUserPage', array( $user, $wgGlobalUserPageDBname, wfWikiID() ) ) ) {
-			$cache[$text] = false;
+			self::$displayCache->set( $text, false );
 			return false;
 		}
 
-		$cache[$text] = (bool)self::getCentralTouched( $user );
-		return $cache[$text];
+		$touched = (bool)self::getCentralTouched( $user );
+		self::$displayCache->set( $text, $touched );
+		return $touched;
 	}
 
 	/**
@@ -141,20 +149,27 @@ class GlobalUserPage extends Article {
 	 * @return string|bool
 	 */
 	protected static function getCentralTouched( User $user ) {
-		static $cache = array();
-		if ( !isset( $cache[$user->getName()] ) ) {
-			$cache[$user->getName()] = self::getRemoteDB( DB_SLAVE )->selectField(
-				'page',
-				'page_touched',
-				array(
-					'page_namespace' => NS_USER,
-					'page_title' => $user->getUserPage()->getDBkey()
-				),
-				__METHOD__
-			);
+		if ( self::$touchedCache->has( $user->getName() ) ) {
+			return self::$touchedCache->get( $user->getName() );
 		}
 
-		return $cache[$user->getName()];
+		global $wgGlobalUserPageDBname;
+		$lb = wfGetLB( $wgGlobalUserPageDBname );
+		$dbr = $lb->getConnection( DB_SLAVE, array(), $wgGlobalUserPageDBname );
+		$touched = $dbr->selectField(
+			'page',
+			'page_touched',
+			array(
+				'page_namespace' => NS_USER,
+				'page_title' => $user->getUserPage()->getDBkey()
+			),
+			__METHOD__
+		);
+		$lb->reuseConnection( $dbr );
+
+		self::$touchedCache->set( $user->getName(), $touched );
+
+		return $touched;
 	}
 
 	/**
@@ -194,11 +209,16 @@ class GlobalUserPage extends Article {
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
 		// Need language code in the key since we pass &uselang= to the API.
-		$key = "globaluserpage:parsed:$touched:$langCode:{$this->getUsername()}";
+		$key = "globaluserpage:parsed:$touched:$langCode:" . md5( $this->getUsername() );
 		$data = $this->cache->get( $key );
 		if ( $data === false ){
 			$data = $this->parseWikiText( $this->getTitle(), $langCode );
-			$this->cache->set( $key, $data, $this->config->get( 'GlobalUserPageCacheExpiry' ) );
+			if ( $data ) {
+				$this->cache->set( $key, $data, $this->config->get( 'GlobalUserPageCacheExpiry' ) );
+			} else {
+				// Cache failure for 10 seconds
+				$this->cache->set( $key, null, 10 );
+			}
 		}
 
 		return $data;
@@ -239,16 +259,43 @@ class GlobalUserPage extends Article {
 	 * Makes an API request to the central wiki
 	 *
 	 * @param $params array
-	 * @return array
+	 * @return array|bool false if the request failed
 	 */
 	protected function makeAPIRequest( $params ) {
 		$params['format'] = 'json';
 		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
-		$req = MWHttpRequest::factory( $url );
-		$req->execute();
+		$req = MWHttpRequest::factory(
+			$url,
+			array( 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) )
+		);
+		$status = $req->execute();
+		if ( !$status->isOK() ) {
+			return false;
+		}
 		$json = $req->getContent();
 		$decoded = FormatJson::decode( $json, true );
 		return $decoded;
+	}
+
+	/**
+	 * Returns a URL to the user page on the central wiki,
+	 * attempts to use SiteConfiguration if possible, else
+	 * falls back to using an API request
+	 *
+	 * @return string
+	 */
+	protected function getRemoteURL() {
+		$url = WikiMap::getForeignURL(
+			$this->config->get( 'GlobalUserPageDBname' ),
+			'User:' . $this->getUsername()
+		);
+
+		if ( $url !== false ) {
+			return $url;
+		} else {
+			// Fallback to the API
+			return $this->getRemoteURLFromAPI();
+		}
 	}
 
 	/**
@@ -259,7 +306,7 @@ class GlobalUserPage extends Article {
 	 *
 	 * @return string
 	 */
-	protected function getRemoteURL() {
+	protected function getRemoteURLFromAPI() {
 		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
 		$data = $this->cache->get( $key );
 		if ( $data === false ) {
@@ -271,6 +318,10 @@ class GlobalUserPage extends Article {
 				'indexpageids' => '1',
 			);
 			$resp = $this->makeAPIRequest( $params );
+			if ( $resp === false ) {
+				// Don't cache upon failure
+				return '';
+			}
 			$pageInfo = $resp['query']['pages'][$resp['query']['pageids'][0]];
 			if ( isset( $pageInfo['canonicalurl'] ) ) {
 				// New in 1.24
@@ -308,6 +359,6 @@ class GlobalUserPage extends Article {
 			'prop' => 'text|modules'
 		);
 		$data = $this->makeAPIRequest( $params );
-		return $data['parse'];
+		return $data !== false ? $data['parse'] : false;
 	}
 }
