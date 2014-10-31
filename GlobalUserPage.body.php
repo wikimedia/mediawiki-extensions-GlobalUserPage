@@ -98,23 +98,25 @@ class GlobalUserPage extends Article {
 	 */
 	public static function displayGlobalPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
+		if ( !self::canBeGlobal( $title ) ) {
+			return false;
+		}
+		// Do some instance caching since this can be
+		// called frequently due do the Linker hook
 		if ( !self::$displayCache ) {
 			self::$displayCache = new MapCacheLRU( 100 );
 		}
+
 		$text = $title->getPrefixedText();
-		// Do some instance caching since this can be
-		// called frequently due do the Linker hook
 		if ( self::$displayCache->has( $text ) ) {
 			return self::$displayCache->get( $text );
 		}
-		if ( !self::canBeGlobal( $title ) ) {
-			self::$displayCache->set( $text, false );
-			return false;
-		}
+
 
 		$user = User::newFromName( $title->getText() );
 
-		if ( !$user || $user->getId() === 0 ) {
+		// Already validated that the username is fine in canBeGlobal
+		if ( $user->getId() === 0 ) {
 			self::$displayCache->set( $text, false );
 			return false;
 		}
@@ -248,11 +250,7 @@ class GlobalUserPage extends Article {
 		}
 
 		// Check valid username
-		if ( !User::newFromName( $title->getText() ) ) {
-			return false;
-		}
-
-		return true;
+		return User::getCanonicalName( $title->getText() ) !== false;
 	}
 
 	/**
