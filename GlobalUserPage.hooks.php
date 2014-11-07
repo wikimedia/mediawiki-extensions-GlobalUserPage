@@ -89,7 +89,7 @@ class GlobalUserPageHooks {
 	public static function onSkinTemplateNavigationUniversal( &$sktemplate, &$links ) {
 		$title = $sktemplate->getTitle();
 
-		if ( GlobalUserPage::displayGlobalPage( $title ) ) {
+		if ( !$title->exists() && GlobalUserPage::displayGlobalPage( $title ) ) {
 			// Removes ?action=edit&redlink=1
 			$links['namespaces']['user']['href'] = $title->getFullURL();
 			// "selected new" --> "selected"
