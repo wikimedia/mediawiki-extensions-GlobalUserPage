@@ -151,6 +151,9 @@ class GlobalUserPage extends Article {
 	 * @return string|bool
 	 */
 	protected static function getCentralTouched( User $user ) {
+		if ( !self::$touchedCache ) {
+			self::$touchedCache = new MapCacheLRU( 100 );
+		}
 		if ( self::$touchedCache->has( $user->getName() ) ) {
 			return self::$touchedCache->get( $user->getName() );
 		}
