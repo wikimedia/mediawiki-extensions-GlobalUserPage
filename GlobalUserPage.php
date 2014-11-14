@@ -35,7 +35,7 @@ $wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7; // One week
 /**
  * API endpoint of the central wiki
  */
-$wgGlobalUserPageAPIUrl = 'http://www.shoutwiki.com/w/api.php';
+$wgGlobalUserPageAPIUrl = 'https://example.org/w/api.php';
 
 /**
  * By default enables global userpage for all users
@@ -46,7 +46,7 @@ $wgDefaultUserOptions['globaluserpage'] = true;
 /**
  * Database name of the central wiki
  */
-$wgGlobalUserPageDBname = 'shoutwiki';
+$wgGlobalUserPageDBname = 'examplewiki';
 
 /**
  * Optionally add a footer message to the
@@ -80,7 +80,7 @@ $wgGlobalUserPageTimeout = 10;
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'GlobalUserPage',
-	'version' => '0.9.1',
+	'version' => '0.10.0',
 	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
 	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
 	'descriptionmsg' => 'globaluserpage-desc',
