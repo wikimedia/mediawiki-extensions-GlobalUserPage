@@ -265,12 +265,14 @@ class GlobalUserPage extends Article {
 	protected function makeAPIRequest( $params ) {
 		$params['format'] = 'json';
 		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
+		wfDebugLog( 'GlobalUserPage', "Making a request to $url" );
 		$req = MWHttpRequest::factory(
 			$url,
 			array( 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) )
 		);
 		$status = $req->execute();
 		if ( !$status->isOK() ) {
+			wfDebugLog( 'GlobalUserPage', __METHOD__ . " Error: {$status->getWikitext()}" );
 			return false;
 		}
 		$json = $req->getContent();
