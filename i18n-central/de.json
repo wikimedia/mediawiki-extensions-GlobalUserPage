@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Metalhead64"
-		]
-	},
-	"GlobalUserPage.css": "/* CSS an dieser Stelle wird für Remote-Instanzen der Benutzerseite und auf der zentralen Benutzerseite selbst geladen */"
-}

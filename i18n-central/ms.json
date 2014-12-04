@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Anakmalaysia"
-		]
-	},
-	"GlobalUserPage.css": "/* CSS yang terletak di sini dimuatkan di tika-tika yang jauh di laman pengguna, dan juga di laman pengguna pusat itu sendiri */"
-}

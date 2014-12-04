@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Baffo"
-		]
-	},
-	"GlobalUserPage.css": "/* Los CSS colocados aquí se carga\nen el instancias remotas de la página de usuario, y en la página de usuario central en sí mismo */"
-}

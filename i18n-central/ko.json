@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Kwj2772"
-		]
-	},
-	"GlobalUserPage.css": "/* 여기 있는 CSS는 전역 사용자 문서 자체와 사용자 문서의 인스턴스에 불러들이게 됩니다 */"
-}

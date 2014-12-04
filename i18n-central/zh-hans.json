@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Liuxinyu970226"
-		]
-	},
-	"GlobalUserPage.css": "/* 放置于此的CSS加载于用户页的远程实例，并位于中央用户页本身 */"
-}

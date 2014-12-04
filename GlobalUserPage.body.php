@@ -49,7 +49,7 @@ class GlobalUserPage extends Article {
 			return;
 		}
 		$out->addHTML( $parsedOutput['text']['*'] );
-		$out->addModuleStyles( array( 'ext.GlobalUserPage', 'ext.GlobalUserPage.site' ) );
+		$out->addModuleStyles( 'ext.GlobalUserPage' );
 
 		$footerKey = $this->config->get( 'GlobalUserPageFooterKey' );
 		if ( $footerKey ) {

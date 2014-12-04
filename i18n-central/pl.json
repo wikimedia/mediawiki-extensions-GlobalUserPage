@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Py64"
-		]
-	},
-	"GlobalUserPage.css": "/* Style CSS zamieszczone tutaj są ładowane na zdalnych instancjach stron użytkownika i na środkowej stronie użytkownika */"
-}

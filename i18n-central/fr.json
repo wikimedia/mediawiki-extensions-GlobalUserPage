@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Gomoko"
-		]
-	},
-	"GlobalUserPage.css": "/* Le CSS placé ici est chargé sur les instances distantes de la page utilisateur, et sur la page utilisateur centrale elle-même */"
-}
