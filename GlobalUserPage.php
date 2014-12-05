@@ -78,7 +78,6 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
 $wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
-$wgAutoloadClasses['ResourceLoaderGlobalUserPageModule'] = __DIR__ . '/ResourceLoaderGlobalUserPageModule.php';
 
 // i18n
 $wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
