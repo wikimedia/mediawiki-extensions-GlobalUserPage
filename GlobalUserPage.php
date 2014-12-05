@@ -89,7 +89,6 @@ $wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
 $wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
 $wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
-$wgHooks['BeforePageDisplay'][] = 'GlobalUserPageHooks::onBeforePageDisplay';
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserPage'] = array(
