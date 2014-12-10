@@ -78,6 +78,11 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
 $wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
+$wgAutoloadClasses['GlobalUserPageLocalJobSubmitJob'] = __DIR__ . '/GlobalUserPageLocalJobSubmitJob.php';
+$wgAutoloadClasses['LocalGlobalUserPageCacheUpdateJob'] = __DIR__ . '/LocalGlobalUserPageCacheUpdateJob.php';
+
+$wgJobClasses['GlobalUserPageLocalJobSubmitJob'] = 'GlobalUserPageLocalJobSubmitJob';
+$wgJobClasses['LocalGlobalUserPageCacheUpdateJob'] = 'LocalGlobalUserPageCacheUpdateJob';
 
 // i18n
 $wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
@@ -88,6 +93,9 @@ $wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
 $wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
 $wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
+$wgHooks['LinksUpdateComplete'][] = 'GlobalUserPageHooks::onLinksUpdateComplete';
+$wgHooks['PageContentInsertComplete'][] = 'GlobalUserPageHooks::onPageContentInsertComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'GlobalUserPageHooks::onArticleDeleteComplete';
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserPage'] = array(

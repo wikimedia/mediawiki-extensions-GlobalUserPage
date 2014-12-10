@@ -20,6 +20,15 @@
 		],
 		"ArticleFromTitle": [
 			"GlobalUserPageHooks::onArticleFromTitle"
+		],
+		"LinksUpdateComplete": [
+			"GlobalUserPageHooks::onLinksUpdateComplete"
+		],
+		"PageContentInsertComplete": [
+			"GlobalUserPageHooks::onPageContentInsertComplete"
+		],
+		"ArticleDeleteComplete": [
+			"GlobalUserPageHooks::onArticleDeleteComplete"
 		]
 	},
 	"MessagesDirs": {
@@ -46,7 +55,13 @@
 	},
 	"AutoloadClasses": {
 		"GlobalUserPage": "GlobalUserPage.body.php",
-		"GlobalUserPageHooks": "GlobalUserPage.hooks.php"
+		"GlobalUserPageHooks": "GlobalUserPage.hooks.php",
+		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob.php",
+		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob.php"
+	},
+	"JobClasses": {
+		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob",
+		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob"
 	},
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
