@@ -66,28 +66,15 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * Turn red User: links into blue ones
+	 * Mark global user pages as known so they appear in blue
 	 *
-	 * @param DummyLinker $linker for b/c
-	 * @param Title $target
-	 * @param string $text
-	 * @param array $customAttribs custom attributes
-	 * @param array $query
-	 * @param array $options
-	 * @param string $ret return value (link HTML)
+	 * @param Title $title title to check
+	 * @param bool &$isKnown Whether the page should be considered known
 	 * @return bool
 	 */
-	public static function onLinkBegin( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
-		if ( in_array( 'known', $options ) || $target->isKnown() ) {
-			return true;
-		}
-
-		if ( GlobalUserPage::shouldDisplayGlobalPage( $target ) ) {
-			$options = array_merge(
-				$options,
-				array( 'known', 'noclasses' )
-			);
-			$options = array_diff( $options, array( 'broken' ) );
+	public static function onTitleIsAlwaysKnown( $title, &$isKnown ) {
+		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+			$isKnown = true;
 		}
 
 		return true;

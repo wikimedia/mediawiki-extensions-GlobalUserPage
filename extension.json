@@ -15,8 +15,8 @@
 		"SkinTemplateNavigation::Universal": [
 			"GlobalUserPageHooks::onSkinTemplateNavigationUniversal"
 		],
-		"LinkBegin": [
-			"GlobalUserPageHooks::onLinkBegin"
+		"TitleIsAlwaysKnown": [
+			"GlobalUserPageHooks::onTitleIsAlwaysKnown"
 		],
 		"ArticleFromTitle": [
 			"GlobalUserPageHooks::onArticleFromTitle"
