@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño"
+			"Toliño",
+			"Banjo"
 		]
 	},
-	"globaluserpage-desc": "Obtén automaticamente páxinas de usuario dun wiki central"
+	"globaluserpage-desc": "Obtén automaticamente páxinas de usuario dun wiki central",
+	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage páxina de usuario global]",
+	"globaluserpage-footer": "'''Esta é unha [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage páxina de usuario global].''' A páxina orixinal atópase en [$2 $2]."
 }
