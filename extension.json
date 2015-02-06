@@ -1,0 +1,54 @@
+{
+	"name": "GlobalUserPage",
+	"version": "0.11.0",
+	"author": [
+		"Kunal Mehta",
+		"Jack Phoenix"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:GlobalUserPage",
+	"descriptionmsg": "globaluserpage-desc",
+	"type": "other",
+	"Hooks": {
+		"GetPreferences": [
+			"GlobalUserPageHooks::onGetPreferences"
+		],
+		"SkinTemplateNavigation::Universal": [
+			"GlobalUserPageHooks::onSkinTemplateNavigationUniversal"
+		],
+		"LinkBegin": [
+			"GlobalUserPageHooks::brokenLink"
+		],
+		"ArticleFromTitle": [
+			"GlobalUserPageHooks::onArticleFromTitle"
+		]
+	},
+	"MessagesDirs": {
+		"GlobalUserPage": [
+			"i18n"
+		]
+	},
+	"config": {
+		"GlobalUserPageCacheExpiry": 604800,
+		"GlobalUserPageAPIUrl": "https://example.org/w/api.php",
+		"GlobalUserPageTimeout": 10,
+		"GlobalUserPageFooterKey": "globaluserpage-footer",
+		"GlobalUserPageDBname": "examplewiki"
+	},
+	"ResourceModules": {
+		"ext.GlobalUserPage": {
+			"styles": "ext.GlobalUserPage.css",
+			"localBasePath": "",
+			"remoteExtPath": "GlobalUserPage"
+		}
+	},
+	"DefaultUserOptions": {
+		"globaluserpage": true
+	},
+	"AutoloadClasses": {
+		"GlobalUserPage": "GlobalUserPage.body.php",
+		"GlobalUserPageHooks": "GlobalUserPage.hooks.php"
+	},
+	"ConfigRegistry": {
+		"globaluserpage": "GlobalVarConfig::newInstance"
+	}
+}
