@@ -48,17 +48,15 @@ class GlobalUserPagePage extends WikiPage {
 	 * @return string
 	 */
 	public function getSourceURL() {
-		$url = WikiMap::getForeignURL(
-			$this->config->get( 'GlobalUserPageDBname' ),
-			'User:' . $this->getUsername()
-		);
-
-		if ( $url !== false ) {
-			return $url;
-		} else {
-			// Fallback to the API
-			return $this->getRemoteURLFromAPI();
+		$wiki = WikiMap::getWiki( $this->config->get( 'GlobalUserPageDBname' ) );
+		if ( $wiki ) {
+			return $wiki->getCanonicalUrl(
+				'User:' . $this->getUsername()
+			);
 		}
+
+		// Fallback to the API
+		return $this->getRemoteURLFromAPI();
 	}
 
 	/**
