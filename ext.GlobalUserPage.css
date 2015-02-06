@@ -3,6 +3,7 @@
 }
 
 .mw-globaluserpage-footer {
+	clear: both;
 	padding: 3px;
 	border: 1px solid #aaa;
 	font-size: 85%;
