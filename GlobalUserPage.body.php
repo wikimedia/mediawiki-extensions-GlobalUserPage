@@ -32,7 +32,7 @@ class GlobalUserPage extends Article {
 	public function showMissingArticle() {
 		$title = $this->getTitle();
 
-		if ( !self::displayGlobalPage( $title ) ) {
+		if ( !self::shouldDisplayGlobalPage( $title ) ) {
 			parent::showMissingArticle();
 			return;
 		}
@@ -96,7 +96,7 @@ class GlobalUserPage extends Article {
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function displayGlobalPage( Title $title ) {
+	public static function shouldDisplayGlobalPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
 		if ( !self::canBeGlobal( $title ) ) {
 			return false;

@@ -30,7 +30,7 @@ class GlobalUserPageHooks {
 		// If another extension's hook has already run, don't override it
 		if ( $page === null
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
-			&& GlobalUserPage::displayGlobalPage( $title )
+			&& GlobalUserPage::shouldDisplayGlobalPage( $title )
 		) {
 			$page = new GlobalUserPage(
 				$title,
@@ -51,7 +51,7 @@ class GlobalUserPageHooks {
 	public static function onSkinTemplateNavigationUniversal( &$sktemplate, &$links ) {
 		$title = $sktemplate->getTitle()->getSubjectPage(); // We want the user page
 
-		if ( !$title->exists() && GlobalUserPage::displayGlobalPage( $title ) ) {
+		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
 			// Removes ?action=edit&redlink=1
 			$links['namespaces']['user']['href'] = $title->getFullURL();
 			// Remove the "new" class:
@@ -82,7 +82,7 @@ class GlobalUserPageHooks {
 			return true;
 		}
 
-		if ( GlobalUserPage::displayGlobalPage( $target ) ) {
+		if ( GlobalUserPage::shouldDisplayGlobalPage( $target ) ) {
 			$options = array_merge(
 				$options,
 				array( 'known', 'noclasses' )
