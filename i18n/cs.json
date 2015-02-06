@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mormegil"
+		]
+	},
+	"globaluserpage-desc": "Automaticky načítá uživatelské stránky z centrální wiki",
+	"globaluserpage-preferences": "Používat [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globální uživatelskou stránku]",
+	"globaluserpage-footer": "'''Toto je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globální uživatelská stránka].''' Původní stránka se nachází na [$2 $2]."
+}
