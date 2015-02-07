@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mormegil"
+			"Mormegil",
+			"Matěj Suchánek"
 		]
 	},
 	"globaluserpage-desc": "Automaticky načítá uživatelské stránky z centrální wiki",
 	"globaluserpage-preferences": "Používat [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globální uživatelskou stránku]",
-	"globaluserpage-footer": "'''Toto je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globální uživatelská stránka].''' Původní stránka se nachází na [$2 $2]."
+	"globaluserpage-footer": "To, co vidíte na této stránce, sem bylo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage přeneseno] z [$2 $2]."
 }

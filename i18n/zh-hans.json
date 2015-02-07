@@ -7,5 +7,5 @@
 	},
 	"globaluserpage-desc": "自动从中心wiki获取用户页",
 	"globaluserpage-preferences": "使用[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用户页]",
-	"globaluserpage-footer": "'''这是个[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用户页]。'''原始页面位于[$2 $2]。"
+	"globaluserpage-footer": "您看到的此页面[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 复制于][$2 $2]。"
 }
