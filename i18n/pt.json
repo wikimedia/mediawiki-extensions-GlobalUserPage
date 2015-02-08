@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fernandofelippe"
+			"Fernandofelippe",
+			"Vitorvicentevalente"
 		]
 	},
-	"globaluserpage-footer": "O que você vê nesta página foi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiado] a partir de [$2 $2]."
+	"globaluserpage-footer": "O que vê nesta página foi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiado] a partir de [$2 $2]."
 }
