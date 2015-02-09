@@ -29,6 +29,9 @@
 		],
 		"ArticleDeleteComplete": [
 			"GlobalUserPageHooks::onArticleDeleteComplete"
+		],
+		"TitleGetEditNotices": [
+			"GlobalUserPageHooks::onTitleGetEditNotices"
 		]
 	},
 	"MessagesDirs": {

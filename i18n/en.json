@@ -5,6 +5,7 @@
 		]
 	},
 	"globaluserpage-desc": "Automatically fetches user pages from a central wiki",
+	"globaluserpage-editnotice": "This page currently displays a user page from another wiki. If you create a new page here, it will be overridden with the newly created page.",
 	"globaluserpage-preferences": "Use [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global user page]",
 	"globaluserpage-footer": "What you see on this page was [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copied] from [$2 $2]."
 }

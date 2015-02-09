@@ -97,6 +97,7 @@ $wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
 $wgHooks['LinksUpdateComplete'][] = 'GlobalUserPageHooks::onLinksUpdateComplete';
 $wgHooks['PageContentInsertComplete'][] = 'GlobalUserPageHooks::onPageContentInsertComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'GlobalUserPageHooks::onArticleDeleteComplete';
+$wgHooks['TitleGetEditNotices'][] = 'GlobalUserPageHooks::onTitleGetEditNotices';
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserPage'] = array(

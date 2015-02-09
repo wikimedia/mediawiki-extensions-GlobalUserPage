@@ -149,4 +149,18 @@ class GlobalUserPageHooks {
 	public static function onArticleDeleteComplete( WikiPage $page ) {
 		return self::onPageContentInsertComplete( $page );
 	}
+
+	/**
+	 * Show an edit notice on user pages which displays global user pages.
+	 *
+	 * @param Title $title
+	 * @param integer $oldid
+	 * @param array &$notices
+	 */
+	public static function onTitleGetEditNotices( Title $title, $oldid, array &$notices ) {
+		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+			$notices['globaluserpage'] = '<strong>' . wfMessage( 'globaluserpage-editnotice' )->parseAsBlock()  . '</strong>';
+		}
+		return true;
+	}
 }
