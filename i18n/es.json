@@ -7,5 +7,5 @@
 	},
 	"globaluserpage-desc": "Obtiene automáticamente páginas de usuario de un wiki central",
 	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage página de usuario global]",
-	"globaluserpage-footer": "'''Esta es una [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage página de usuario global].''' La página original se encuentra en [$2 $2]."
+	"globaluserpage-footer": "Lo que ves en esta página se [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copió] de [$2 $2]."
 }
