@@ -91,4 +91,61 @@ class GlobalUserPageHooks {
 
 		return true;
 	}
+
+	/**
+	 * Whether a page is the global user page on the central wiki
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	protected static function isGlobalUserPage( Title $title ) {
+		global $wgGlobalUserPageDBname;
+		return $wgGlobalUserPageDBname === wfWikiID() // On the central wiki
+			&& $title->inNamespace( NS_USER ) // is a user page
+			&& $title->getRootTitle()->equals( $title ); // and is a root page.
+
+	}
+
+	/**
+	 * After a LinksUpdate runs for a user page, queue remote squid purges
+	 *
+	 * @param LinksUpdate $lu
+	 * @return bool
+	 */
+	public static function onLinksUpdateComplete( LinksUpdate &$lu ) {
+		$title = $lu->getTitle();
+		if ( self::isGlobalUserPage( $title ) ) {
+			$inv = new GlobalUserPageCacheInvalidator( $title->getText() );
+			$inv->invalidate();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Invalidate cache on remote wikis when a new page is created
+	 * Also handles the ArticleDeleteComplete hook
+	 *
+	 * @param WikiPage $page
+	 * @return bool
+	 */
+	public static function onPageContentInsertComplete( WikiPage $page ) {
+		$title = $page->getTitle();
+		if ( self::isGlobalUserPage( $title ) ) {
+			$inv = new GlobalUserPageCacheInvalidator( $title->getText(), array( 'links' ) );
+			$inv->invalidate();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Invalidate cache on remote wikis when a user page is deleted
+	 *
+	 * @param WikiPage $page
+	 * @return bool
+	 */
+	public static function onArticleDeleteComplete( WikiPage $page ) {
+		return self::onPageContentInsertComplete( $page );
+	}
 }

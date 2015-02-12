@@ -364,4 +364,21 @@ class GlobalUserPage extends Article {
 		$data = $this->makeAPIRequest( $params );
 		return $data !== false ? $data['parse'] : false;
 	}
+
+	/**
+	 * @return array
+	 */
+	public static function getEnabledWikis() {
+		static $list = null;
+		if ( $list === null ) {
+			$list = array();
+			if ( wfRunHooks( 'GlobalUserPageWikis', array( &$list ) ) ) {
+				// Fallback if no hook override
+				global $wgLocalDatabases;
+				$list = $wgLocalDatabases;
+			}
+		}
+
+		return $list;
+	}
 }
