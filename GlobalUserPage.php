@@ -78,6 +78,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
 $wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
+$wgAutoloadClasses['GlobalUserPageCacheInvalidator'] = __DIR__ . '/GlobalUserPageCacheInvalidator.php';
 $wgAutoloadClasses['GlobalUserPageLocalJobSubmitJob'] = __DIR__ . '/GlobalUserPageLocalJobSubmitJob.php';
 $wgAutoloadClasses['LocalGlobalUserPageCacheUpdateJob'] = __DIR__ . '/LocalGlobalUserPageCacheUpdateJob.php';
 
