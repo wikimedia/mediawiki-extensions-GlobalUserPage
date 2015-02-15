@@ -92,7 +92,7 @@ $wgConfigRegistry['globaluserpage'] = 'GlobalVarConfig::newInstance';
 
 $wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
 $wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
-$wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::brokenLink';
+$wgHooks['LinkBegin'][] = 'GlobalUserPageHooks::onLinkBegin';
 $wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
 $wgHooks['LinksUpdateComplete'][] = 'GlobalUserPageHooks::onLinksUpdateComplete';
 $wgHooks['PageContentInsertComplete'][] = 'GlobalUserPageHooks::onPageContentInsertComplete';

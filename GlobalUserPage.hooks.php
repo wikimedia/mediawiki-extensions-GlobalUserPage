@@ -77,7 +77,7 @@ class GlobalUserPageHooks {
 	 * @param string $ret return value (link HTML)
 	 * @return bool
 	 */
-	public static function brokenLink( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
+	public static function onLinkBegin( $linker, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
 		if ( in_array( 'known', $options ) || $target->isKnown() ) {
 			return true;
 		}
@@ -87,6 +87,7 @@ class GlobalUserPageHooks {
 				$options,
 				array( 'known', 'noclasses' )
 			);
+			$options = array_diff( $options, array( 'broken' ) );
 		}
 
 		return true;

@@ -16,7 +16,7 @@
 			"GlobalUserPageHooks::onSkinTemplateNavigationUniversal"
 		],
 		"LinkBegin": [
-			"GlobalUserPageHooks::brokenLink"
+			"GlobalUserPageHooks::onLinkBegin"
 		],
 		"ArticleFromTitle": [
 			"GlobalUserPageHooks::onArticleFromTitle"
