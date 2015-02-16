@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pikne"
+		]
+	},
+	"globaluserpage-desc": "Võimaldab hankida kasutajalehekülje automaatselt kesksest vikist.",
+	"globaluserpage-preferences": "Kasuta [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globaalset kasutajalehekülge]",
+	"globaluserpage-footer": "Selle lehekülje sisu on [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopeeritud] asukohast [$2 $2]."
+}
