@@ -1,0 +1,5 @@
+{
+	"globaluserpage-desc": "Henter automatisk brukersider fra en sentral wiki",
+	"globaluserpage-preferences": "Bruk [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global brukerside]",
+	"globaluserpage-footer": "Det du ser på denne siden ble [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopiert] fra [$2 $2]."
+}
