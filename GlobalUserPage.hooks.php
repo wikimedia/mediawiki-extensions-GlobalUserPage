@@ -146,7 +146,9 @@ class GlobalUserPageHooks {
 	 */
 	public static function onTitleGetEditNotices( Title $title, $oldid, array &$notices ) {
 		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
-			$notices['globaluserpage'] = '<strong>' . wfMessage( 'globaluserpage-editnotice' )->parseAsBlock()  . '</strong>';
+			$notices['globaluserpage'] = '<p><strong>' .
+				wfMessage( 'globaluserpage-editnotice' )->parse()
+				. '</strong></p>';
 		}
 		return true;
 	}
