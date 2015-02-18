@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen"
+		]
+	},
+	"globaluserpage-desc": "Tự động lấy trang thành viên từ một wiki trung ương",
+	"globaluserpage-editnotice": "Trang này đang hiển thị một trang thành viên từ một wiki khác. Nếu bạn tạo ra trang mới tại đây, nó sẽ ghi đè trang này.",
+	"globaluserpage-preferences": "Sử dụng [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage trang thành viên toàn cục]",
+	"globaluserpage-footer": "Nội dung xuất hiện trên trang này được [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sao chép] từ [$2 $2]."
+}
