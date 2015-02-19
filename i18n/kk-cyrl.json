@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Arystanbek"
+		]
+	},
+	"globaluserpage-desc": "Орталық уикиден автоматты түрде қатысушы беттерін алу",
+	"globaluserpage-editnotice": "Бұл бет басқа уикиден қатысушы бетін көрсетуде. Егер сіз жаңа бет бастасаңыз, онда жаңадан бастаған бет үстіне жазылады.",
+	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage Ғаламдық қатысушы бетін] қолдану",
+	"globaluserpage-footer": "Сіз бұл беттің [$2 $2] бетінен [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage көшірілген] нұсқасын көріп отырсыз."
+}

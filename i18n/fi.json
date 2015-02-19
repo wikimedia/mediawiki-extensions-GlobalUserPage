@@ -7,5 +7,5 @@
 	},
 	"globaluserpage-desc": "Hakee automaattisesti käyttäjäsivut keskuswikistä",
 	"globaluserpage-preferences": "Käytä [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage järjestelmänlaajuista käyttäjäsivua]",
-	"globaluserpage-footer": "Mitä näet tällä sivulla on [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopioitu] sivulta [$2 $2]."
+	"globaluserpage-footer": "Tämän sivun sisältö on [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopioitu] sivulta [$2 $2]."
 }
