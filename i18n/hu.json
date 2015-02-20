@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tacsipacsi"
+		]
+	},
+	"globaluserpage-desc": "Automatikusan megjeleníti a felhasználói lapokat egy központi wikiről",
+	"globaluserpage-editnotice": "Ez a lap jelenleg egy másik wikiről jelenít meg falhasználói lapot. Ha létrehozol itt egy új lapot, akkor ezt felül fogja írni az új lap.",
+	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage Globális felhasználói lap] használata",
+	"globaluserpage-footer": "Az ezen a lapon látható tartalom a(z) [$2 $2] lapról van [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage másolva]."
+}

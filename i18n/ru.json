@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Okras"
+			"Okras",
+			"Kaganer"
 		]
 	},
 	"globaluserpage-desc": "Автоматически извлекает страницы участника из центральной вики",
+	"globaluserpage-editnotice": "На этой странице сейчас отображается персональная страница участника из другого вики-проекта. Её содержимое можно заменить на локальную версию, если вы её здесь создадите.",
 	"globaluserpage-preferences": "Использовать [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальную страницу участника]",
-	"globaluserpage-footer": "''' Это [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальная страница участника].''' Исходная страница находится по адресу [$2 $2]."
+	"globaluserpage-footer": "Всё, что вы видите на этой странице, было [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скопировано] из [$2 $2]."
 }

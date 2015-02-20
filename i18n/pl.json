@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Peter Bowman"
+			"Peter Bowman",
+			"Chrumps"
 		]
 	},
+	"globaluserpage-editnotice": "Ta strona aktualnie wyświetla stronę użytkownika z innej wiki. Jeśli utworzysz tutaj nową stronę, zastąpi ona wyświetlaną obecnie.",
 	"globaluserpage-footer": "To, co widzisz na tej stronie, zostało [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage skopiowane] z [$2 $2]."
 }
