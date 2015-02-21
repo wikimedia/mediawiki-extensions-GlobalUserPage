@@ -1,7 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Aftab1995"
+			"Aftab1995",
+			"Aftabuzzaman"
 		]
-	}
+	},
+	"globaluserpage-desc": "একটি কেন্দ্রীয় উইকি থেকে ব্যবহারকারী পাতা স্বয়ংক্রিয়ভাবে নিয়ে আসে।",
+	"globaluserpage-editnotice": "এই পাতাটি বর্তমানে অন্য উইকি থেকে একটি ব্যবহারকারী পাতা প্রদর্শন করছে। আপনি যদি এখানে একটি নতুন পাতা তৈরি করেন, তাহলে এটি সদ্য তৈরিকৃত পাতা দিয়ে অধিলিখিত করা হবে।",
+	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage বৈশ্বিক ব্যবহারকারী পাতা] ব্যবহার করুন।",
+	"globaluserpage-footer": "আপনি এই পাতায় যা দেখছেন তা [$2 $2] থেকে [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage অনুলিপি করা হয়েছে]।"
 }
