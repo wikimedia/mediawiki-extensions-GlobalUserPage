@@ -5,6 +5,7 @@
 		]
 	},
 	"globaluserpage-desc": "Автоматски дава кориснички страници од централно вики",
+	"globaluserpage-editnotice": "На страницава е прикажана корисничка страница од друго вики. Ако тука создадете нова страница, таа ќе биде заменета со нвосоздадената страница.",
 	"globaluserpage-preferences": "Послужете се со [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобална корисничка страница]",
-	"globaluserpage-footer": "'''Ова е  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобална корисничка страница].''' Изворната страница е сместена на [$2 $2]."
+	"globaluserpage-footer": "'''Она што го гледате на страницава беше  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage копирана] од [$2 $2]."
 }
