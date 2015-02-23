@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Xuacu"
+			"Xuacu",
+			"Fitoschido"
 		]
 	},
-	"globaluserpage-desc": "Baxa automáticamente páxines d'usuariu de [http://www.shoutwiki.com ShoutWiki Hub]"
+	"globaluserpage-desc": "Baxa automáticamente páxines d'usuariu de [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-editnotice": "Anguaño, esta páxina amuesa’l conteníu d’una páxina d’usuariu creada n’otra wiki. Si creas una páxina equí, esta va prevalecer por sobre la versión esistente."
 }

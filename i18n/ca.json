@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toniher"
+			"Toniher",
+			"Fitoschido"
 		]
-	}
+	},
+	"globaluserpage-editnotice": "Actualment, aquesta pàgina mostra el contingut d’una pàgina d’usuari creada en un altre wiki. Si cregueu una pàgina aquí, aquesta prevaldrà sobre la versió existent."
 }
