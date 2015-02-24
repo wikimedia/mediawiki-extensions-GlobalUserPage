@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Praveenp"
+		]
+	},
+	"globaluserpage-desc": "ഒരു കേന്ദ്രവിക്കിയിൽ നിന്നും ഉപയോക്തൃതാളുകൾ സ്വയം എടുക്കുക",
+	"globaluserpage-editnotice": "ഈ താൾ മറ്റൊരു വിക്കിയിൽ നിന്നുള്ള ഉപയോക്തൃതാൾ ആണ് പ്രദർശിപ്പിച്ചുകൊണ്ടിരിക്കുന്നത്. ഇവിടെ ഒരു പുതിയ താൾ താങ്കൾ സൃഷ്ടിക്കുകയാണെങ്കിൽ അത് ആ പുതിയതായി സൃഷ്ടിക്കപ്പെട്ട താളിനാൽ മാറ്റപ്പെടുന്നതായിരിക്കും.",
+	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ആഗോള ഉപയോക്തൃതാൾ] ഉപയോഗിക്കുക",
+	"globaluserpage-footer": "ഈ താളിന്റെ ഉള്ളടക്കം [$2 $2] എന്ന താളിൽ നിന്ന് [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage പകർത്തിയതാണ്]."
+}
