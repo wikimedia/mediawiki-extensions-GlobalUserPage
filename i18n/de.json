@@ -7,5 +7,5 @@
 	"globaluserpage-desc": "Ermöglicht den automatischen Abruf von Benutzerseiten von einem zentralen Wiki",
 	"globaluserpage-editnotice": "Diese Seite zeigt derzeit eine Benutzerseite von einem anderen Wiki an. Falls du hier eine neue Seite erstellst, wird sie mit der neu erstellten Seite überschrieben.",
 	"globaluserpage-preferences": "Ermöglicht die Verwendung der [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globalen Benutzerseite]",
-	"globaluserpage-footer": "Der Inhalt auf dieser Seite wurde von [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopiert]."
+	"globaluserpage-footer": "Der Inhalt auf dieser Seite wurde von [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage eingebunden]."
 }
