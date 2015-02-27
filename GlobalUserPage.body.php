@@ -253,7 +253,7 @@ class GlobalUserPage extends Article {
 		}
 
 		// Check valid username
-		return User::getCanonicalName( $title->getText() ) !== false;
+		return User::isValidUserName( $title->getText() );
 	}
 
 	/**
