@@ -2,9 +2,10 @@
 	"@metadata": {
 		"authors": [
 			"Siebrand",
-			"JurgenNL"
+			"JurgenNL",
+			"Mbch331"
 		]
 	},
 	"globaluserpage-desc": "Haalt automatisch hulppagina's op van [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-editnotice": "Deze pagina laat de gebruikerspagina van een andere wiki zien. Als je hier een nieuwe pagina aanmaakt, zal de bestaande pagina worden overschreven door de reeds bestaande."
+	"globaluserpage-editnotice": "Deze pagina laat de gebruikerspagina van een andere wiki zien. Als je hier een nieuwe pagina aanmaakt, zal de bestaande pagina worden overschreven door de nieuw aangemaakte."
 }
