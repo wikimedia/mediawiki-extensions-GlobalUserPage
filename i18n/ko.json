@@ -2,10 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Hym411",
-			"Kwj2772"
+			"Kwj2772",
+			"Revi"
 		]
 	},
 	"globaluserpage-desc": "중앙 위키에서 사용자 문서를 자동으로 읽어옵니다.",
+	"globaluserpage-editnotice": "이 문서는 다른 위키의 사용자 문서를 보여주고 있습니다. 새 문서를 생성한다면, 다른 위키의 문서는 새로 생성되는 문서로 대체될 것입니다.",
 	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 전역 사용자 문서]를 사용",
-	"globaluserpage-footer": "'''이 문서는 [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 전역 사용자 문서]입니다.''' 원본 문서는 [$2 $2]에 있습니다."
+	"globaluserpage-footer": "이 문서에서 보는 내용은 [$2 $2]에서 [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 복사]되었습니다."
 }
