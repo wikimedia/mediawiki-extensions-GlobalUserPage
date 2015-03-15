@@ -82,7 +82,7 @@ class GlobalUserPage extends Article {
 		);
 		foreach ( $map as $type => $func ) {
 			foreach ( $parsedOutput[$type] as $module ) {
-				if ( $rl->getModule( $module ) !== null ) {
+				if ( $rl->isModuleRegistered( $module ) ) {
 					$out->$func( $module );
 				}
 			}
