@@ -7,6 +7,7 @@
 		]
 	},
 	"globaluserpage-desc": "Obtén automaticamente páxinas de usuario dun wiki central",
+	"globaluserpage-editnotice": "Esta páxina presenta actualmente unha páxina de usuaro de outra wiki. Se crea unha nova páxina aquí, será substituída coa nova páxina creada.",
 	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage páxina de usuario global]",
 	"globaluserpage-footer": "O que ve nesta páxina foi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiado] de [$2 $2]."
 }
