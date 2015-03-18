@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"EagerLin"
 		]
 	},
 	"globaluserpage-preferences": "使用[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域使用者頁面]",
-	"globaluserpage-footer": "'''這是一個 [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域使用者頁面]。'''原始頁面位於 [$2 $2]。"
+	"globaluserpage-footer": "您所看到的[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage '''全域使用者頁面''']原始於 [$2 $2]。"
 }
