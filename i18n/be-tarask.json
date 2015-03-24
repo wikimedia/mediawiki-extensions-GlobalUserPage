@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Renessaince"
+		]
+	},
+	"globaluserpage-desc": "Аўтаматычна падцягвае старонкі ўдзельніка з цэнтральнай вікі",
+	"globaluserpage-editnotice": "Цяпер на гэтай старонцы адлюстроўваецца старонка ўдзельніка зь іншага разьдзелу вікі. Калі Вы створыце тут новую старонку, яна заменіць гэты зьмест.",
+	"globaluserpage-preferences": "Выкарыстоўваць [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глябальную старонку ўдзельніка]",
+	"globaluserpage-footer": "Усё, што Вы бачыце на гэтай старонцы, [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скапіявана] з [$2 $2]."
+}
