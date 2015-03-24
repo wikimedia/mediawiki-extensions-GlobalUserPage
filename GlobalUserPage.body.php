@@ -114,6 +114,7 @@ class GlobalUserPage extends Article {
 
 
 		$user = User::newFromName( $title->getText() );
+		$user->load( User::READ_NORMAL );
 
 		// Already validated that the username is fine in canBeGlobal
 		if ( $user->getId() === 0 ) {
