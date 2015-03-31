@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01"
+		]
+	},
+	"globaluserpage-editnotice": "Ova stranica trenutno prikazuje korisničku stranicu sa drugog vikija. Ako ovde napravite novu stranicu ona će potisnuti trenutnu stranicu.",
+	"globaluserpage-footer": "Ovo je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] korisničke stranice [$2 $2]."
+}
