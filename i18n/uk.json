@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Andriykopanytsia"
+			"Andriykopanytsia",
+			"Piramidion"
 		]
 	},
 	"globaluserpage-desc": "Автоматично витягує сторінки користувача з центральної вікі",
-	"globaluserpage-preferences": "Використовувати [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальну сторінку учасника]",
-	"globaluserpage-footer": "''' Це [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальна сторінка учасника].''' Вихідна сторінка розміщена на [$2 $2]."
+	"globaluserpage-editnotice": "На цій сторінці наразі відображається сторінка користувача з іншої вікі. Якщо Ви створите тут нову сторінку, вона замінить ту, яка відображається зараз.",
+	"globaluserpage-preferences": "Використовувати [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальну сторінку користувача]",
+	"globaluserpage-footer": "Те, що Ви бачите на цій сторінці, було [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скопійоване] з [$2 $2]."
 }
