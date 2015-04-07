@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yueman"
+		]
+	},
+	"globaluserpage-desc": "自動由中心維基去攞用户頁",
+	"globaluserpage-editnotice": "呢版顯示緊另一個維基嘅用戶頁。如果你開版新嘅，就會顯示新開嗰版。",
+	"globaluserpage-preferences": "用[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用戶頁]",
+	"globaluserpage-footer": "你睇到嘅呢一版內容係[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 嚟自][$2 $2]。"
+}
