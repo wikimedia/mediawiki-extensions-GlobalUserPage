@@ -5,6 +5,8 @@
 			"Fitoschido"
 		]
 	},
-	"globaluserpage-desc": "Baxa automáticamente páxines d'usuariu de [http://www.shoutwiki.com ShoutWiki Hub]",
-	"globaluserpage-editnotice": "Anguaño, esta páxina amuesa’l conteníu d’una páxina d’usuariu creada n’otra wiki. Si creas una páxina equí, esta va prevalecer por sobre la versión esistente."
+	"globaluserpage-desc": "Baxa automáticamente páxines d'usuariu d'una wiki central",
+	"globaluserpage-editnotice": "Anguaño, esta páxina amuesa’l conteníu d’una páxina d’usuariu creada n’otra wiki. Si creas una páxina equí, esta va prevalecer por sobre la versión esistente.",
+	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage páxina d'usuariu global]",
+	"globaluserpage-footer": "Lo que ves nesta páxina [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copióse] de [$2 $2]."
 }
