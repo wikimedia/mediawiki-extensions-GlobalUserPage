@@ -2,11 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Andriykopanytsia",
-			"Piramidion"
+			"Piramidion",
+			"Максим Підліснюк"
 		]
 	},
 	"globaluserpage-desc": "Автоматично витягує сторінки користувача з центральної вікі",
 	"globaluserpage-editnotice": "На цій сторінці наразі відображається сторінка користувача з іншої вікі. Якщо Ви створите тут нову сторінку, вона замінить ту, яка відображається зараз.",
+	"globaluserpage-central-editnotice": "Це сторінка користувача буде [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage відображена] на інших Вікі, у яких користувач не має локальної сторінки.",
 	"globaluserpage-preferences": "Використовувати [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальну сторінку користувача]",
 	"globaluserpage-footer": "Те, що Ви бачите на цій сторінці, було [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скопійоване] з [$2 $2]."
 }
