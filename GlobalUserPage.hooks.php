@@ -138,7 +138,8 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * Show an edit notice on user pages which displays global user pages.
+	 * Show an edit notice on user pages which displays global user pages
+	 * or on the central global user page.
 	 *
 	 * @param Title $title
 	 * @param integer $oldid
@@ -149,7 +150,10 @@ class GlobalUserPageHooks {
 			$notices['globaluserpage'] = '<p><strong>' .
 				wfMessage( 'globaluserpage-editnotice' )->parse()
 				. '</strong></p>';
+		} elseif ( self::isGlobalUserPage( $title ) ) {
+			$notices['centraluserpage'] = wfMessage( 'globaluserpage-central-editnotice' )->parseAsBlock();
 		}
+
 		return true;
 	}
 }

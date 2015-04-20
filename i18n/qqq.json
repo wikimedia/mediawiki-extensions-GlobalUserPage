@@ -7,6 +7,7 @@
 	},
 	"globaluserpage-desc": "{{desc|name=GlobalUserPage|url=https://www.mediawiki.org/wiki/Extension:GlobalUserPage}}",
 	"globaluserpage-editnotice": "Edit notice displayed on user pages if it currently shows a global user page.",
+	"globaluserpage-central-editnotice": "Edit notice displayed on global user pages on the central wiki.",
 	"globaluserpage-preferences": "Used as checkbox label in [[Special:GlobalPreferences]].",
 	"globaluserpage-footer": "Footer shown on global user pages. Parameters:\n* $1 - the user's name\n* $2 - a link to the original user page on the central wiki"
 }
