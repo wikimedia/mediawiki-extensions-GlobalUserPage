@@ -101,6 +101,7 @@ $wgHooks['TitleGetEditNotices'][] = 'GlobalUserPageHooks::onTitleGetEditNotices'
 
 // Register the CSS as a module with ResourceLoader
 $wgResourceModules['ext.GlobalUserPage'] = array(
+	'position' => 'top',
 	'styles' => 'ext.GlobalUserPage.css',
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'GlobalUserPage',
