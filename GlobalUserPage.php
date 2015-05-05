@@ -1,108 +1,14 @@
 <?php
-/**
- * GlobalUserpage extension
- * Fetches user pages from ShoutWiki Hub if they don't exist locally
- *
- * Based on the HelpPages extension by Kunal Mehta, which is also in the
- * public domain.
- *
- * @file
- * @ingroup Extensions
- * @version 0.4
- * @date 8 April 2014
- * @author Jack Phoenix <jack@countervandalism.net>
- * @license Public domain
- * @todo The WantedPages::getQueryInfo hook -- would be lovely to remove the User:
- * pages of GlobalUserpage users from Special:WantedPages, but alas, it's not
- * that simple because there probably isn't an efficient way to check who is and
- * who isn't a GlobalUserpage user, so it's most likely "all or nothing".
- */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	exit;
+if ( function_exists( 'wfLoadExtension' ) ) {
+	wfLoadExtension( 'GlobalUserPage' );
+	// Keep i18n globals so mergeMessageFileList.php doesn't break
+	$wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
+	/* wfWarn(
+		'Deprecated PHP entry point used for GlobalUserPage extension. Please use wfLoadExtension instead, ' .
+		'see https://www.mediawiki.org/wiki/Extension_registration for more details.'
+	); */
+	return true;
+} else {
+	die( 'This version of the GlobalUserPage extension requires MediaWiki 1.25+' );
 }
-
-/**
- * How long to cache the rendered HTML for
- *
- * Note that the extension should invalidate
- * the cache whenever the base page is touched,
- * but this is a safeguard against invalidation
- * issues.
- */
-$wgGlobalUserPageCacheExpiry = 60 * 60 * 24 * 7; // One week
-
-/**
- * API endpoint of the central wiki
- */
-$wgGlobalUserPageAPIUrl = 'https://example.org/w/api.php';
-
-/**
- * By default enables global userpage for all users
- * @see https://www.mediawiki.org/wiki/Manual:$wgDefaultUserOptions
- */
-$wgDefaultUserOptions['globaluserpage'] = true;
-
-/**
- * Database name of the central wiki
- */
-$wgGlobalUserPageDBname = 'examplewiki';
-
-/**
- * Optionally add a footer message to the
- * bottom of every global user page. Should
- * be set to the name of a message key, or
- * false if no footer is wanted.
- *
- * @var string|bool
- */
-$wgGlobalUserPageFooterKey = 'globaluserpage-footer';
-
-/**
- * Timeout for internal API requests. To use $wgHTTPTimeout,
- * set this to 'default'
- *
- * @var string|int
- */
-$wgGlobalUserPageTimeout = 10;
-
-// Extension credits that will show up on Special:Version
-$wgExtensionCredits['other'][] = array(
-	'path' => __FILE__,
-	'name' => 'GlobalUserPage',
-	'version' => '0.11.0',
-	'author' => array( 'Kunal Mehta', 'Jack Phoenix' ),
-	'url' => 'https://www.mediawiki.org/wiki/Extension:GlobalUserPage',
-	'descriptionmsg' => 'globaluserpage-desc',
-);
-
-$wgAutoloadClasses['GlobalUserPage'] = __DIR__ . '/GlobalUserPage.body.php';
-$wgAutoloadClasses['GlobalUserPageHooks'] = __DIR__ . '/GlobalUserPage.hooks.php';
-$wgAutoloadClasses['GlobalUserPageCacheInvalidator'] = __DIR__ . '/GlobalUserPageCacheInvalidator.php';
-$wgAutoloadClasses['GlobalUserPageLocalJobSubmitJob'] = __DIR__ . '/GlobalUserPageLocalJobSubmitJob.php';
-$wgAutoloadClasses['LocalGlobalUserPageCacheUpdateJob'] = __DIR__ . '/LocalGlobalUserPageCacheUpdateJob.php';
-
-$wgJobClasses['GlobalUserPageLocalJobSubmitJob'] = 'GlobalUserPageLocalJobSubmitJob';
-$wgJobClasses['LocalGlobalUserPageCacheUpdateJob'] = 'LocalGlobalUserPageCacheUpdateJob';
-
-// i18n
-$wgMessagesDirs['GlobalUserPage'] = __DIR__ . '/i18n';
-
-$wgConfigRegistry['globaluserpage'] = 'GlobalVarConfig::newInstance';
-
-$wgHooks['GetPreferences'][] = 'GlobalUserPageHooks::onGetPreferences';
-$wgHooks['SkinTemplateNavigation::Universal'][] = 'GlobalUserPageHooks::onSkinTemplateNavigationUniversal';
-$wgHooks['TitleIsAlwaysKnown'][] = 'GlobalUserPageHooks::onTitleIsAlwaysKnown';
-$wgHooks['ArticleFromTitle'][] = 'GlobalUserPageHooks::onArticleFromTitle';
-$wgHooks['LinksUpdateComplete'][] = 'GlobalUserPageHooks::onLinksUpdateComplete';
-$wgHooks['PageContentInsertComplete'][] = 'GlobalUserPageHooks::onPageContentInsertComplete';
-$wgHooks['ArticleDeleteComplete'][] = 'GlobalUserPageHooks::onArticleDeleteComplete';
-$wgHooks['TitleGetEditNotices'][] = 'GlobalUserPageHooks::onTitleGetEditNotices';
-
-// Register the CSS as a module with ResourceLoader
-$wgResourceModules['ext.GlobalUserPage'] = array(
-	'position' => 'top',
-	'styles' => 'ext.GlobalUserPage.css',
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'GlobalUserPage',
-);

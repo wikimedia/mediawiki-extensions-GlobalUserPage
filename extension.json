@@ -8,6 +8,11 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:GlobalUserPage",
 	"descriptionmsg": "globaluserpage-desc",
 	"type": "other",
+	"MessagesDirs": {
+		"GlobalUserPage": [
+			"i18n"
+		]
+	},
 	"Hooks": {
 		"GetPreferences": [
 			"GlobalUserPageHooks::onGetPreferences"
@@ -34,11 +39,6 @@
 			"GlobalUserPageHooks::onTitleGetEditNotices"
 		]
 	},
-	"MessagesDirs": {
-		"GlobalUserPage": [
-			"i18n"
-		]
-	},
 	"config": {
 		"GlobalUserPageCacheExpiry": 604800,
 		"GlobalUserPageAPIUrl": "https://example.org/w/api.php",
@@ -48,10 +48,17 @@
 	},
 	"ResourceModules": {
 		"ext.GlobalUserPage": {
-			"styles": "ext.GlobalUserPage.css",
-			"localBasePath": "",
-			"remoteExtPath": "GlobalUserPage"
+			"position": "top",
+			"styles": "ext.GlobalUserPage.css"
 		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "GlobalUserPage"
+	},
+	"JobClasses": {
+		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob",
+		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob"
 	},
 	"DefaultUserOptions": {
 		"globaluserpage": true
@@ -59,12 +66,9 @@
 	"AutoloadClasses": {
 		"GlobalUserPage": "GlobalUserPage.body.php",
 		"GlobalUserPageHooks": "GlobalUserPage.hooks.php",
+		"GlobalUserPageCacheInvalidator": "GlobalUserPageCacheInvalidator.php",
 		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob.php",
 		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob.php"
-	},
-	"JobClasses": {
-		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob",
-		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob"
 	},
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
