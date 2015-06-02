@@ -3,10 +3,13 @@
 		"authors": [
 			"Siebrand",
 			"JurgenNL",
-			"Mbch331"
+			"Mbch331",
+			"Esketti"
 		]
 	},
-	"globaluserpage-desc": "Haalt automatisch hulppagina's op van [http://www.shoutwiki.com ShoutWiki Hub]",
+	"globaluserpage-desc": "Automatisch ophaalt gebruiker pagina ' s van een centrale wiki",
 	"globaluserpage-editnotice": "Deze pagina laat de gebruikerspagina van een andere wiki zien. Als je hier een nieuwe pagina aanmaakt, zal de bestaande pagina worden overschreven door de nieuw aangemaakte.",
+	"globaluserpage-central-editnotice": "Deze pagina gebruiker [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage weergegeven] op andere wiki ' s als een lokale gebruiker op de pagina bestaat niet.",
+	"globaluserpage-preferences": "Gebruik [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global user pagina]",
 	"globaluserpage-footer": "Wat je op deze pagina ziet, is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gekopieerd] van [$2 $2]."
 }
