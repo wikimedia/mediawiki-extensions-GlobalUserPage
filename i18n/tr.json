@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Arystanbek"
+			"Arystanbek",
+			"Meelo"
 		]
 	},
 	"globaluserpage-desc": "Otomatik olarak merkezi bir wiki kullanıcı sayfaları getirir",
 	"globaluserpage-editnotice": "Bu sayfa şu anda başka bir wiki kullanıcı bir sayfa görüntüler. Eğer yeni bir sayfa oluşturma, yeni oluşturulan sayfa ile geçersiz olacaktır.",
-	"globaluserpage-central-editnotice": "Bu sayfa kullanıcı yerel kullanıcı bir sayfa var mı yoksa [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage görüntülenen] diğer wiki üzerinde olacak."
+	"globaluserpage-central-editnotice": "Bu sayfa kullanıcı yerel kullanıcı bir sayfa var mı yoksa [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage görüntülenen] diğer wiki üzerinde olacak.",
+	"globaluserpage-footer": "Bu sayfada gördükleriniz [$2 $2] sayfasından [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopyalanmıştır]."
 }
