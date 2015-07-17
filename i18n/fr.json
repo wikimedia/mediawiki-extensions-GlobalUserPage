@@ -3,11 +3,12 @@
 		"authors": [
 			"Gomoko",
 			"Ltrlg",
-			"Djiboun"
+			"Djiboun",
+			"Wladek92"
 		]
 	},
 	"globaluserpage-desc": "Extrait automatiquement les pages d’utilisateur d’un wiki central",
-	"globaluserpage-editnotice": "Cette page affiche une page utilisateur d'un autre wiki. Si vous créez une nouvelle page ici, elle sera remplacée par la page nouvellement créée.",
+	"globaluserpage-editnotice": "Cette page affiche actuellement une page utilisateur d′un autre wiki. Si vous créez une nouvelle page ici, celle de l′autre wiki sera remplacée par la page nouvellement créée.",
 	"globaluserpage-central-editnotice": "Cette page utilisateur sera [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage affichée] sur les autres wikis si une page utilisateur locale  n'existe pas.",
 	"globaluserpage-preferences": "Utiliser [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage la page d’utilisateur global]",
 	"globaluserpage-footer": "Le contenu de cette page est une [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copie] de [$2 $2]."
