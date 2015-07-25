@@ -6,6 +6,7 @@
 	},
 	"globaluserpage-desc": "Tự động lấy trang thành viên từ một wiki trung ương",
 	"globaluserpage-editnotice": "Trang này đang hiển thị một trang thành viên từ một wiki khác. Nếu bạn tạo ra trang mới tại đây, nó sẽ ghi đè trang này.",
+	"globaluserpage-central-editnotice": "Trang cá nhân này sẽ [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage xuất hiện] trên tất cả những wiki mà bạn không có trang cá nhân địa phương.",
 	"globaluserpage-preferences": "Sử dụng [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage trang thành viên toàn cục]",
 	"globaluserpage-footer": "Nội dung xuất hiện trên trang này được [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sao chép] từ [$2 $2]."
 }
