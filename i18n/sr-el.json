@@ -5,5 +5,6 @@
 		]
 	},
 	"globaluserpage-editnotice": "Ova stranica trenutno prikazuje korisničku stranicu sa drugog vikija. Ako ovde napravite novu stranicu ona će potisnuti trenutnu stranicu.",
+	"globaluserpage-central-editnotice": "Ova korsnička stranica će biti [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] na drugim vikijima gde ne postoji lokalna korisnička stranica.",
 	"globaluserpage-footer": "Ovo je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] korisničke stranice [$2 $2]."
 }
