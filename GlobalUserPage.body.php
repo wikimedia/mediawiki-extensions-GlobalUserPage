@@ -134,7 +134,7 @@ class GlobalUserPage extends Article {
 		// whether User:A@foowiki === User:A@centralwiki.
 		// This hook intentionally functions the same
 		// as the one in Extension:GlobalCssJs.
-		if ( !wfRunHooks( 'LoadGlobalUserPage', array( $user, $wgGlobalUserPageDBname, wfWikiID() ) ) ) {
+		if ( !Hooks::run( 'LoadGlobalUserPage', array( $user, $wgGlobalUserPageDBname, wfWikiID() ) ) ) {
 			self::$displayCache->set( $text, false );
 			return false;
 		}
@@ -373,7 +373,7 @@ class GlobalUserPage extends Article {
 		static $list = null;
 		if ( $list === null ) {
 			$list = array();
-			if ( wfRunHooks( 'GlobalUserPageWikis', array( &$list ) ) ) {
+			if ( Hooks::run( 'GlobalUserPageWikis', array( &$list ) ) ) {
 				// Fallback if no hook override
 				global $wgLocalDatabases;
 				$list = $wgLocalDatabases;
