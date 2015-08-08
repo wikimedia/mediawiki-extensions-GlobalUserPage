@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Lokal Profil",
-			"Wikimon"
+			"Wikimon",
+			"WikiPhoenix"
 		]
 	},
 	"globaluserpage-desc": "Hämtar automatiskt användarsidor från en central wiki",
 	"globaluserpage-preferences": "Använd [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global användarsida]",
-	"globaluserpage-footer": "'''Det här är en [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global användarsida].''' Originalsidan finns på [$2 $2]."
+	"globaluserpage-footer": "Det du ser på denna sida har [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopierats] från [$2 $2]."
 }
