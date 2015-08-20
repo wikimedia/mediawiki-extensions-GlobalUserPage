@@ -6,7 +6,7 @@
 		]
 	},
 	"globaluserpage-desc": "自动从中心wiki获取用户页",
-	"globaluserpage-editnotice": "此页面目前显示来自其他wiki的用户页。如果您在此创建一个新页面，它将被新创建的页面覆盖。",
+	"globaluserpage-editnotice": "此页面目前显示来自其他wiki的用户页。如果您在此创建一个新页面，它将不再显示其他wiki的页面。",
 	"globaluserpage-central-editnotice": "此用户页将在其他wiki[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 显示]，如果在对应wiki上没有本地用户页的话。",
 	"globaluserpage-preferences": "使用[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 全域用户页]",
 	"globaluserpage-footer": "您在此页面看见的内容[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 复制]自[$2 $2]。"
