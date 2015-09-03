@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Shirayuki"
+			"Shirayuki",
+			"Otokoume"
 		]
 	},
 	"globaluserpage-desc": "利用者ページを中央ウィキから自動的に取得する",
+	"globaluserpage-editnotice": "このページは現在、別のウィキからの利用者ページが表示されます。ここで新しいページを作成すると、他のウィキのページが表示されなくなります。",
 	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage グローバル利用者ページ]を使用",
 	"globaluserpage-footer": "'''このページは[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage グローバル利用者ページ]です。'''元のページは [$2 $2] にあります。"
 }
