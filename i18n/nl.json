@@ -9,8 +9,8 @@
 		]
 	},
 	"globaluserpage-desc": "Haalt automatisch gebruikerspagina's van een centrale wiki",
-	"globaluserpage-editnotice": "Deze pagina laat de gebruikerspagina van een andere wiki zien. Als je hier een nieuwe pagina aanmaakt, zal de bestaande pagina worden overschreven door de nieuw aangemaakte.",
+	"globaluserpage-editnotice": "Hier wordt een gebruikerspagina van een andere wiki weergegeven. Als u hier een nieuwe pagina maakt, wordt de pagina van de andere wiki niet langer weergegeven.",
 	"globaluserpage-central-editnotice": "Deze gebruikerspagina wordt [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage weergegeven] op andere wiki's als er daar geen lokale gebruikerspagina is.",
 	"globaluserpage-preferences": "Gebruik [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globale gebruikerspagina]",
-	"globaluserpage-footer": "Wat je op deze pagina ziet, is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gekopieerd] van [$2 $2]."
+	"globaluserpage-footer": "Wat u op deze pagina ziet, is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gekopieerd] van [$2 $2]."
 }
