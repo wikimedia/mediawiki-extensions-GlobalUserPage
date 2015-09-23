@@ -326,15 +326,9 @@ class GlobalUserPage extends Article {
 				// Don't cache upon failure
 				return '';
 			}
+			// @todo: use formatversion=2
 			$pageInfo = $resp['query']['pages'][$resp['query']['pageids'][0]];
-			if ( isset( $pageInfo['canonicalurl'] ) ) {
-				// New in 1.24
-				$data = $pageInfo['canonicalurl'];
-			} else {
-				// This is dependent upon PROTO_CURRENT, which is hardcoded in config,
-				// but it's good enough for back-compat
-				$data = $pageInfo['fullurl'];
-			}
+			$data = $pageInfo['canonicalurl'];
 			// Don't set an expiry since we expect people not to change the
 			// url to their wiki without clearing their caches!
 			$this->cache->set( $key, $data );
