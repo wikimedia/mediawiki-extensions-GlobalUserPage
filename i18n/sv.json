@@ -3,10 +3,13 @@
 		"authors": [
 			"Lokal Profil",
 			"Wikimon",
-			"WikiPhoenix"
+			"WikiPhoenix",
+			"Ainali"
 		]
 	},
 	"globaluserpage-desc": "Hämtar automatiskt användarsidor från en central wiki",
+	"globaluserpage-editnotice": "Den här sidan visar för närvarande en användarsida från en annan wiki. Om du skapar en ny sida här kommer den inte att visa den andra wikins sida.",
+	"globaluserpage-central-editnotice": "Denna användarsida kommer att [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage visas] på andra wikis om en lokal användarsida inte finns där.",
 	"globaluserpage-preferences": "Använd [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global användarsida]",
 	"globaluserpage-footer": "Det du ser på denna sida har [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopierats] från [$2 $2]."
 }
