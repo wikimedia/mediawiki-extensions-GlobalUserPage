@@ -16,11 +16,7 @@ class LocalGlobalUserPageCacheUpdateJob extends Job {
 	public function run() {
 		$title = Title::makeTitleSafe( NS_USER, $this->params['username'] );
 		// We want to purge the cache of the accompanying page so the tabs change colors
-		if ( $title->isTalkPage() ) {
-			$other = $title->getSubjectPage();
-		} else {
-			$other = $title->getTalkPage();
-		}
+		$other = $title->getOtherPage();
 
 		$title->purgeSquid();
 		$other->purgeSquid();
