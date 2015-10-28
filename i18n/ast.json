@@ -6,8 +6,8 @@
 		]
 	},
 	"globaluserpage-desc": "Baxa automáticamente páxines d'usuariu d'una wiki central",
-	"globaluserpage-editnotice": "Anguaño, esta páxina amuesa’l conteníu d’una páxina d’usuariu creada n’otra wiki. Si creas una páxina equí, esta va prevalecer por sobre la versión esistente.",
-	"globaluserpage-central-editnotice": "Esta páxina d'usuariu [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage veráse] n'otres wikis si nun esiste una páxina d'usuariu llocal n'elles.",
+	"globaluserpage-editnotice": "Anguaño, esta páxina amuesa'l conteníu d'una páxina d'usuariu creada n'otra wiki. Si crees una páxina nueva equí, yá nun se va amosar la páxina de la otra wiki.",
+	"globaluserpage-central-editnotice": "Esta páxina d'usuariu [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage va amosase] n'otres wikis si n'elles nun esiste una páxina d'usuariu local.",
 	"globaluserpage-preferences": "Usar [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage páxina d'usuariu global]",
 	"globaluserpage-footer": "Lo que ves nesta páxina [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copióse] de [$2 $2]."
 }
