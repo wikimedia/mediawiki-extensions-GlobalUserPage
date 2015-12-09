@@ -129,11 +129,10 @@ class GlobalUserPage extends Article {
 			}
 		}
 
-		// Allow for authorization extensions to determine
-		// whether User:A@foowiki === User:A@centralwiki.
-		// This hook intentionally functions the same
-		// as the one in Extension:GlobalCssJs.
-		if ( !Hooks::run( 'LoadGlobalUserPage', array( $user, $wgGlobalUserPageDBname, wfWikiID() ) ) ) {
+		// Make sure that the username represents the same
+		// user on both wikis.
+		$lookup = CentralIdLookup::factory();
+		if ( !$lookup->isAttached( $user ) || !$lookup->isAttached( $user, $wgGlobalUserPageDBname ) ) {
 			self::$displayCache->set( $text, false );
 			return false;
 		}
