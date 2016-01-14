@@ -7,6 +7,7 @@
 	},
 	"globaluserpage-desc": "Scarica automaticamente le pagine utente da un wiki centrale",
 	"globaluserpage-editnotice": "Questa pagina mostra attualmente una pagina utente di un altro wiki. Se si crea una nuova pagina qui, non sarà più mostrata la pagina dell'altro wiki.",
+	"globaluserpage-central-editnotice": "Questa pagina utente sarà [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage visualizzata] su altri wiki se non esiste una pagina utente locale.",
 	"globaluserpage-preferences": "Usa [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage pagina utente globale]",
 	"globaluserpage-footer": "Quello che vedi in questa pagina è stato [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiato] da [$2 $2]."
 }
