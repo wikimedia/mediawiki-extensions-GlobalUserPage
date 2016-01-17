@@ -9,7 +9,7 @@
 	"descriptionmsg": "globaluserpage-desc",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.25.0"
+		"MediaWiki": ">= 1.27.0"
 	},
 	"MessagesDirs": {
 		"GlobalUserPage": [
