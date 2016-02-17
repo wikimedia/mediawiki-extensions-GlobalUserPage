@@ -2,8 +2,10 @@
 	"@metadata": {
 		"authors": [
 			"Otogi",
-			"David1010"
+			"David1010",
+			"BRUTE"
 		]
 	},
-	"globaluserpage-editnotice": "ეს გვერდი აჩვენებს მომხმარებლის გვერდს სხვა ვიკიდან. თუ თქვენ აქ ახალ გვერდს შექმნით, ის სხვა ვიკის გვერდებზე არ გამოჩნდება."
+	"globaluserpage-editnotice": "ეს გვერდი აჩვენებს მომხმარებლის გვერდს სხვა ვიკიდან. თუ თქვენ აქ ახალ გვერდს შექმნით, ის სხვა ვიკის გვერდებზე არ გამოჩნდება.",
+	"globaluserpage-preferences": "გამოიყენეთ\n[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage გლობალური მომხმარებლის გვერდი]"
 }
