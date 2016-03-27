@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Янмурза Баки"
+			"Янмурза Баки",
+			"Азат Хәлилов"
 		]
 	},
+	"globaluserpage-desc": "Үҙәк викинан ҡатнашыусы биттәрен автоматик рәүештә тартып ала",
 	"globaluserpage-editnotice": "Хәҙер бында икенсе вики-проектан ҡатнашыусының шәхси бите күрһәтелгән. Әгәр яңы бит булдырһағыҙ, икенсе вики-проекттағы бит бында күрһәтелмәйәсәк.",
 	"globaluserpage-central-editnotice": " Әгәр унда ҡатнашыусының локаль бите булмаһа, был ҡатнашыусы бите икенсе вики-проекттарҙа [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күрһәтеләсәк].",
 	"globaluserpage-preferences": "Ҡулланырға: [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ҡатнашыусының глобаль бите]",
-	"globaluserpage-footer": "Был биттә нейҙәр күрәһегеҙ, барыһы ла [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күсерелгән]"
+	"globaluserpage-footer": "Был биттә нимә күрәһегеҙ, барыһы ла [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күсерелгән]"
 }
