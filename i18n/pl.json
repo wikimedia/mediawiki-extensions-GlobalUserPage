@@ -2,9 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Peter Bowman",
-			"Chrumps"
+			"Chrumps",
+			"Woytecr"
 		]
 	},
-	"globaluserpage-editnotice": "Ta strona aktualnie wyświetla stronę użytkownika z innej wiki. Jeśli utworzysz tutaj nową stronę, zastąpi ona wyświetlaną obecnie.",
+	"globaluserpage-desc": "Automatycznie pobiera strony użytkowników z centralnej wiki",
+	"globaluserpage-editnotice": "Ta strona aktualnie wyświetla stronę użytkownika z innej wiki. Jeśli utworzysz tutaj nową stronę, nie będzie wyświetlana strona z innej wiki.",
+	"globaluserpage-central-editnotice": "Ta strona użytkownika będzie [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage wyświetlana] na innych wiki, jeżeli nie będzie istniała na nich lokalna strona użytkownika.",
+	"globaluserpage-preferences": "Użyj [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globalnej strony użytkownika]",
 	"globaluserpage-footer": "To, co widzisz na tej stronie, zostało [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage skopiowane] z [$2 $2]."
 }
