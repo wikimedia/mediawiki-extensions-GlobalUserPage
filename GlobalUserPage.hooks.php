@@ -156,4 +156,11 @@ class GlobalUserPageHooks {
 
 		return true;
 	}
+
+	/**
+	 * @param array $ids
+	 */
+	public static function onGetDoubleUnderscoreIDs( array &$ids ) {
+		$ids[] = 'noglobal';
+	}
 }

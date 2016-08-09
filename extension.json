@@ -17,6 +17,9 @@
 			"i18n"
 		]
 	},
+	"ExtensionMessagesFiles": {
+		"GlobalUserPageMagic": "GlobalUserPage.i18n.magic.php"
+	},
 	"Hooks": {
 		"GetPreferences": [
 			"GlobalUserPageHooks::onGetPreferences"
@@ -41,7 +44,8 @@
 		],
 		"TitleGetEditNotices": [
 			"GlobalUserPageHooks::onTitleGetEditNotices"
-		]
+		],
+		"GetDoubleUnderscoreIDs": "GlobalUserPageHooks::onGetDoubleUnderscoreIDs"
 	},
 	"config": {
 		"GlobalUserPageCacheExpiry": 604800,

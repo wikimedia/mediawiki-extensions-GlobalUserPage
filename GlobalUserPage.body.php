@@ -160,15 +160,28 @@ class GlobalUserPage extends Article {
 		global $wgGlobalUserPageDBname;
 		$lb = wfGetLB( $wgGlobalUserPageDBname );
 		$dbr = $lb->getConnection( DB_SLAVE, array(), $wgGlobalUserPageDBname );
-		$touched = $dbr->selectField(
-			'page',
-			'page_touched',
+		$row = $dbr->selectRow(
+			[ 'page', 'page_props' ],
+			[ 'page_touched', 'pp_propname' ],
 			array(
 				'page_namespace' => NS_USER,
-				'page_title' => $user->getUserPage()->getDBkey()
+				'page_title' => $user->getUserPage()->getDBkey(),
 			),
-			__METHOD__
+			__METHOD__,
+			[],
+			[ 'page_props' =>
+				[ 'LEFT JOIN', [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] ]
+			]
 		);
+		if ( $row ) {
+			if ( $row->pp_propname == 'noglobal' ) {
+				$touched = false;
+			} else {
+				$touched = $row->page_touched;
+			}
+		} else {
+			$touched = false;
+		}
 		$lb->reuseConnection( $dbr );
 
 		self::$touchedCache->set( $user->getName(), $touched );
