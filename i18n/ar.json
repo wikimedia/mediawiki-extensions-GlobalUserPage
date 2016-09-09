@@ -1,9 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Maroen1990"
+			"Maroen1990",
+			"Meno25"
 		]
 	},
 	"globaluserpage-desc": "جلب تلقائيا صفحات المستخدم من ويكي المركزي",
-	"globaluserpage-editnotice": "هذه الصفحة تعرض حاليا صفحة المستخدم من ويكي آخر. إذا قمت بإنشاء صفحة جديدة هنا، أنه لم يعد عرض صفحة ويكي الآخر."
+	"globaluserpage-editnotice": "هذه الصفحة تعرض حاليا صفحة المستخدم من ويكي آخر. إذا قمت بإنشاء صفحة جديدة هنا، أنه لم يعد عرض صفحة ويكي الآخر.",
+	"globaluserpage-central-editnotice": "صفحة المستخدم هذه سيتم [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage عرضها] على الويكيات الأخرى لو أن صفحة مستخدم محلية كانت غير موجودة هناك.",
+	"globaluserpage-preferences": "استخدم [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage صفحة المستخدم العالمية]",
+	"globaluserpage-footer": "ما تراه على هذه الصفحة تم [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage نسخه] من [$2 $2]."
 }
