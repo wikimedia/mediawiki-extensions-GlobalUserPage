@@ -10,7 +10,7 @@
 	"license-name": "CC0-1.0",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.27.0"
+		"MediaWiki": ">= 1.28.0"
 	},
 	"MessagesDirs": {
 		"GlobalUserPage": [
@@ -23,9 +23,6 @@
 	"Hooks": {
 		"GetPreferences": [
 			"GlobalUserPageHooks::onGetPreferences"
-		],
-		"SkinTemplateNavigation::Universal": [
-			"GlobalUserPageHooks::onSkinTemplateNavigationUniversal"
 		],
 		"TitleIsAlwaysKnown": [
 			"GlobalUserPageHooks::onTitleIsAlwaysKnown"

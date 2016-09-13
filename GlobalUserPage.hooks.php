@@ -42,30 +42,6 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * Turn red links into blue in the navigation tabs (Monobook's p-cactions).
-	 *
-	 * @param SkinTemplate $sktemplate
-	 * @param array $links
-	 * @return bool
-	 */
-	public static function onSkinTemplateNavigationUniversal( &$sktemplate, &$links ) {
-		$title = $sktemplate->getTitle()->getSubjectPage(); // We want the user page
-
-		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
-			// Removes ?action=edit&redlink=1
-			$links['namespaces']['user']['href'] = $title->getFullURL();
-			// Remove the "new" class:
-			// "selected new" --> "selected"
-			// "new" --> ""
-			$links['namespaces']['user']['class'] = trim(
-				str_replace( 'new', '', $links['namespaces']['user']['class'] )
-			);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Mark global user pages as known so they appear in blue
 	 *
 	 * @param Title $title title to check
