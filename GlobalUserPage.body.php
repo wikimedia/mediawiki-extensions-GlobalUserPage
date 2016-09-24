@@ -361,7 +361,7 @@ class GlobalUserPage extends Article {
 			'title' => $unLocalizedName,
 			'text' => $wikitext,
 			'disableeditsection' => 1,
-			'disablepp' => 1,
+			'disablelimitreport' => 1,
 			'uselang' => $langCode,
 			'prop' => 'text|modules'
 		);
