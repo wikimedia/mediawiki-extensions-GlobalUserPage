@@ -3,6 +3,12 @@
 class GlobalUserPage extends Article {
 
 	/**
+	 * Cache version of action=parse
+	 * output
+	 */
+	const PARSED_CACHE_VERSION = 2;
+
+	/**
 	 * @var Config
 	 */
 	private $config;
@@ -44,11 +50,11 @@ class GlobalUserPage extends Article {
 
 		// If the user page is empty or the API request failed, show the normal
 		// missing article page
-		if ( !$parsedOutput || !trim( $parsedOutput['text']['*'] ) ) {
+		if ( !$parsedOutput || !trim( $parsedOutput['text'] ) ) {
 			parent::showMissingArticle();
 			return;
 		}
-		$out->addHTML( $parsedOutput['text']['*'] );
+		$out->addHTML( $parsedOutput['text'] );
 		$out->addModuleStyles( 'ext.GlobalUserPage' );
 
 		$footerKey = $this->config->get( 'GlobalUserPageFooterKey' );
@@ -86,6 +92,8 @@ class GlobalUserPage extends Article {
 				}
 			}
 		}
+
+		$out->addJsConfigVars( $parsedOutput['jsconfigvars'] );
 	}
 
 	/**
@@ -226,7 +234,9 @@ class GlobalUserPage extends Article {
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
 		// Need language code in the key since we pass &uselang= to the API.
-		$key = "globaluserpage:parsed:$touched:$langCode:" . md5( $this->getUsername() );
+		$key = $this->cache->makeGlobalKey( 'globaluserpage', 'parsed',
+			self::PARSED_CACHE_VERSION, $touched, $langCode, md5( $this->getUsername() )
+		);
 		$data = $this->cache->get( $key );
 		if ( $data === false ){
 			$data = $this->parseWikiText( $this->getTitle(), $langCode );
@@ -363,7 +373,8 @@ class GlobalUserPage extends Article {
 			'disableeditsection' => 1,
 			'disablelimitreport' => 1,
 			'uselang' => $langCode,
-			'prop' => 'text|modules'
+			'prop' => 'text|modules|jsconfigvars',
+			'formatversion' => 2
 		);
 		$data = $this->makeAPIRequest( $params );
 		return $data !== false ? $data['parse'] : false;
