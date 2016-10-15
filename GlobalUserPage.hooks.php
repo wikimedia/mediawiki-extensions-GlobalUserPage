@@ -139,4 +139,21 @@ class GlobalUserPageHooks {
 	public static function onGetDoubleUnderscoreIDs( array &$ids ) {
 		$ids[] = 'noglobal';
 	}
+
+	/**
+	 * @param Title $title
+	 * @param $page
+	 * @return bool
+	 */
+	public static function onWikiPageFactory( Title $title, &$page ) {
+		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+			$page = new GlobalUserPagePage(
+				$title,
+				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
+			);
+			return false;
+		}
+
+		return true;
+	}
 }

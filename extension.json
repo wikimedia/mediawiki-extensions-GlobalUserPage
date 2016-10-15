@@ -42,7 +42,8 @@
 		"TitleGetEditNotices": [
 			"GlobalUserPageHooks::onTitleGetEditNotices"
 		],
-		"GetDoubleUnderscoreIDs": "GlobalUserPageHooks::onGetDoubleUnderscoreIDs"
+		"GetDoubleUnderscoreIDs": "GlobalUserPageHooks::onGetDoubleUnderscoreIDs",
+		"WikiPageFactory": "GlobalUserPageHooks::onWikiPageFactory"
 	},
 	"config": {
 		"GlobalUserPageCacheExpiry": 604800,
@@ -70,6 +71,7 @@
 	},
 	"AutoloadClasses": {
 		"GlobalUserPage": "GlobalUserPage.body.php",
+		"GlobalUserPagePage": "GlobalUserPagePage.php",
 		"GlobalUserPageHooks": "GlobalUserPage.hooks.php",
 		"GlobalUserPageCacheInvalidator": "GlobalUserPageCacheInvalidator.php",
 		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob.php",

@@ -30,9 +30,9 @@ class GlobalUserPage extends Article {
 
 	public function __construct( Title $title, Config $config ) {
 		global $wgMemc;
-		parent::__construct( $title );
 		$this->config = $config;
 		$this->cache = $wgMemc;
+		parent::__construct( $title );
 	}
 
 	public function showMissingArticle() {
@@ -61,7 +61,7 @@ class GlobalUserPage extends Article {
 		if ( $footerKey ) {
 			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
 				"\n" . $out->msg( $footerKey )
-					->params( $this->getUsername(), $this->getRemoteURL() )->parse() .
+					->params( $this->getUsername(), $this->mPage->getSourceURL() )->parse() .
 				"\n</div>"
 			);
 		}
@@ -222,7 +222,7 @@ class GlobalUserPage extends Article {
 	 * @return string
 	 */
 	public function getUsername() {
-		return $this->getTitle()->getText();
+		return $this->mPage->getUsername();
 	}
 
 	/**
@@ -278,81 +278,11 @@ class GlobalUserPage extends Article {
 	}
 
 	/**
-	 * Makes an API request to the central wiki
-	 *
-	 * @param $params array
-	 * @return array|bool false if the request failed
+	 * @param Title $title
+	 * @return GlobalUserPagePage
 	 */
-	protected function makeAPIRequest( $params ) {
-		$params['format'] = 'json';
-		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
-		wfDebugLog( 'GlobalUserPage', "Making a request to $url" );
-		$req = MWHttpRequest::factory(
-			$url,
-			array( 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) )
-		);
-		$status = $req->execute();
-		if ( !$status->isOK() ) {
-			wfDebugLog( 'GlobalUserPage', __METHOD__ . " Error: {$status->getWikitext()}" );
-			return false;
-		}
-		$json = $req->getContent();
-		$decoded = FormatJson::decode( $json, true );
-		return $decoded;
-	}
-
-	/**
-	 * Returns a URL to the user page on the central wiki,
-	 * attempts to use SiteConfiguration if possible, else
-	 * falls back to using an API request
-	 *
-	 * @return string
-	 */
-	protected function getRemoteURL() {
-		$url = WikiMap::getForeignURL(
-			$this->config->get( 'GlobalUserPageDBname' ),
-			'User:' . $this->getUsername()
-		);
-
-		if ( $url !== false ) {
-			return $url;
-		} else {
-			// Fallback to the API
-			return $this->getRemoteURLFromAPI();
-		}
-	}
-
-	/**
-	 * Returns a URL to the user page on the central wiki;
-	 * if MW >= 1.24, this will be the cannonical url, otherwise
-	 * it will be using whatever protocol was specified in
-	 * $wgGlobalUserPageAPIUrl.
-	 *
-	 * @return string
-	 */
-	protected function getRemoteURLFromAPI() {
-		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
-		$data = $this->cache->get( $key );
-		if ( $data === false ) {
-			$params = array(
-				'action' => 'query',
-				'titles' => 'User:' . $this->getUsername(),
-				'prop' => 'info',
-				'inprop' => 'url',
-				'formatversion' => '2',
-			);
-			$resp = $this->makeAPIRequest( $params );
-			if ( $resp === false ) {
-				// Don't cache upon failure
-				return '';
-			}
-			$data = $resp['query']['pages'][0]['canonicalurl'];
-			// Don't set an expiry since we expect people not to change the
-			// url to their wiki without clearing their caches!
-			$this->cache->set( $key, $data );
-		}
-
-		return $data;
+	public function newPage( Title $title ) {
+		return new GlobalUserPagePage( $title, $this->config );
 	}
 
 	/**
@@ -360,7 +290,7 @@ class GlobalUserPage extends Article {
 	 *
 	 * @param Title $title
 	 * @param string $langCode
-	 * @return array
+	 * @return array|bool
 	 */
 	protected function parseWikiText( Title $title, $langCode ) {
 		$unLocalizedName = MWNamespace::getCanonicalName( NS_USER ) . ':' . $title->getText();
@@ -375,7 +305,7 @@ class GlobalUserPage extends Article {
 			'prop' => 'text|modules|jsconfigvars',
 			'formatversion' => 2
 		);
-		$data = $this->makeAPIRequest( $params );
+		$data = $this->mPage->makeAPIRequest( $params );
 		return $data !== false ? $data['parse'] : false;
 	}
 
