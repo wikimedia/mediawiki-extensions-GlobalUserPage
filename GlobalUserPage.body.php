@@ -167,7 +167,7 @@ class GlobalUserPage extends Article {
 
 		global $wgGlobalUserPageDBname;
 		$lb = wfGetLB( $wgGlobalUserPageDBname );
-		$dbr = $lb->getConnection( DB_SLAVE, array(), $wgGlobalUserPageDBname );
+		$dbr = $lb->getConnectionRef( DB_REPLICA, array(), $wgGlobalUserPageDBname );
 		$row = $dbr->selectRow(
 			[ 'page', 'page_props' ],
 			[ 'page_touched', 'pp_propname' ],
@@ -190,7 +190,6 @@ class GlobalUserPage extends Article {
 		} else {
 			$touched = false;
 		}
-		$lb->reuseConnection( $dbr );
 
 		self::$touchedCache->set( $user->getName(), $touched );
 
