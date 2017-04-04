@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Papuass"
+		]
+	},
+	"globaluserpage-desc": "Automātiski iegūst dalībnieku lapas no centrālās vikivietnes",
+	"globaluserpage-editnotice": "Šī lapa šobrīd attēlo dalībnieka lapu no citas vikivietnes. Ja tu šeit izveidosi jaunu lapu, šeit vairs netiks rādīta citas vikivietnes lapa.",
+	"globaluserpage-central-editnotice": "Šī dalībnieka lapa tiks [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage attēlota] citās vikivietnēs, ja tajās nebūs izveidota lokāla dalībnieka lapa.",
+	"globaluserpage-preferences": "Izmantot [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globālo dalībnieka lapu]",
+	"globaluserpage-footer": "Šajā lapā redzama [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] no [$2 $2]."
+}
