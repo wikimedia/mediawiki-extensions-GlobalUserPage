@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kumkumuk"
+			"Kumkumuk",
+			"Gırd"
 		]
 	},
 	"globaluserpage-desc": "Otomatikmen merkez dê wiki ra perranê karberi ano",
 	"globaluserpage-editnotice": "Na perra wikiyan dê binan dınewke asena. Eger kı ena perrer vırazê se,  wikiyanê binan dı do niaso",
 	"globaluserpage-central-editnotice": "Na perra karberi, lokal perra cı nêbıyayen wikiyan dı [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage bıaso ].",
 	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage Umumi perra karberi] bıkarnê",
-	"globaluserpage-footer": "O kı ena perrer dı aseno,  perda [$2 $2]  ra [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopya biyo]."
+	"globaluserpage-footer": "Çiyo ke şıma ena perre sero vênenê, [$2 $2] ra [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopya biyo]."
 }
