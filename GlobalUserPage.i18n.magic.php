@@ -1,8 +1,7 @@
 <?php
 
-$magicWords = array();
+$magicWords = [];
 
-$magicWords['en'] = array(
-	'noglobal' => array( 1, '__NOGLOBAL__' ),
-);
-
+$magicWords['en'] = [
+	'noglobal' => [ 1, '__NOGLOBAL__' ],
+];

@@ -71,13 +71,13 @@ class GlobalUserPagePage extends WikiPage {
 		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
 		$data = $this->cache->get( $key );
 		if ( $data === false ) {
-			$params = array(
+			$params = [
 				'action' => 'query',
 				'titles' => 'User:' . $this->getUsername(),
 				'prop' => 'info',
 				'inprop' => 'url',
 				'formatversion' => '2',
-			);
+			];
 			$resp = $this->makeAPIRequest( $params );
 			if ( $resp === false ) {
 				// Don't cache upon failure
@@ -104,7 +104,7 @@ class GlobalUserPagePage extends WikiPage {
 		wfDebugLog( 'GlobalUserPage', "Making a request to $url" );
 		$req = MWHttpRequest::factory(
 			$url,
-			array( 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) )
+			[ 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) ]
 		);
 		$status = $req->execute();
 		if ( !$status->isOK() ) {

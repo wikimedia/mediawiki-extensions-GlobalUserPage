@@ -80,11 +80,11 @@ class GlobalUserPage extends Article {
 	 */
 	private function loadModules( OutputPage $out, array $parsedOutput ) {
 		$rl = $out->getResourceLoader();
-		$map = array(
+		$map = [
 			'modules' => 'addModules',
 			'modulestyles' => 'addModuleStyles',
 			'modulescripts' => 'addModuleScripts',
-		);
+		];
 		foreach ( $map as $type => $func ) {
 			foreach ( $parsedOutput[$type] as $module ) {
 				if ( $rl->isModuleRegistered( $module ) ) {
@@ -118,7 +118,6 @@ class GlobalUserPage extends Article {
 		if ( self::$displayCache->has( $text ) ) {
 			return self::$displayCache->get( $text );
 		}
-
 
 		$user = User::newFromName( $title->getText() );
 		$user->load( User::READ_NORMAL );
@@ -167,14 +166,14 @@ class GlobalUserPage extends Article {
 
 		global $wgGlobalUserPageDBname;
 		$lb = wfGetLB( $wgGlobalUserPageDBname );
-		$dbr = $lb->getConnectionRef( DB_REPLICA, array(), $wgGlobalUserPageDBname );
+		$dbr = $lb->getConnectionRef( DB_REPLICA, [], $wgGlobalUserPageDBname );
 		$row = $dbr->selectRow(
 			[ 'page', 'page_props' ],
 			[ 'page_touched', 'pp_propname' ],
-			array(
+			[
 				'page_namespace' => NS_USER,
 				'page_title' => $user->getUserPage()->getDBkey(),
-			),
+			],
 			__METHOD__,
 			[],
 			[ 'page_props' =>
@@ -295,7 +294,7 @@ class GlobalUserPage extends Article {
 	protected function parseWikiText( Title $title, $langCode ) {
 		$unLocalizedName = MWNamespace::getCanonicalName( NS_USER ) . ':' . $title->getText();
 		$wikitext = '{{:' . $unLocalizedName . '}}';
-		$params = array(
+		$params = [
 			'action' => 'parse',
 			'title' => $unLocalizedName,
 			'text' => $wikitext,
@@ -304,7 +303,7 @@ class GlobalUserPage extends Article {
 			'uselang' => $langCode,
 			'prop' => 'text|modules|jsconfigvars',
 			'formatversion' => 2
-		);
+		];
 		$data = $this->mPage->makeAPIRequest( $params );
 		return $data !== false ? $data['parse'] : false;
 	}
@@ -315,8 +314,8 @@ class GlobalUserPage extends Article {
 	public static function getEnabledWikis() {
 		static $list = null;
 		if ( $list === null ) {
-			$list = array();
-			if ( Hooks::run( 'GlobalUserPageWikis', array( &$list ) ) ) {
+			$list = [];
+			if ( Hooks::run( 'GlobalUserPageWikis', [ &$list ] ) ) {
 				// Fallback if no hook override
 				global $wgLocalDatabases;
 				$list = $wgLocalDatabases;

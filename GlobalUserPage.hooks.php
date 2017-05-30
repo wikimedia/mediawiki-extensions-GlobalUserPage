@@ -10,11 +10,11 @@ class GlobalUserPageHooks {
 	 */
 	public static function onGetPreferences( User $user, &$preferences ) {
 		if ( class_exists( 'GlobalPreferences' ) && GlobalPreferences::onGlobalPrefsPage() ) {
-			$preferences['globaluserpage'] = array(
+			$preferences['globaluserpage'] = [
 				'type' => 'toggle',
 				'label-message' => 'globaluserpage-preferences',
 				'section' => 'personal/info', // not the best place for it, but eh
-			);
+			];
 		}
 
 		return true;
@@ -96,7 +96,7 @@ class GlobalUserPageHooks {
 	public static function onPageContentInsertComplete( WikiPage $page ) {
 		$title = $page->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
-			$inv = new GlobalUserPageCacheInvalidator( $title->getText(), array( 'links' ) );
+			$inv = new GlobalUserPageCacheInvalidator( $title->getText(), [ 'links' ] );
 			$inv->invalidate();
 		}
 

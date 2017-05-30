@@ -15,7 +15,7 @@ class GlobalUserPageCacheInvalidator {
 	 */
 	private $options;
 
-	public function __construct( $username, array $options = array() ) {
+	public function __construct( $username, array $options = [] ) {
 		$this->username = $username;
 		$this->options = $options;
 	}
@@ -30,10 +30,10 @@ class GlobalUserPageCacheInvalidator {
 
 		JobQueueGroup::singleton()->push( new GlobalUserPageLocalJobSubmitJob(
 			Title::newFromText( 'User:' . $this->username ),
-			array(
+			[
 				'username' => $this->username,
 				'touch' => in_array( 'links', $this->options ),
-			)
+			]
 		) );
 	}
 }
