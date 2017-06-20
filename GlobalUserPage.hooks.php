@@ -67,7 +67,6 @@ class GlobalUserPageHooks {
 		return $wgGlobalUserPageDBname === wfWikiID() // On the central wiki
 			&& $title->inNamespace( NS_USER ) // is a user page
 			&& $title->getRootTitle()->equals( $title ); // and is a root page.
-
 	}
 
 	/**

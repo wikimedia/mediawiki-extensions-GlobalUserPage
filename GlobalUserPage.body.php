@@ -236,7 +236,7 @@ class GlobalUserPage extends Article {
 			self::PARSED_CACHE_VERSION, $touched, $langCode, md5( $this->getUsername() )
 		);
 		$data = $this->cache->get( $key );
-		if ( $data === false ){
+		if ( $data === false ) {
 			$data = $this->parseWikiText( $this->getTitle(), $langCode );
 			if ( $data ) {
 				$this->cache->set( $key, $data, $this->config->get( 'GlobalUserPageCacheExpiry' ) );
