@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Cainamarques"
+			"Cainamarques",
+			"Felipe L. Ewald"
 		]
 	},
-	"globaluserpage-desc": "Busca automaticamente páginas de usuário de [http://www.shoutwiki.com ShoutWiki Hub]"
+	"globaluserpage-desc": "Obtém automaticamente páginas de usuário de uma wiki central"
 }
