@@ -5,5 +5,6 @@
 			"Felipe L. Ewald"
 		]
 	},
-	"globaluserpage-desc": "Obtém automaticamente páginas de usuário de uma wiki central"
+	"globaluserpage-desc": "Obtém automaticamente páginas de usuário de uma wiki central",
+	"globaluserpage-footer": "O que você vê nesta página foi  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiado] de [$2 $2]."
 }
