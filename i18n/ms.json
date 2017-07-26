@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Anakmalaysia"
+			"Anakmalaysia",
+			"Jeluang Terluang"
 		]
 	},
-	"globaluserpage-footer": "Apa yang anda baca di halaman ini adalah [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage salinan] dari [$2 $2]."
+	"globaluserpage-footer": "Apa yang anda baca di halaman ini ialah [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage salinan] daripada [$2 $2]."
 }
