@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ooswesthoesbes"
+		]
+	},
+	"globaluserpage-desc": "Haolt automatisch gebroekerspagina's van 'ne centrale wiki",
+	"globaluserpage-editnotice": "Dees pagina toeantj uch noe 'n gebroekerspagina van 'nen angere wiki. Es doe hie 'n nuuj pagina aanmaaks, zal dees neet mieë de pagina van d'n angere wiki toeane.",
+	"globaluserpage-central-editnotice": "Dees gebroekerspagina zal [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage getoeandj waere] op anger wiki's es dao gein lokaal gebroekerspagina is.",
+	"globaluserpage-preferences": "Gebroek 'n [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globaal gebroekerspagina]",
+	"globaluserpage-footer": "Waat se zuus op dees pagina is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gekopieerdj gewaore] vanaaf [$2 $2]."
+}
