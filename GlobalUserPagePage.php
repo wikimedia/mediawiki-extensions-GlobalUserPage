@@ -95,7 +95,7 @@ class GlobalUserPagePage extends WikiPage {
 	/**
 	 * Makes an API request to the central wiki
 	 *
-	 * @param $params array
+	 * @param array $params
 	 * @return array|bool false if the request failed
 	 */
 	public function makeAPIRequest( $params ) {

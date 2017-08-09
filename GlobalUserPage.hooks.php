@@ -5,7 +5,7 @@ class GlobalUserPageHooks {
 	 * Adds the user option for using GlobalUserpage to Special:GlobalPreferences.
 	 *
 	 * @param User $user
-	 * @param array $preferences Preference descriptions
+	 * @param array &$preferences Preference descriptions
 	 * @return bool
 	 */
 	public static function onGetPreferences( User $user, &$preferences ) {
@@ -21,8 +21,8 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * @param Title $title
-	 * @param Article|null $page
+	 * @param Title &$title
+	 * @param Article|null &$page
 	 * @param IContextSource $context
 	 * @return bool
 	 */
@@ -72,7 +72,7 @@ class GlobalUserPageHooks {
 	/**
 	 * After a LinksUpdate runs for a user page, queue remote squid purges
 	 *
-	 * @param LinksUpdate $lu
+	 * @param LinksUpdate &$lu
 	 * @return bool
 	 */
 	public static function onLinksUpdateComplete( LinksUpdate &$lu ) {
@@ -117,8 +117,9 @@ class GlobalUserPageHooks {
 	 * or on the central global user page.
 	 *
 	 * @param Title $title
-	 * @param integer $oldid
+	 * @param int $oldid
 	 * @param array &$notices
+	 * @return true
 	 */
 	public static function onTitleGetEditNotices( Title $title, $oldid, array &$notices ) {
 		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
@@ -133,7 +134,7 @@ class GlobalUserPageHooks {
 	}
 
 	/**
-	 * @param array $ids
+	 * @param array &$ids
 	 */
 	public static function onGetDoubleUnderscoreIDs( array &$ids ) {
 		$ids[] = 'noglobal';
@@ -141,7 +142,7 @@ class GlobalUserPageHooks {
 
 	/**
 	 * @param Title $title
-	 * @param $page
+	 * @param WikiPage &$page
 	 * @return bool
 	 */
 	public static function onWikiPageFactory( Title $title, &$page ) {
