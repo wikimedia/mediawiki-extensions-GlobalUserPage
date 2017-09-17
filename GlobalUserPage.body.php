@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class GlobalUserPage extends Article {
 
 	/**
@@ -165,8 +167,10 @@ class GlobalUserPage extends Article {
 		}
 
 		global $wgGlobalUserPageDBname;
-		$lb = wfGetLB( $wgGlobalUserPageDBname );
-		$dbr = $lb->getConnectionRef( DB_REPLICA, [], $wgGlobalUserPageDBname );
+		$factory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
+		$mainLB = $factory->getMainLB( $wgGlobalUserPageDBname );
+
+		$dbr = $mainLB->getConnectionRef( DB_REPLICA, [], $wgGlobalUserPageDBname );
 		$row = $dbr->selectRow(
 			[ 'page', 'page_props' ],
 			[ 'page_touched', 'pp_propname' ],
