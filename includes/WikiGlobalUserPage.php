@@ -14,7 +14,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GlobalUserPagePage extends WikiPage {
+namespace MediaWiki\GlobalUserPage;
+
+use BagOStuff;
+use Config;
+use FormatJson;
+use MWHttpRequest;
+use Title;
+use WikiMap;
+use WikiPage;
+
+class WikiGlobalUserPage extends WikiPage {
 
 	/**
 	 * @var Config
@@ -42,6 +52,7 @@ class GlobalUserPagePage extends WikiPage {
 	 */
 	public function getWikiDisplayName() {
 		$url = $this->getSourceURL();
+
 		return wfParseUrl( $url )['host'];
 	}
 
@@ -123,10 +134,12 @@ class GlobalUserPagePage extends WikiPage {
 		$status = $req->execute();
 		if ( !$status->isOK() ) {
 			wfDebugLog( 'GlobalUserPage', __METHOD__ . " Error: {$status->getWikitext()}" );
+
 			return false;
 		}
 		$json = $req->getContent();
 		$decoded = FormatJson::decode( $json, true );
+
 		return $decoded;
 	}
 }

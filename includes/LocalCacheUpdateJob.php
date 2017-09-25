@@ -14,11 +14,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace MediaWiki\GlobalUserPage;
+
+use HTMLFileCache;
+use Job;
+use Title;
+
 /**
  * A job that runs on local wikis to purge squid and possibly
  * queue local HTMLCacheUpdate jobs
  */
-class LocalGlobalUserPageCacheUpdateJob extends Job {
+class LocalCacheUpdateJob extends Job {
 	/**
 	 * @param Title $title
 	 * @param array $params Should have 'username' and 'touch' keys

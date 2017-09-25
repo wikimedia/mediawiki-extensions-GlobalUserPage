@@ -14,16 +14,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace MediaWiki\GlobalUserPage;
+
+use Job;
+use JobQueueGroup;
+use Title;
+
 /**
- * Job class that submits LocalGlobalUserPageCacheUpdateJob jobs
+ * Job class that submits LocalCacheUpdateJob jobs
  */
-class GlobalUserPageLocalJobSubmitJob extends Job {
+class LocalJobSubmitJob extends Job {
 	public function __construct( Title $title, array $params ) {
 		parent::__construct( 'GlobalUserPageLocalJobSubmitJob', $title, $params );
 	}
 
 	public function run() {
-		$job = new LocalGlobalUserPageCacheUpdateJob(
+		$job = new LocalCacheUpdateJob(
 			Title::newFromText( 'User:' . $this->params['username'] ),
 			$this->params
 		);

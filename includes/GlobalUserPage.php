@@ -14,7 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+namespace MediaWiki\GlobalUserPage;
+
+use Article;
+use BagOStuff;
+use CentralIdLookup;
+use Config;
+use Hooks as MWHooks;
+use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
+use MWNamespace;
+use OutputPage;
+use Title;
+use User;
 
 class GlobalUserPage extends Article {
 
@@ -56,6 +68,7 @@ class GlobalUserPage extends Article {
 
 		if ( !self::shouldDisplayGlobalPage( $title ) ) {
 			parent::showMissingArticle();
+
 			return;
 		}
 
@@ -68,6 +81,7 @@ class GlobalUserPage extends Article {
 		// missing article page
 		if ( !$parsedOutput || !trim( $parsedOutput['text'] ) ) {
 			parent::showMissingArticle();
+
 			return;
 		}
 		$out->addHTML( $parsedOutput['text'] );
@@ -141,6 +155,7 @@ class GlobalUserPage extends Article {
 		// Already validated that the username is fine in canBeGlobal
 		if ( $user->getId() === 0 ) {
 			self::$displayCache->set( $text, false );
+
 			return false;
 		}
 
@@ -148,6 +163,7 @@ class GlobalUserPage extends Article {
 		if ( class_exists( 'GlobalPreferences' ) ) {
 			if ( !$user->getOption( 'globaluserpage' ) ) {
 				self::$displayCache->set( $text, false );
+
 				return false;
 			}
 		}
@@ -157,11 +173,13 @@ class GlobalUserPage extends Article {
 		$lookup = CentralIdLookup::factory();
 		if ( !$lookup->isAttached( $user ) || !$lookup->isAttached( $user, $wgGlobalUserPageDBname ) ) {
 			self::$displayCache->set( $text, false );
+
 			return false;
 		}
 
 		$touched = (bool)self::getCentralTouched( $user );
 		self::$displayCache->set( $text, $touched );
+
 		return $touched;
 	}
 
@@ -195,7 +213,7 @@ class GlobalUserPage extends Article {
 			__METHOD__,
 			[],
 			[ 'page_props' =>
-				[ 'LEFT JOIN', [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] ]
+				[ 'LEFT JOIN', [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] ],
 			]
 		);
 		if ( $row ) {
@@ -296,10 +314,10 @@ class GlobalUserPage extends Article {
 
 	/**
 	 * @param Title $title
-	 * @return GlobalUserPagePage
+	 * @return WikiGlobalUserPage
 	 */
 	public function newPage( Title $title ) {
-		return new GlobalUserPagePage( $title, $this->config );
+		return new WikiGlobalUserPage( $title, $this->config );
 	}
 
 	/**
@@ -320,9 +338,10 @@ class GlobalUserPage extends Article {
 			'disablelimitreport' => 1,
 			'uselang' => $langCode,
 			'prop' => 'text|modules|jsconfigvars',
-			'formatversion' => 2
+			'formatversion' => 2,
 		];
 		$data = $this->mPage->makeAPIRequest( $params );
+
 		return $data !== false ? $data['parse'] : false;
 	}
 
@@ -333,7 +352,7 @@ class GlobalUserPage extends Article {
 		static $list = null;
 		if ( $list === null ) {
 			$list = [];
-			if ( Hooks::run( 'GlobalUserPageWikis', [ &$list ] ) ) {
+			if ( MWHooks::run( 'GlobalUserPageWikis', [ &$list ] ) ) {
 				// Fallback if no hook override
 				global $wgLocalDatabases;
 				$list = $wgLocalDatabases;

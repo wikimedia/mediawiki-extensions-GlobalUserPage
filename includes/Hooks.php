@@ -14,7 +14,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GlobalUserPageHooks {
+namespace MediaWiki\GlobalUserPage;
+
+use Article;
+use ConfigFactory;
+use GlobalPreferences;
+use IContextSource;
+use LinksUpdate;
+use Title;
+use User;
+use WikiPage;
+
+class Hooks {
 	/**
 	 * Adds the user option for using GlobalUserpage to Special:GlobalPreferences.
 	 *
@@ -23,7 +34,7 @@ class GlobalUserPageHooks {
 	 * @return bool
 	 */
 	public static function onGetPreferences( User $user, &$preferences ) {
-		if ( class_exists( 'GlobalPreferences' ) && GlobalPreferences::onGlobalPrefsPage() ) {
+		if ( class_exists( GlobalPreferences::class ) && GlobalPreferences::onGlobalPrefsPage() ) {
 			$preferences['globaluserpage'] = [
 				'type' => 'toggle',
 				'label-message' => 'globaluserpage-preferences',
@@ -78,6 +89,7 @@ class GlobalUserPageHooks {
 	 */
 	protected static function isGlobalUserPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
+
 		return $wgGlobalUserPageDBname === wfWikiID() // On the central wiki
 			&& $title->inNamespace( NS_USER ) // is a user page
 			&& $title->getRootTitle()->equals( $title ); // and is a root page.
@@ -92,7 +104,7 @@ class GlobalUserPageHooks {
 	public static function onLinksUpdateComplete( LinksUpdate &$lu ) {
 		$title = $lu->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
-			$inv = new GlobalUserPageCacheInvalidator( $title->getText() );
+			$inv = new CacheInvalidator( $title->getText() );
 			$inv->invalidate();
 		}
 
@@ -109,7 +121,7 @@ class GlobalUserPageHooks {
 	public static function onPageContentInsertComplete( WikiPage $page ) {
 		$title = $page->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
-			$inv = new GlobalUserPageCacheInvalidator( $title->getText(), [ 'links' ] );
+			$inv = new CacheInvalidator( $title->getText(), [ 'links' ] );
 			$inv->invalidate();
 		}
 
@@ -161,10 +173,11 @@ class GlobalUserPageHooks {
 	 */
 	public static function onWikiPageFactory( Title $title, &$page ) {
 		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
-			$page = new GlobalUserPagePage(
+			$page = new WikiGlobalUserPagePage(
 				$title,
 				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
 			);
+
 			return false;
 		}
 

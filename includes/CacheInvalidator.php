@@ -14,7 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GlobalUserPageCacheInvalidator {
+namespace MediaWiki\GlobalUserPage;
+
+use JobQueueGroup;
+use Title;
+
+class CacheInvalidator {
 	/**
 	 * Username of the user who's userpage needs to be invalidated
 	 *
@@ -42,7 +47,7 @@ class GlobalUserPageCacheInvalidator {
 			return;
 		}
 
-		JobQueueGroup::singleton()->push( new GlobalUserPageLocalJobSubmitJob(
+		JobQueueGroup::singleton()->push( new LocalJobSubmitJob(
 			Title::newFromText( 'User:' . $this->username ),
 			[
 				'username' => $this->username,

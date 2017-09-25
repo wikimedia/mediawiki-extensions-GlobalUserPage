@@ -22,28 +22,28 @@
 	},
 	"Hooks": {
 		"GetPreferences": [
-			"GlobalUserPageHooks::onGetPreferences"
+			"MediaWiki\\GlobalUserPage\\Hooks::onGetPreferences"
 		],
 		"TitleIsAlwaysKnown": [
-			"GlobalUserPageHooks::onTitleIsAlwaysKnown"
+			"MediaWiki\\GlobalUserPage\\Hooks::onTitleIsAlwaysKnown"
 		],
 		"ArticleFromTitle": [
-			"GlobalUserPageHooks::onArticleFromTitle"
+			"MediaWiki\\GlobalUserPage\\Hooks::onArticleFromTitle"
 		],
 		"LinksUpdateComplete": [
-			"GlobalUserPageHooks::onLinksUpdateComplete"
+			"MediaWiki\\GlobalUserPage\\Hooks::onLinksUpdateComplete"
 		],
 		"PageContentInsertComplete": [
-			"GlobalUserPageHooks::onPageContentInsertComplete"
+			"MediaWiki\\GlobalUserPage\\Hooks::onPageContentInsertComplete"
 		],
 		"ArticleDeleteComplete": [
-			"GlobalUserPageHooks::onArticleDeleteComplete"
+			"MediaWiki\\GlobalUserPage\\Hooks::onArticleDeleteComplete"
 		],
 		"TitleGetEditNotices": [
-			"GlobalUserPageHooks::onTitleGetEditNotices"
+			"MediaWiki\\GlobalUserPage\\Hooks::onTitleGetEditNotices"
 		],
-		"GetDoubleUnderscoreIDs": "GlobalUserPageHooks::onGetDoubleUnderscoreIDs",
-		"WikiPageFactory": "GlobalUserPageHooks::onWikiPageFactory"
+		"GetDoubleUnderscoreIDs": "MediaWiki\\GlobalUserPage\\Hooks::onGetDoubleUnderscoreIDs",
+		"WikiPageFactory": "MediaWiki\\GlobalUserPage\\Hooks::onWikiPageFactory"
 	},
 	"config": {
 		"GlobalUserPageCacheExpiry": 604800,
@@ -63,19 +63,19 @@
 		"remoteExtPath": "GlobalUserPage"
 	},
 	"JobClasses": {
-		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob",
-		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob"
+		"GlobalUserPageLocalJobSubmitJob": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
+		"LocalGlobalUserPageCacheUpdateJob": "MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob"
 	},
 	"DefaultUserOptions": {
 		"globaluserpage": true
 	},
 	"AutoloadClasses": {
-		"GlobalUserPage": "GlobalUserPage.body.php",
-		"GlobalUserPagePage": "GlobalUserPagePage.php",
-		"GlobalUserPageHooks": "GlobalUserPage.hooks.php",
-		"GlobalUserPageCacheInvalidator": "GlobalUserPageCacheInvalidator.php",
-		"GlobalUserPageLocalJobSubmitJob": "GlobalUserPageLocalJobSubmitJob.php",
-		"LocalGlobalUserPageCacheUpdateJob": "LocalGlobalUserPageCacheUpdateJob.php"
+		"MediaWiki\\GlobalUserPage\\GlobalUserPage": "includes/GlobalUserPage.php",
+		"MediaWiki\\GlobalUserPage\\WikiGlobalUserPage": "includes/WikiGlobalUserPage.php",
+		"MediaWiki\\GlobalUserPage\\Hooks": "includes/Hooks.php",
+		"MediaWiki\\GlobalUserPage\\CacheInvalidator": "includes/CacheInvalidator.php",
+		"MediaWiki\\GlobalUserPage\\LocalJobSubmitJob": "includes/LocalJobSubmitJob.php",
+		"MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob": "includes/LocalCacheUpdateJob.php"
 	},
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
