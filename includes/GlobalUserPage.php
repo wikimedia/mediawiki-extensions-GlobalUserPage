@@ -87,11 +87,14 @@ class GlobalUserPage extends Article {
 		$out->addHTML( $parsedOutput['text'] );
 		$out->addModuleStyles( 'ext.GlobalUserPage' );
 
+		// Set canonical URL to point to the source
+		$sourceURL = $this->mPage->getSourceURL();
+		$out->setCanonicalUrl( $sourceURL );
 		$footerKey = $this->config->get( 'GlobalUserPageFooterKey' );
 		if ( $footerKey ) {
 			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
 				"\n" . $out->msg( $footerKey )
-					->params( $this->getUsername(), $this->mPage->getSourceURL() )->parse() .
+					->params( $this->getUsername(), $sourceURL )->parse() .
 				"\n</div>"
 			);
 		}
