@@ -173,7 +173,7 @@ class Hooks {
 	 */
 	public static function onWikiPageFactory( Title $title, &$page ) {
 		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
-			$page = new WikiGlobalUserPagePage(
+			$page = new WikiGlobalUserPage(
 				$title,
 				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
 			);
