@@ -4,5 +4,8 @@
 			"Bunukwiki"
 		]
 	},
-	"globaluserpage-desc": "lunuk nay teban nu wiki maala misaungayay kasabelih"
+	"globaluserpage-desc": "lunuk nay teban nu wiki maala misaungayay kasabelih",
+	"globaluserpage-central-editnotice": "amahica zuma wiki i niyazu’ay a misaungayay kasabelih inayi’ sa, a  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage paazih], tina misaungayay kasabelih.",
+	"globaluserpage-preferences": "pisaungay [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sacahamin a subal misaungayay kasabelih]",
+	"globaluserpage-footer": "maazih nu misu [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sacahamin-subal misaungayay kasabelih] saayaway i [$2 $2]"
 }
