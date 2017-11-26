@@ -5,6 +5,7 @@
 		]
 	},
 	"globaluserpage-desc": "lunuk nay teban nu wiki maala misaungayay kasabelih",
+	"globaluserpage-editnotice": "tina kasabelih paazihay a misaungayay kasabelih ayza namakay zuma wiki. amahica itini kisu patizeng baluhayay a kasabelih, acaay tu paazih zuma wiki a kasabelih.",
 	"globaluserpage-central-editnotice": "amahica zuma wiki i niyazu’ay a misaungayay kasabelih inayi’ sa, a  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage paazih], tina misaungayay kasabelih.",
 	"globaluserpage-preferences": "pisaungay [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sacahamin a subal misaungayay kasabelih]",
 	"globaluserpage-footer": "maazih nu misu [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage sacahamin-subal misaungayay kasabelih] saayaway i [$2 $2]"
