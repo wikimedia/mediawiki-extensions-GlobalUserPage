@@ -7,7 +7,7 @@
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:GlobalUserPage",
 	"descriptionmsg": "globaluserpage-desc",
-	"license-name": "GPL-3.0+",
+	"license-name": "GPL-3.0-or-later",
 	"type": "other",
 	"requires": {
 		"MediaWiki": ">= 1.28.0"
