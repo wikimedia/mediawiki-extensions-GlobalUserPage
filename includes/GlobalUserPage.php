@@ -20,6 +20,7 @@ use Article;
 use BagOStuff;
 use CentralIdLookup;
 use Config;
+use ExtensionRegistry;
 use Hooks as MWHooks;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
@@ -163,7 +164,7 @@ class GlobalUserPage extends Article {
 		}
 
 		// Only check preferences if E:GlobalPreferences is installed
-		if ( class_exists( 'GlobalPreferences' ) ) {
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'GlobalPreferences' ) ) {
 			if ( !$user->getOption( 'globaluserpage' ) ) {
 				self::$displayCache->set( $text, false );
 
