@@ -2,8 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Anakmalaysia",
-			"Jeluang Terluang"
+			"Jeluang Terluang",
+			"SNN95"
 		]
 	},
+	"globaluserpage-desc": "Laman pengguna diperoleh dari wiki pusat secara automatik",
+	"globaluserpage-editnotice": "Halaman ini kini memaparkan halaman pengguna dari wiki lain. Jika anda membuat halaman baru di sini, ia tidak akan memaparkan halaman wiki yang lain lagi.",
+	"globaluserpage-central-editnotice": "Halaman pengguna ini akan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage dipaparkan] di wiki lain jika laman pengguna setempat tidak wujud di sana.",
+	"globaluserpage-preferences": "Menggunakan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage laman pengguna global]",
 	"globaluserpage-footer": "Apa yang anda baca di halaman ini ialah [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage salinan] daripada [$2 $2]."
 }
