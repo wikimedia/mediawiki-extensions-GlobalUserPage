@@ -18,9 +18,10 @@ namespace MediaWiki\GlobalUserPage;
 
 use Article;
 use ConfigFactory;
-use GlobalPreferences;
+use ExtensionRegistry;
 use IContextSource;
 use LinksUpdate;
+use MediaWiki\MediaWikiServices;
 use Title;
 use User;
 use WikiPage;
@@ -34,7 +35,11 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onGetPreferences( User $user, &$preferences ) {
-		if ( class_exists( GlobalPreferences::class ) && GlobalPreferences::onGlobalPrefsPage() ) {
+		$preferencesFactory = MediaWikiServices::getInstance()->getPreferencesFactory();
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'GlobalPreferences' )
+			&& $preferencesFactory instanceof \GlobalPreferences\GlobalPreferencesFactory
+			&& $preferencesFactory->onGlobalPrefsPage()
+		) {
 			$preferences['globaluserpage'] = [
 				'type' => 'toggle',
 				'label-message' => 'globaluserpage-preferences',
