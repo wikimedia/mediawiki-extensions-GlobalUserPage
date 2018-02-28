@@ -18,37 +18,12 @@ namespace MediaWiki\GlobalUserPage;
 
 use Article;
 use ConfigFactory;
-use ExtensionRegistry;
 use IContextSource;
 use LinksUpdate;
-use MediaWiki\MediaWikiServices;
 use Title;
-use User;
 use WikiPage;
 
 class Hooks {
-	/**
-	 * Adds the user option for using GlobalUserpage to Special:GlobalPreferences.
-	 *
-	 * @param User $user
-	 * @param array &$preferences Preference descriptions
-	 * @return bool
-	 */
-	public static function onGetPreferences( User $user, &$preferences ) {
-		$preferencesFactory = MediaWikiServices::getInstance()->getPreferencesFactory();
-		if ( ExtensionRegistry::getInstance()->isLoaded( 'GlobalPreferences' )
-			&& $preferencesFactory instanceof \GlobalPreferences\GlobalPreferencesFactory
-			&& $preferencesFactory->onGlobalPrefsPage()
-		) {
-			$preferences['globaluserpage'] = [
-				'type' => 'toggle',
-				'label-message' => 'globaluserpage-preferences',
-				'section' => 'personal/info', // not the best place for it, but eh
-			];
-		}
-
-		return true;
-	}
 
 	/**
 	 * @param Title &$title
