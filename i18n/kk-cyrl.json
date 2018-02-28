@@ -7,6 +7,5 @@
 	"globaluserpage-desc": "Орталық уикиден автоматты түрде қатысушы беттерін алу",
 	"globaluserpage-editnotice": "Бұл бет басқа уикиден қатысушы бетін көрсетуде. Егер осында сіз жаңа бет бастасаңыз, онда басқа уикидегі беті көрсетілмейді.",
 	"globaluserpage-central-editnotice": "Егер осында жергілікті қатысушы беті жоқ болса басқа уикидегі бұл қатысушы беті [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage көрсетіледі].",
-	"globaluserpage-preferences": "[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage Ғаламдық қатысушы бетін] қолдану",
 	"globaluserpage-footer": "Сіз бұл беттің [$2 $2] бетінен [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage көшірілген] нұсқасын көріп отырсыз."
 }

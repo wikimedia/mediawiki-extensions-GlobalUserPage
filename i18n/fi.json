@@ -9,6 +9,5 @@
 	"globaluserpage-desc": "Hakee automaattisesti käyttäjäsivut keskuswikistä",
 	"globaluserpage-editnotice": "Tämä sivu näyttää tällä hetkellä käyttäjäsivun toisesta wikistä. Jos luot uuden sivun täällä, se ei enää näytä toisen wikin sivua.",
 	"globaluserpage-central-editnotice": "Tämä käyttäjäsivu [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage näytetään] muissa wikeissä, jos siellä ei ole paikallista käyttäjäsivua olemassa.",
-	"globaluserpage-preferences": "Käytä [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage järjestelmänlaajuista käyttäjäsivua]",
 	"globaluserpage-footer": "Tämän sivun sisältö on [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopioitu] sivulta [$2 $2]."
 }

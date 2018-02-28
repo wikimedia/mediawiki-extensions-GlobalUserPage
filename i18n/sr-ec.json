@@ -7,6 +7,5 @@
 	"globaluserpage-desc": "Аутоматски приказује корисничку страницу са централног викија.",
 	"globaluserpage-editnotice": "Ова страница тренутно приказује корисничку страницу са другог викија. Ако овде направите нову страницу она ће потиснути тренутну страницу.",
 	"globaluserpage-central-editnotice": "Ова корсничка страница ће бити [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage приказана] на другим викијима где не постоји локална корисничка страница.",
-	"globaluserpage-preferences": "Користи [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобалну корисничку страницу]",
 	"globaluserpage-footer": "Ово је [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage копија] корисничке странице [$2 $2]."
 }

@@ -6,6 +6,5 @@
 			"BRUTE"
 		]
 	},
-	"globaluserpage-editnotice": "ეს გვერდი აჩვენებს მომხმარებლის გვერდს სხვა ვიკიდან. თუ თქვენ აქ ახალ გვერდს შექმნით, ის სხვა ვიკის გვერდებზე არ გამოჩნდება.",
-	"globaluserpage-preferences": "გამოიყენეთ\n[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage გლობალური მომხმარებლის გვერდი]"
+	"globaluserpage-editnotice": "ეს გვერდი აჩვენებს მომხმარებლის გვერდს სხვა ვიკიდან. თუ თქვენ აქ ახალ გვერდს შექმნით, ის სხვა ვიკის გვერდებზე არ გამოჩნდება."
 }

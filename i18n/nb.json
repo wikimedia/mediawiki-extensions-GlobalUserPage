@@ -7,6 +7,5 @@
 	"globaluserpage-desc": "Henter automatisk brukersider fra en sentral wiki",
 	"globaluserpage-editnotice": "Denne siden viser en brukerside fra en annen wiki. Om du oppretter en ny side her vil du erstatte den med den nye siden.",
 	"globaluserpage-central-editnotice": "Denne brukersiden vil bli [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage vist] på andre wikier om en lokal brukerside ikke finnes der.",
-	"globaluserpage-preferences": "Bruk [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage global brukerside]",
 	"globaluserpage-footer": "Det du ser på denne siden ble [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopiert] fra [$2 $2]."
 }

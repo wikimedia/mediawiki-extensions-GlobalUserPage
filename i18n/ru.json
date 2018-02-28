@@ -10,6 +10,5 @@
 	"globaluserpage-desc": "Автоматически извлекает страницы участника из центральной вики",
 	"globaluserpage-editnotice": "В настоящее время здесь отображается личная страница участника из другого вики-проекта. Если вы создадите новую страницу, страница из другого вики-проекта больше не будет здесь отображаться.",
 	"globaluserpage-central-editnotice": "Эта страница участника будет [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage показана] в других вики-проектах, если там не существуют локальные страницы участника.",
-	"globaluserpage-preferences": "Использовать [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальную страницу участника]",
 	"globaluserpage-footer": "Всё, что вы видите на этой странице, было [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скопировано] из [$2 $2]."
 }

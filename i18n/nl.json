@@ -11,6 +11,5 @@
 	"globaluserpage-desc": "Haalt automatisch gebruikerspagina's van een centrale wiki",
 	"globaluserpage-editnotice": "Hier wordt een gebruikerspagina van een andere wiki weergegeven. Als u hier een nieuwe pagina maakt, wordt de pagina van de andere wiki niet langer weergegeven.",
 	"globaluserpage-central-editnotice": "Deze gebruikerspagina wordt [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage weergegeven] op andere wiki's als er daar geen lokale gebruikerspagina is.",
-	"globaluserpage-preferences": "Gebruik [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globale gebruikerspagina]",
 	"globaluserpage-footer": "Wat u op deze pagina ziet, is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gekopieerd] van [$2 $2]."
 }

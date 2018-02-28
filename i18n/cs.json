@@ -9,6 +9,5 @@
 	"globaluserpage-desc": "Automaticky načítá uživatelské stránky z centrální wiki",
 	"globaluserpage-editnotice": "Na této stránce se momentálně zobrazuje uživatelská stránka z jiné wiki. Pokud zde založíte novou stránku, stránka z jiné wiki se zde již zobrazovat nebude.",
 	"globaluserpage-central-editnotice": "Tato uživatelská stránka se [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage zobrazí] na ostatních wiki, pokud na nich neexistuje lokální uživatelská stránka.",
-	"globaluserpage-preferences": "Používat [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globální uživatelskou stránku]",
 	"globaluserpage-footer": "To, co vidíte na této stránce, sem bylo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage přeneseno] z [$2 $2]."
 }

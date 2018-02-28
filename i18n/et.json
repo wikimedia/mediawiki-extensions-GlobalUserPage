@@ -7,6 +7,5 @@
 	"globaluserpage-desc": "Võimaldab hankida kasutajalehekülje automaatselt kesksest vikist.",
 	"globaluserpage-editnotice": "Sellel leheküljel näidatakse praegu teisest vikist pärit kasutajalehekülge. Kui lood siia uue lehekülje, siis teise viki lehekülge siin enam ei näidata.",
 	"globaluserpage-central-editnotice": "Seda kasutajalehekülge [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage näidatakse] teistes vikides, kus kohalik kasutajalehekülg puudub.",
-	"globaluserpage-preferences": "Kasuta [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globaalset kasutajalehekülge]",
 	"globaluserpage-footer": "Selle lehekülje sisu on [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopeeritud] asukohast [$2 $2]."
 }

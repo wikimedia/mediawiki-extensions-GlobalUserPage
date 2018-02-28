@@ -12,6 +12,5 @@
 	"globaluserpage-desc": "Автоматично витягує сторінки користувача з центральної вікі",
 	"globaluserpage-editnotice": "Наразі відображається сторінка користувача з іншої вікі. Якщо Ви тут створите нову сторінку, вона замінить наявну, яка вже більше не буде відображатися.",
 	"globaluserpage-central-editnotice": "Ця сторінка користувача буде [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage відображена] на інших Вікі, де немає локальної сторінки користувача.",
-	"globaluserpage-preferences": "Використовувати [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage глобальну сторінку користувача]",
 	"globaluserpage-footer": "Те, що Ви бачите на цій сторінці, було [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скопійоване] з [$2 $2]."
 }

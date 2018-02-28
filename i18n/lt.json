@@ -7,6 +7,5 @@
 	"globaluserpage-desc": "Automatiškai gauti naudotojo puslapius iš konkretaus vikio",
 	"globaluserpage-editnotice": "Šis puslapis dabar rodo naudotojo puslapį iš kito vikio. Jeigu čia sukursite naują puslapį, jis neberodys kito vikio puslapio.",
 	"globaluserpage-central-editnotice": "Šis naudotojo puslapis bus [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage rodomas] kituose vikiuose, jeigu ten neegzistuoja lokalus naudotojo puslapis.",
-	"globaluserpage-preferences": "Naudoti [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage globalų naudotojo puslapį]",
 	"globaluserpage-footer": "Ką matote šiame puslapyje buvo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage nukopijuota] iš [$2 $2]."
 }
