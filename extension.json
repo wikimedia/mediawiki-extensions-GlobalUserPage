@@ -10,7 +10,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.28.0"
+		"MediaWiki": ">= 1.29.0"
 	},
 	"MessagesDirs": {
 		"GlobalUserPage": [
@@ -51,7 +51,6 @@
 	},
 	"ResourceModules": {
 		"ext.GlobalUserPage": {
-			"position": "top",
 			"styles": "ext.GlobalUserPage.css"
 		}
 	},
