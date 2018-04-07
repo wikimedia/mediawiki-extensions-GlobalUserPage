@@ -45,5 +45,6 @@ class LocalCacheUpdateJob extends Job {
 		if ( $this->params['touch'] ) {
 			$title->touchLinks();
 		}
+		return true;
 	}
 }

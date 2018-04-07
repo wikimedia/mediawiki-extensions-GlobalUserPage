@@ -36,5 +36,6 @@ class LocalJobSubmitJob extends Job {
 		foreach ( GlobalUserPage::getEnabledWikis() as $wiki ) {
 			JobQueueGroup::singleton( $wiki )->push( $job );
 		}
+		return true;
 	}
 }
