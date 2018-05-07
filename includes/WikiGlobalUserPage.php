@@ -20,6 +20,7 @@ use BagOStuff;
 use Config;
 use FormatJson;
 use MWHttpRequest;
+use Status;
 use Title;
 use WikiMap;
 use WikiPage;
@@ -133,7 +134,9 @@ class WikiGlobalUserPage extends WikiPage {
 		);
 		$status = $req->execute();
 		if ( !$status->isOK() ) {
-			wfDebugLog( 'GlobalUserPage', __METHOD__ . " Error: {$status->getWikitext()}" );
+			wfDebugLog(
+				'GlobalUserPage', __METHOD__ . ' Error: ' . Status::wrap( $status )->getWikitext()
+			);
 
 			return false;
 		}
