@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Janezdrilc"
+		]
+	},
+	"globaluserpage-editnotice": "Ta stran trenutno prikazuje uporabniško stran iz drugega wikija. V kolikor ustvariš novo stran tu, tamkajšnja na njej ne bo več prikazana.",
+	"globaluserpage-central-editnotice": "Ta uporabniška stran bo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] na drugih wikijih, v kolikor tamkajšnje uporabniške strani še ne obstajajo.",
+	"globaluserpage-footer": "Vsebina na tej strani je samodejno [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] iz strani [$2 $2]."
+}
