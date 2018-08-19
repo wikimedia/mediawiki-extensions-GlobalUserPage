@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dr Lotus Black"
+		]
+	},
+	"globaluserpage-desc": "ဗဟိုဝီကီမှ အသုံးပြုသူစာမျက်နှာများကို အလိုအလျောက် ခေါ်ယူရန်",
+	"globaluserpage-editnotice": "ဤစာမျက်နှာသည် လက်ရှိတွင် အခြားဝီကီမှ အသုံးပြုသူစာမျက်နှာကို ပြသထားခြင်းဖြစ်သည်။ ဤနေရာတွင် စာမျက်နှာသစ်တစ်ခု ဖန်တီးပါက အခြားဝီကီများ၏ စာမျက်နှာတွင် ပြသပေးမည်မဟုတ်တော့ပါ။",
+	"globaluserpage-central-editnotice": "အကယ်၍ ဒေသတွင်း အသုံးပြုသူစာမျက်နှာ မရှိပါက ဤအသုံးပြုသူစာမျက်နှာသည် အခြားဝီကီများတွင် [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ပြသပေးမည်]ဖြစ်သည်။",
+	"globaluserpage-footer": "ဤစာမျက်နှာပေါ်တွင် သင်မြင်ရသောအရာမှာ [$2 $2] မှ [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage မိတ္တူကူးထားသည်]"
+}
