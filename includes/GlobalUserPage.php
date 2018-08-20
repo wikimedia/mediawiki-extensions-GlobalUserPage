@@ -258,8 +258,12 @@ class GlobalUserPage extends Article {
 	}
 
 	/**
+	 * We trust that the remote wiki has done proper HTML escaping and isn't
+	 * crazy by having raw HTML enabled.
+	 *
 	 * @param string $touched The page_touched for the page
 	 * @return array|bool
+	 * @return-taint escaped
 	 */
 	public function getRemoteParsedText( $touched ) {
 		$langCode = $this->getContext()->getLanguage()->getCode();
