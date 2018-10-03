@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Sarrus"
+			"Sarrus",
+			"Saederup92"
 		]
 	},
+	"globaluserpage-desc": "Henter automatisk brugersider fra en central wiki",
 	"globaluserpage-footer": "Indholdet på denne side er [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopieret] fra [$2 $2]."
 }
