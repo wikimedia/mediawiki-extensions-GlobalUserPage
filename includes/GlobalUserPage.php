@@ -21,6 +21,7 @@ use BagOStuff;
 use CentralIdLookup;
 use Config;
 use Hooks as MWHooks;
+use IP;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
 use MWNamespace;
@@ -155,11 +156,10 @@ class GlobalUserPage extends Article {
 			return self::$displayCache->get( $text );
 		}
 
+		// Normalize the username
 		$user = User::newFromName( $title->getText() );
-		$user->load( User::READ_NORMAL );
 
-		// Already validated that the username is fine in canBeGlobal
-		if ( $user->getId() === 0 ) {
+		if ( !$user ) {
 			self::$displayCache->set( $text, false );
 
 			return false;
@@ -310,7 +310,12 @@ class GlobalUserPage extends Article {
 		}
 
 		// Check valid username
-		return User::isValidUserName( $title->getText() );
+		if ( !User::isValidUserName( $title->getText() ) ) {
+			return false;
+		}
+
+		// IPs don't get global userpages
+		return !IP::isIPAddress( $title->getText() );
 	}
 
 	/**
