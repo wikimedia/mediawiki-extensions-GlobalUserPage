@@ -117,15 +117,14 @@ class GlobalUserPage extends Article {
 	 */
 	private function loadModules( OutputPage $out, array $parsedOutput ) {
 		$rl = $out->getResourceLoader();
-		$map = [
-			'modules' => 'addModules',
-			'modulestyles' => 'addModuleStyles',
-		];
-		foreach ( $map as $type => $func ) {
-			foreach ( $parsedOutput[$type] as $module ) {
-				if ( $rl->isModuleRegistered( $module ) ) {
-					$out->$func( $module );
-				}
+		foreach ( $parsedOutput['modules'] as $module ) {
+			if ( $rl->isModuleRegistered( $module ) ) {
+				$out->addModules( $module );
+			}
+		}
+		foreach ( $parsedOutput['modulestyles'] as $module ) {
+			if ( $rl->isModuleRegistered( $module ) ) {
+				$out->addModuleStyles( $module );
 			}
 		}
 
