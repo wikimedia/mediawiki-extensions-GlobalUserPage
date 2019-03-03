@@ -120,7 +120,6 @@ class GlobalUserPage extends Article {
 		$map = [
 			'modules' => 'addModules',
 			'modulestyles' => 'addModuleStyles',
-			'modulescripts' => 'addModuleScripts',
 		];
 		foreach ( $map as $type => $func ) {
 			foreach ( $parsedOutput[$type] as $module ) {
