@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bjankuloski06"
+			"Bjankuloski06",
+			"Vlad5250"
 		]
 	},
 	"globaluserpage-desc": "Автоматски дава кориснички страници од централно вики",
 	"globaluserpage-editnotice": "На страницава е прикажана корисничка страница од друго вики. Ако тука создадете нова страница, повеќе нема да се прикажува страницата од другото вики.",
 	"globaluserpage-central-editnotice": "Оваа корисничка страница ќе [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage се прикажува] на други викија ако корисникот нема страница таму.",
-	"globaluserpage-footer": "'''Она што го гледате на страницава е [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage прекопирано] од [$2 $2]."
+	"globaluserpage-footer": "Она што го гледате на страницава е [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage прекопирано] од [$2 $2]."
 }
