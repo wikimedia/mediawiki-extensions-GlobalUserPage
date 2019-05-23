@@ -29,6 +29,9 @@ use OutputPage;
 use Title;
 use User;
 
+/**
+ * @phan-property WikiGlobalUserPage $mPage Set by overwritten newPage() in this class
+ */
 class GlobalUserPage extends Article {
 
 	/**
