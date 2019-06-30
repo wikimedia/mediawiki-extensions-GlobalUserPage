@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"PiefPafPier"
+		]
+	},
+	"globaluserpage-desc": "Hellet meidoggersiden automatysk fan in sintrale wiki",
+	"globaluserpage-editnotice": "Dizze side lit op it stuit de meidoggerside fan in oare wiki sjen. At jo hjir in nije side oanmeitsje, dan wurdt de side fan dy oare wiki net mear werjûn.",
+	"globaluserpage-central-editnotice": "Dizze meidoggerside wurdt op oare wiki's [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage werjûn], at dêr gjin lokale meidoggerside is.",
+	"globaluserpage-footer": "Wat jo op dizze side sjogge, is [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopiearre] fan [$2 $2]."
+}
