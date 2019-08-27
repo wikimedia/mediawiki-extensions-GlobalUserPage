@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Metalhead64",
-			"Purodha"
+			"Purodha",
+			"DannyS712"
 		]
 	},
 	"globaluserpage-desc": "Ermöglicht den automatischen Abruf von Benutzerseiten von einem zentralen Wiki",
-	"globaluserpage-editnotice": "Diese Seite zeigt derzeit eine Benutzerseite von einem anderen Wiki an. Falls du hier eine neue Seite erstellst, wird sie auf anderen Wikiseiten nicht mehr angezeigt.",
+	"globaluserpage-editnotice": "Diese Seite zeigt derzeit eine Benutzerseite von einem anderen Wiki an. Falls du hier eine neue Seite erstellst, wird die Seite des anderen Wikis hier nicht mehr angezeigt.",
 	"globaluserpage-central-editnotice": "Diese Benutzerseite wird auf anderen Wikis [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage angezeigt], falls keine lokale Benutzerseite dort vorhanden ist.",
 	"globaluserpage-footer": "Der Inhalt auf dieser Seite wurde von [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage eingebunden]."
 }
