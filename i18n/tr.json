@@ -3,11 +3,12 @@
 		"authors": [
 			"Arystanbek",
 			"Meelo",
-			"McAang"
+			"McAang",
+			"BaRaN6161 TURK"
 		]
 	},
 	"globaluserpage-desc": "Otomatik olarak merkezi bir wiki kullanıcı sayfaları getirir",
-	"globaluserpage-editnotice": "Bu sayfa şu anda başka bir wiki kullanıcı bir sayfa görüntüler. Eğer yeni bir sayfa oluşturma, yeni oluşturulan sayfa ile geçersiz olacaktır.",
+	"globaluserpage-editnotice": "Bu sayfa şu anda başka bir wiki'den bir kullanıcı sayfası görüntülüyor. Burada yeni bir sayfa oluşturursanız, artık diğer wiki sayfasını göstermeyecektir.",
 	"globaluserpage-central-editnotice": "Bu kullanıcı sayfası, yerel bir kullanıcı sayfası olmayan vikilerde [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage görüntülenecek].",
 	"globaluserpage-footer": "Bu sayfada gördükleriniz [$2 $2] sayfasından [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopyalanmıştır]."
 }
