@@ -16,12 +16,13 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use BagOStuff;
 use Config;
 use FormatJson;
+use MediaWiki\MediaWikiServices;
 use MWHttpRequest;
 use Status;
 use Title;
+use WANObjectCache;
 use WikiMap;
 use WikiPage;
 
@@ -33,15 +34,14 @@ class WikiGlobalUserPage extends WikiPage {
 	private $config;
 
 	/**
-	 * @var BagOStuff
+	 * @var WANObjectCache
 	 */
 	private $cache;
 
 	public function __construct( Title $title, Config $config ) {
-		global $wgMemc;
 		parent::__construct( $title );
 		$this->config = $config;
-		$this->cache = $wgMemc;
+		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 	}
 
 	public function isLocal() {
@@ -94,28 +94,29 @@ class WikiGlobalUserPage extends WikiPage {
 	 * @return string
 	 */
 	protected function getRemoteURLFromAPI() {
-		$key = 'globaluserpage:url:' . md5( $this->getUsername() );
-		$data = $this->cache->get( $key );
-		if ( $data === false ) {
-			$params = [
-				'action' => 'query',
-				'titles' => 'User:' . $this->getUsername(),
-				'prop' => 'info',
-				'inprop' => 'url',
-				'formatversion' => '2',
-			];
-			$resp = $this->makeAPIRequest( $params );
-			if ( $resp === false ) {
-				// Don't cache upon failure
-				return '';
-			}
-			$data = $resp['query']['pages'][0]['canonicalurl'];
-			// Don't set an expiry since we expect people not to change the
-			// url to their wiki without clearing their caches!
-			$this->cache->set( $key, $data );
-		}
+		$cache = $this->cache;
 
-		return $data;
+		return $cache->getWithSetCallback(
+			$cache->makeGlobalKey( 'globaluserpage-url', sha1( $this->getUsername() ) ),
+			$cache::TTL_MONTH,
+			function ( $oldValue, &$ttl ) use ( $cache ) {
+				$resp = $this->makeAPIRequest( [
+					'action' => 'query',
+					'titles' => 'User:' . $this->getUsername(),
+					'prop' => 'info',
+					'inprop' => 'url',
+					'formatversion' => '2',
+				] );
+
+				if ( $resp === false ) {
+					$ttl = $cache::TTL_UNCACHEABLE;
+
+					return '';
+				}
+
+				return $resp['query']['pages'][0]['canonicalurl'];
+			}
+		);
 	}
 
 	/**

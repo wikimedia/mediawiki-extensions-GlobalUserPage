@@ -17,7 +17,6 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Article;
-use BagOStuff;
 use CentralIdLookup;
 use Config;
 use Hooks as MWHooks;
@@ -27,6 +26,7 @@ use MWNamespace;
 use OutputPage;
 use Title;
 use User;
+use WANObjectCache;
 use Wikimedia\IPUtils;
 
 /**
@@ -46,7 +46,7 @@ class GlobalUserPage extends Article {
 	private $config;
 
 	/**
-	 * @var BagOStuff
+	 * @var WANObjectCache
 	 */
 	private $cache;
 
@@ -61,9 +61,8 @@ class GlobalUserPage extends Article {
 	private static $touchedCache;
 
 	public function __construct( Title $title, Config $config ) {
-		global $wgMemc;
 		$this->config = $config;
-		$this->cache = $wgMemc;
+		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		parent::__construct( $title );
 	}
 
@@ -269,22 +268,28 @@ class GlobalUserPage extends Article {
 	public function getRemoteParsedText( $touched ) {
 		$langCode = $this->getContext()->getLanguage()->getCode();
 
-		// Need language code in the key since we pass &uselang= to the API.
-		$key = $this->cache->makeGlobalKey( 'globaluserpage', 'parsed',
-			self::PARSED_CACHE_VERSION, $touched, $langCode, md5( $this->getUsername() )
-		);
-		$data = $this->cache->get( $key );
-		if ( $data === false ) {
-			$data = $this->parseWikiText( $this->getTitle(), $langCode );
-			if ( $data ) {
-				$this->cache->set( $key, $data, $this->config->get( 'GlobalUserPageCacheExpiry' ) );
-			} else {
-				// Cache failure for 10 seconds
-				$this->cache->set( $key, null, 10 );
-			}
-		}
+		$cache = $this->cache;
 
-		return $data;
+		return $cache->getWithSetCallback(
+			// Need language code in the key since we pass &uselang= to the API
+			$cache->makeGlobalKey(
+				'globaluserpage-parsed',
+				$touched,
+				$langCode,
+				md5( $this->getUsername() )
+			),
+			$this->config->get( 'GlobalUserPageCacheExpiry' ),
+			function ( $oldValue, &$ttl ) use ( $langCode, $cache ) {
+				$data = $this->parseWikiText( $this->getTitle(), $langCode );
+				if ( !$data ) {
+					// Cache failure for 10 seconds
+					$ttl = $cache::TTL_UNCACHEABLE;
+				}
+
+				return $data;
+			},
+			[ 'version' => self::PARSED_CACHE_VERSION ]
+		);
 	}
 
 	/**
