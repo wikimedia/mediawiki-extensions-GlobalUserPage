@@ -21,13 +21,13 @@ use BagOStuff;
 use CentralIdLookup;
 use Config;
 use Hooks as MWHooks;
-use IP;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
 use MWNamespace;
 use OutputPage;
 use Title;
 use User;
+use Wikimedia\IPUtils;
 
 /**
  * @property WikiGlobalUserPage $mPage Set by overwritten newPage() in this class
@@ -316,7 +316,7 @@ class GlobalUserPage extends Article {
 		}
 
 		// IPs don't get global userpages
-		return !IP::isIPAddress( $title->getText() );
+		return !IPUtils::isIPAddress( $title->getText() );
 	}
 
 	/**
