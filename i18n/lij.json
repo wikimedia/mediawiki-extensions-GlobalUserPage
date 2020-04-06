@@ -4,5 +4,8 @@
 			"Giromin Cangiaxo"
 		]
 	},
+	"globaluserpage-desc": "A scarrega aotomaticamente e paggine utente da 'na wiki çentrâ",
+	"globaluserpage-editnotice": "Questa paggina oua a mostra 'na paggina utente da 'n atra wiki. Se oua ti chì ti ghe crei 'na noeuva paggina, quella de l'atro wiki a no saiâ ciù mostrâ.",
+	"globaluserpage-central-editnotice": "Questa paggina utente a saiâ [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage vixoalizâ] insce i atre wikki se lae 'na paggina utente locale a no gh'è.",
 	"globaluserpage-footer": "Quello che ti veddi inte sta paggina o l'è stæto [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiou] da [$2 $2]."
 }
