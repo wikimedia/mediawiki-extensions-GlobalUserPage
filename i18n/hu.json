@@ -1,8 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Tacsipacsi",
-			"Bencemac"
+			"Bencemac",
+			"Tacsipacsi"
 		]
 	},
 	"globaluserpage-desc": "Automatikusan megjeleníti a felhasználói lapokat egy központi wikiről",

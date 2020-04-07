@@ -1,10 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Okras",
 			"Kaganer",
-			"Sealle",
-			"NBS"
+			"NBS",
+			"Okras",
+			"Sealle"
 		]
 	},
 	"globaluserpage-desc": "Автоматически извлекает страницы участника из центральной вики",

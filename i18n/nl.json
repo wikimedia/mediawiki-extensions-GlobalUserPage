@@ -1,11 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Siebrand",
+			"Esketti",
 			"JurgenNL",
 			"Mbch331",
-			"Esketti",
-			"McDutchie"
+			"McDutchie",
+			"Siebrand"
 		]
 	},
 	"globaluserpage-desc": "Haalt automatisch gebruikerspagina's van een centrale wiki",

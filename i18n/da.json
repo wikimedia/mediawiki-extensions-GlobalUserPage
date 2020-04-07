@@ -1,8 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Sarrus",
-			"Saederup92"
+			"Saederup92",
+			"Sarrus"
 		]
 	},
 	"globaluserpage-desc": "Henter automatisk brugersider fra en central wiki",

@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"DannyS712",
 			"Metalhead64",
-			"Purodha",
-			"DannyS712"
+			"Purodha"
 		]
 	},
 	"globaluserpage-desc": "Ermöglicht den automatischen Abruf von Benutzerseiten von einem zentralen Wiki",

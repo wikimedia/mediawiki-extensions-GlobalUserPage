@@ -1,12 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Djiboun",
 			"Gomoko",
 			"Ltrlg",
-			"Djiboun",
-			"Wladek92",
 			"Titip1995",
-			"Urhixidur"
+			"Urhixidur",
+			"Wladek92"
 		]
 	},
 	"globaluserpage-desc": "Extrait automatiquement les pages d’utilisateur d’un wiki central",

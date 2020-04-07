@@ -2,11 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Andriykopanytsia",
-			"Piramidion",
-			"Максим Підліснюк",
-			"Ата",
 			"Base",
-			"Dars"
+			"Dars",
+			"Piramidion",
+			"Ата",
+			"Максим Підліснюк"
 		]
 	},
 	"globaluserpage-desc": "Автоматично витягує сторінки користувача з центральної вікі",

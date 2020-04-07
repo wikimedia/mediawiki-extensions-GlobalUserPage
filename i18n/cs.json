@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mormegil",
+			"Dvorapa",
 			"Matěj Suchánek",
-			"Dvorapa"
+			"Mormegil"
 		]
 	},
 	"globaluserpage-desc": "Automaticky načítá uživatelské stránky z centrální wiki",
