@@ -53,13 +53,8 @@
 	"DefaultUserOptions": {
 		"globaluserpage": true
 	},
-	"AutoloadClasses": {
-		"MediaWiki\\GlobalUserPage\\GlobalUserPage": "includes/GlobalUserPage.php",
-		"MediaWiki\\GlobalUserPage\\WikiGlobalUserPage": "includes/WikiGlobalUserPage.php",
-		"MediaWiki\\GlobalUserPage\\Hooks": "includes/Hooks.php",
-		"MediaWiki\\GlobalUserPage\\CacheInvalidator": "includes/CacheInvalidator.php",
-		"MediaWiki\\GlobalUserPage\\LocalJobSubmitJob": "includes/LocalJobSubmitJob.php",
-		"MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob": "includes/LocalCacheUpdateJob.php"
+	"AutoloadNamespaces": {
+		"MediaWiki\\GlobalUserPage\\": "includes/"
 	},
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
