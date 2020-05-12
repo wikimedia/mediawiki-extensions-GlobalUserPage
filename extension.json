@@ -31,11 +31,21 @@
 		"WikiPageFactory": "MediaWiki\\GlobalUserPage\\Hooks::onWikiPageFactory"
 	},
 	"config": {
-		"GlobalUserPageCacheExpiry": 604800,
-		"GlobalUserPageAPIUrl": "https://example.org/w/api.php",
-		"GlobalUserPageTimeout": 10,
-		"GlobalUserPageFooterKey": "globaluserpage-footer",
-		"GlobalUserPageDBname": "examplewiki"
+		"GlobalUserPageCacheExpiry": {
+			"value": 604800
+		},
+		"GlobalUserPageAPIUrl": {
+			"value": "https://example.org/w/api.php"
+		},
+		"GlobalUserPageTimeout": {
+			"value": 10
+		},
+		"GlobalUserPageFooterKey": {
+			"value": "globaluserpage-footer"
+		},
+		"GlobalUserPageDBname": {
+			"value": "examplewiki"
+		}
 	},
 	"ResourceModules": {
 		"ext.GlobalUserPage": {
@@ -59,5 +69,5 @@
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
