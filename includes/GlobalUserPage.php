@@ -24,6 +24,7 @@ use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
 use MWNamespace;
 use OutputPage;
+use ParserOutput;
 use Title;
 use User;
 use WANObjectCache;
@@ -107,6 +108,28 @@ class GlobalUserPage extends Article {
 
 		// Add indicators (T149286)
 		$out->setIndicators( $parsedOutput['indicators'] );
+
+		// Make sure we set the correct robot policy
+		$policy = $this->getRobotPolicy( 'view' );
+		$out->setIndexPolicy( $policy['index'] );
+		$out->setFollowPolicy( $policy['follow'] );
+	}
+
+	/**
+	 * Override robot policy to always set noindex (T177159)
+	 *
+	 * @param string $action
+	 * @param ParserOutput|null $pOutput
+	 * @return array
+	 */
+	public function getRobotPolicy( $action, ParserOutput $pOutput = null ) {
+		$policy = parent::getRobotPolicy( $action, $pOutput );
+		if ( self::shouldDisplayGlobalPage( $this->getTitle() ) ) {
+			// Set noindex if this page is global
+			$policy['index'] = 'noindex';
+		}
+
+		return $policy;
 	}
 
 	/**
