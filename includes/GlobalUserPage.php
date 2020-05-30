@@ -39,7 +39,7 @@ class GlobalUserPage extends Article {
 	 * Cache version of action=parse
 	 * output
 	 */
-	const PARSED_CACHE_VERSION = 3;
+	private const PARSED_CACHE_VERSION = 3;
 
 	/**
 	 * @var Config
