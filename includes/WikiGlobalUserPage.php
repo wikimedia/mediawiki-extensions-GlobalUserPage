@@ -19,7 +19,6 @@ namespace MediaWiki\GlobalUserPage;
 use Config;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
-use MWHttpRequest;
 use Status;
 use Title;
 use WANObjectCache;
@@ -129,9 +128,10 @@ class WikiGlobalUserPage extends WikiPage {
 		$params['format'] = 'json';
 		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
 		wfDebugLog( 'GlobalUserPage', "Making a request to $url" );
-		$req = MWHttpRequest::factory(
+		$req = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
 			$url,
-			[ 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) ]
+			[ 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) ],
+			__METHOD__
 		);
 		$status = $req->execute();
 		if ( !$status->isOK() ) {
