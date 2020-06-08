@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sumbukompor"
+		]
+	},
+	"globaluserpage-desc": "Sacara otomatis njupuk kaca naraguna saka sawiji wiki kapusat.",
+	"globaluserpage-editnotice": "Kaca iki saiki nampilaké kaca naraguna saka wiki liya. Menawa panjenengan nggawé kaca anyar ing kéné, kaca wiki kasebut ora bakal manèh ditampilaké.",
+	"globaluserpage-central-editnotice": "Kaca naraguna iki bakal [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ditampilaké] ing wiki liya menawa kaca naraguna lokal ora digawé ing kana.",
+	"globaluserpage-footer": "Sing panjenengan waca ing kaca iki [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage disalin] saka [$2 $2]."
+}
