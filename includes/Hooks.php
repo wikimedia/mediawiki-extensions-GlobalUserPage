@@ -95,10 +95,12 @@ class Hooks {
 	 * Invalidate cache on remote wikis when a new page is created
 	 * Also handles the ArticleDeleteComplete hook
 	 *
+	 * @note other parameters are also passed by the hook, but none of them are used
+	 *
 	 * @param WikiPage $page
 	 * @return bool
 	 */
-	public static function onPageContentInsertComplete( WikiPage $page ) {
+	public static function onPageSaveComplete( WikiPage $page ) {
 		$title = $page->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
 			$inv = new CacheInvalidator( $title->getText(), [ 'links' ] );
@@ -115,7 +117,7 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onArticleDeleteComplete( WikiPage $page ) {
-		return self::onPageContentInsertComplete( $page );
+		return self::onPageSaveComplete( $page );
 	}
 
 	/**

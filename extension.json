@@ -24,7 +24,7 @@
 		"TitleIsAlwaysKnown": "MediaWiki\\GlobalUserPage\\Hooks::onTitleIsAlwaysKnown",
 		"ArticleFromTitle": "MediaWiki\\GlobalUserPage\\Hooks::onArticleFromTitle",
 		"LinksUpdateComplete": "MediaWiki\\GlobalUserPage\\Hooks::onLinksUpdateComplete",
-		"PageContentInsertComplete": "MediaWiki\\GlobalUserPage\\Hooks::onPageContentInsertComplete",
+		"PageSaveComplete": "MediaWiki\\GlobalUserPage\\Hooks::onPagesaveComplete",
 		"ArticleDeleteComplete": "MediaWiki\\GlobalUserPage\\Hooks::onArticleDeleteComplete",
 		"TitleGetEditNotices": "MediaWiki\\GlobalUserPage\\Hooks::onTitleGetEditNotices",
 		"GetDoubleUnderscoreIDs": "MediaWiki\\GlobalUserPage\\Hooks::onGetDoubleUnderscoreIDs",
