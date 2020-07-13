@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Fernandofelippe",
 			"Fúlvio",
-			"Hamilton Abreu"
+			"Hamilton Abreu",
+			"Vitorvicentevalente"
 		]
 	},
 	"globaluserpage-desc": "Obtém automaticamente as páginas de utilizador de uma wiki central",
