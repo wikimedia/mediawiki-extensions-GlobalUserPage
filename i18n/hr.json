@@ -8,5 +8,5 @@
 	"globaluserpage-desc": "Automatsko dohvaćanje suradničke stranice sa središnjeg wikija",
 	"globaluserpage-editnotice": "Ova stranica trenutačno prikazuje suradničku stranicu s drugog wikija. Ako ovdje stvorite novu stranicu, stranica s drugog wikija neće više biti prikazana.",
 	"globaluserpage-central-editnotice": "Ova suradnička stranica bit će [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] na drugim wikijima, ako na njima ne postoji lokalna suradnička stranica.",
-	"globaluserpage-footer": "Sadržaj ove stranice [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] je stranice [$2 $2]."
+	"globaluserpage-footer": "Sadržaj ove stranice [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] je stranice [$2 {{fullurl:m:user:}}$1]."
 }
