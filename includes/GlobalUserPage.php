@@ -339,7 +339,7 @@ class GlobalUserPage extends Article {
 		}
 
 		// Check valid username
-		if ( !User::isValidUserName( $title->getText() ) ) {
+		if ( !MediaWikiServices::getInstance()->getUserNameUtils()->isValid( $title->getText() ) ) {
 			return false;
 		}
 
