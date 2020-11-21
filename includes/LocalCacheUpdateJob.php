@@ -18,6 +18,7 @@ namespace MediaWiki\GlobalUserPage;
 
 use HTMLFileCache;
 use Job;
+use MediaWiki\MediaWikiServices;
 use Title;
 
 /**
@@ -37,9 +38,9 @@ class LocalCacheUpdateJob extends Job {
 		$title = Title::makeTitleSafe( NS_USER, $this->params['username'] );
 		// We want to purge the cache of the accompanying page so the tabs change colors
 		$other = $title->getOtherPage();
-
-		$title->purgeSquid();
-		$other->purgeSquid();
+		$hcu = MediaWikiServices::getInstance()->getHtmlCacheUpdater();
+		$hcu->purgeTitleUrls( $title, $hcu::PURGE_INTENT_TXROUND_REFLECTED );
+		$hcu->purgeTitleUrls( $other, $hcu::PURGE_INTENT_TXROUND_REFLECTED );
 		HTMLFileCache::clearFileCache( $title );
 		HTMLFileCache::clearFileCache( $other );
 		if ( $this->params['touch'] ) {
