@@ -53,8 +53,8 @@
 		}
 	},
 	"ResourceFileModulePaths": {
-		"localBasePath": "",
-		"remoteExtPath": "GlobalUserPage"
+		"localBasePath": "modules",
+		"remoteExtPath": "GlobalUserPage/modules"
 	},
 	"JobClasses": {
 		"GlobalUserPageLocalJobSubmitJob": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
