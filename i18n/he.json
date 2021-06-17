@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
-			"Guycn2"
+			"Guycn2",
+			"IKhitron"
 		]
 	},
 	"globaluserpage-desc": "אחזור אוטומטי של דפי משתמש מאתר ויקי מרכזי",
 	"globaluserpage-editnotice": "הדף הזה מציג לך עכשיו דף מוויקי אחר. יצירה של דף חדש תגרום לכך שהדף מהוויקי האחר לא יוצג עוד.",
 	"globaluserpage-central-editnotice": "דף המשתמש [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage יוצג] באתרי ויקי אחרים אם דף משתמש מקומי לא קיים בהם.",
-	"globaluserpage-footer": "מה {{GENDER:|שאתה רואה|שאתה רואה}} בדף הזה מציג תוכן ש[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage הועתק] מהדף [$2 $2]."
+	"globaluserpage-footer": "מה {{GENDER:|שאתה רואה|שאת רואה|שאתה רואה}} בדף הזה מציג תוכן ש[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage הועתק] מהדף [$2 $2]."
 }
