@@ -17,7 +17,6 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Article;
-use CentralIdLookup;
 use Config;
 use Hooks as MWHooks;
 use MapCacheLRU;
@@ -190,7 +189,7 @@ class GlobalUserPage extends Article {
 
 		// Make sure that the username represents the same
 		// user on both wikis.
-		$lookup = CentralIdLookup::factory();
+		$lookup = MediaWikiServices::getInstance()->getCentralIdLookupFactory()->getLookup();
 		if ( !$lookup->isAttached( $user ) || !$lookup->isAttached( $user, $wgGlobalUserPageDBname ) ) {
 			self::$displayCache->set( $text, false );
 
