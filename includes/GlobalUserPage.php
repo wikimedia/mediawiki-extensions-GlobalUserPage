@@ -21,7 +21,6 @@ use Config;
 use Hooks as MWHooks;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
-use MWNamespace;
 use OutputPage;
 use ParserOutput;
 use Title;
@@ -362,7 +361,9 @@ class GlobalUserPage extends Article {
 	 * @return array|bool
 	 */
 	protected function parseWikiText( Title $title, $langCode ) {
-		$unLocalizedName = MWNamespace::getCanonicalName( NS_USER ) . ':' . $title->getText();
+		$unLocalizedName = MediaWikiServices::getInstance()
+			->getNamespaceInfo()
+			->getCanonicalName( NS_USER ) . ':' . $title->getText();
 		$wikitext = '{{:' . $unLocalizedName . '}}';
 		$params = [
 			'action' => 'parse',
