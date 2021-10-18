@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"globaluserpage-desc": "Obtene automaticamente paginas de usator ab un wiki central",
+	"globaluserpage-editnotice": "Iste pagina monstra actualmente un pagina de usator de un altere wiki. Si tu crea un nove pagina ci, le pagina del altere wiki non se monstrara plus.",
+	"globaluserpage-central-editnotice": "Iste pagina de usator essera [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage monstrate] sur altere wikis ubi un usator local non existe ancora.",
+	"globaluserpage-footer": "Lo que tu vide sur iste pagina ha essite [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiate] de [$2 $2]."
+}
