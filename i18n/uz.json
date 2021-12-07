@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Malikxan"
+		]
+	},
+	"globaluserpage-desc": "Avtomatik ravishda foydalanuvchi sahifalarni markaziy vikidan oladi",
+	"globaluserpage-editnotice": "Hozirda bu sahifada boshqa vikidagi foydalanuvchi sahifasi koʻrsatiladi. Agarda siz bu yerda yangi sahifa yaratsangiz, bu sahifada boshqa vikidagi sahifa koʻrsatilmaydi.",
+	"globaluserpage-central-editnotice": "Agar bu yerda mahalliy foydalanuvchi sahifasi mavjud boʻlmasa, ushbu foydalanuvchi sahifasining boshqa vikilardagi sahifasi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage koʻrsatiladi].",
+	"globaluserpage-footer": "Ushbu sahifada koʻrganlaringiz [$2 $2] sahifasidan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage nusxalangandir]."
+}

@@ -4,11 +4,12 @@
 			"Benfutbol10",
 			"Fitoschido",
 			"Macofe",
-			"Peter Bowman"
+			"Peter Bowman",
+			"Jakeukalane"
 		]
 	},
-	"globaluserpage-desc": "Obtiene automáticamente páginas de usuario de un wiki central",
-	"globaluserpage-editnotice": "Actualmente, esta página muestra el contenido de una página de usuario creada en otro wiki. Si creas una página nueva aquí, ya no se mostrará la página del otro wiki.",
+	"globaluserpage-desc": "Obtiene automáticamente páginas de usuario de una wiki central",
+	"globaluserpage-editnotice": "Actualmente, esta página muestra el contenido de una página de usuario creada en otra wiki. Si creas una página nueva aquí, ya no se mostrará la página de la otra wiki.",
 	"globaluserpage-central-editnotice": "Esta página de usuario se [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage mostrará] en otros wikis si en ellas no existe una página de usuario local.",
 	"globaluserpage-footer": "Lo que ves en esta página se [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copió] de [$2 $2]."
 }
