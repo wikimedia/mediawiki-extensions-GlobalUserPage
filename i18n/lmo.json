@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Salvemm el lombard"
+		]
+	},
+	"globaluserpage-desc": "La descarega in automatich i pagine d'utent d'un wiki central",
+	"globaluserpage-editnotice": "Adsedess questa pagina chì la mostra una pagina d'utent d'un alter wiki. Se te crearet una pagina noeuva chichinscì, la sarà pu mostrada la pagina de l'alter wiki.",
+	"globaluserpage-central-editnotice": "Questa pagina d'utent chì la sarà [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage visualizzada] in su di alter wiki se l'esist minga una pagina d'utent local.",
+	"globaluserpage-footer": "Quell che te veded in quella pagina chì l'è stad [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiad] de [$2 $2]."
+}

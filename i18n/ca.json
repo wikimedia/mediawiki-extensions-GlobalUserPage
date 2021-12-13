@@ -3,9 +3,10 @@
 		"authors": [
 			"Fitoschido",
 			"Toniher",
-			"Vriullop"
+			"Vriullop",
+			"Mguix"
 		]
 	},
-	"globaluserpage-editnotice": "Actualment, aquesta pàgina mostra el contingut d’una pàgina d’usuari creada en un altre wiki. Si cregueu una pàgina aquí, aquesta prevaldrà sobre la versió existent.",
+	"globaluserpage-editnotice": "Aquesta pàgina mostra actualment una pàgina d'usuari d'un altre wiki.  Si creeu una nova pàgina aquí, ja no mostrarà la pàgina de l'altre wiki.",
 	"globaluserpage-footer": "El contingut d'aquesta pàgina és una [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage còpia] de [$2 $2]."
 }

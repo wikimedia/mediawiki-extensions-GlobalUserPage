@@ -5,11 +5,12 @@
 			"Cwlin0416",
 			"EagerLin",
 			"Liuxinyu970226",
-			"Xiplus"
+			"Xiplus",
+			"Pseudo Classes"
 		]
 	},
 	"globaluserpage-desc": "自動自中央 wiki 取得使用者頁面",
 	"globaluserpage-editnotice": "此頁面目前顯示的使用者頁面來自其他wiki。若您在此建立新的頁面，將不會再顯示其他wiki的頁面。",
-	"globaluserpage-central-editnotice": "若其他 wiki 在地使用者頁面不存在時，將會[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 顯示]，此使用者頁面。",
-	"globaluserpage-footer": "您所看到的[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage '''全域使用者頁面''']原始於 [$2 $2]。"
+	"globaluserpage-central-editnotice": "若其他wiki的本地使用者頁面不存在時，將會[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 顯示]此使用者頁面。",
+	"globaluserpage-footer": "此頁的內容是位於 [$2 $2] 的[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage '''全域使用者頁面''']。"
 }
