@@ -21,6 +21,7 @@ use ConfigFactory;
 use IContextSource;
 use LinksUpdate;
 use Title;
+use WikiMap;
 use WikiPage;
 
 class Hooks {
@@ -70,7 +71,7 @@ class Hooks {
 	protected static function isGlobalUserPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
 
-		return $wgGlobalUserPageDBname === wfWikiID() // On the central wiki
+		return $wgGlobalUserPageDBname === WikiMap::getCurrentWikiId() // On the central wiki
 			&& $title->inNamespace( NS_USER ) // is a user page
 			&& $title->getRootTitle()->equals( $title ); // and is a root page.
 	}

@@ -26,6 +26,7 @@ use ParserOutput;
 use Title;
 use User;
 use WANObjectCache;
+use WikiMap;
 use Wikimedia\IPUtils;
 
 /**
@@ -256,7 +257,7 @@ class GlobalUserPage extends Article {
 	 * @return bool
 	 */
 	public function isSourcePage() {
-		if ( wfWikiID() !== $this->config->get( 'GlobalUserPageDBname' ) ) {
+		if ( WikiMap::getCurrentWikiId() !== $this->config->get( 'GlobalUserPageDBname' ) ) {
 			return false;
 		}
 
@@ -322,7 +323,7 @@ class GlobalUserPage extends Article {
 	protected static function canBeGlobal( Title $title ) {
 		global $wgGlobalUserPageDBname;
 		// Don't run this code for Hub.
-		if ( wfWikiID() === $wgGlobalUserPageDBname ) {
+		if ( WikiMap::getCurrentWikiId() === $wgGlobalUserPageDBname ) {
 			return false;
 		}
 
