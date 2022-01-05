@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chadyka"
+		]
+	},
+	"globaluserpage-desc": "Аўтаматычна падцягвае старонкі ўдзельніка з цэнтральнай вікі",
+	"globaluserpage-editnotice": "Цяпер на гэтай старонцы адлюстроўваецца старонка ўдзельніка з іншага раздзелу вікі. Калі Вы створыце тут новую старонку, яна больш не будзе паказваць старонку з іншай вікі.",
+	"globaluserpage-central-editnotice": "Гэтая старонка ўдзельніка будзе [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage паказаная] ў іншых вікі, калі там не створаная лакальная старонка ўдзельніка.",
+	"globaluserpage-footer": "Усё, што Вы бачыце на гэтай старонцы, [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скапіявана] з [$2 $2]."
+}
