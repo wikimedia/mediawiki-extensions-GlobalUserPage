@@ -17,7 +17,7 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Job;
-use JobQueueGroup;
+use MediaWiki\MediaWikiServices;
 use Title;
 
 /**
@@ -33,8 +33,9 @@ class LocalJobSubmitJob extends Job {
 			Title::newFromText( 'User:' . $this->params['username'] ),
 			$this->params
 		);
+		$jobQueueGroupFactory = MediaWikiServices::getInstance()->getJobQueueGroupFactory();
 		foreach ( GlobalUserPage::getEnabledWikis() as $wiki ) {
-			JobQueueGroup::singleton( $wiki )->push( $job );
+			$jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
 		}
 		return true;
 	}

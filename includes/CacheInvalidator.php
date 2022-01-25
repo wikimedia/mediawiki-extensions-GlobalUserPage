@@ -16,7 +16,7 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use JobQueueGroup;
+use MediaWiki\MediaWikiServices;
 use Title;
 
 class CacheInvalidator {
@@ -47,7 +47,7 @@ class CacheInvalidator {
 			return;
 		}
 
-		JobQueueGroup::singleton()->push( new LocalJobSubmitJob(
+		MediaWikiServices::getInstance()->getJobQueueGroup()->push( new LocalJobSubmitJob(
 			Title::newFromText( 'User:' . $this->username ),
 			[
 				'username' => $this->username,
