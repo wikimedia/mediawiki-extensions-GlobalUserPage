@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Patsagorn Y."
+			"Patsagorn Y.",
+			"Geonuch"
 		]
 	},
+	"globaluserpage-editnotice": "หน้านี้แสดงผลจากหน้าผู้ใช้จากวิกิอื่นในขณะนี้ ถ้าคุณสร้างหน้าใหม่ที่นี่ หน้านี้จะไม่แสดงผลจากหน้าของวิกิอื่นอีกต่อไป",
 	"globaluserpage-footer": "เนื้อหาด้านบนนี้ถูก[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage คัดลอก]มาจาก [$2 $2]"
 }
