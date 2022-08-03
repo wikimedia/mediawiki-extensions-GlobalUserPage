@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"TayfunEt."
+		]
+	},
+	"globaluserpage-desc": "Ulanyjy sahypalaryny merkezi wikiden awtomatiki usulda alýar",
+	"globaluserpage-editnotice": "Bu sahypa häzirki wagtda başga bir wikiden ulanyjy sahypasyny görkezýär. Bu ýerde täze sahypa döretseňiz, beýleki wikiniň sahypasyny görkezmez.",
+	"globaluserpage-central-editnotice": "Bu ulanyjy sahypasy, ýerli ulanyjy sahypasy ýok bolsa, beýleki wikilerde [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage görkeziler] bolar.",
+	"globaluserpage-footer": "Bu sahypada görýän zatlaryňyz [$2 $2] sahypasyndan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage göçürildi]."
+}
