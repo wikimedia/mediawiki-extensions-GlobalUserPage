@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saurmandal"
+		]
+	},
+	"globaluserpage-desc": "अपने आप केंद्रीय विकि से सदस्य पृष्ठ प्राप्त करता है",
+	"globaluserpage-editnotice": "इस पृष्ठ पर इस समय किसी दूसरे विकि से एक सदस्य पृष्ठ दिखाया जा रहा है। अगर आप यहाँ पर एक नया पृष्ठ बनाते हैं, यहाँ पर उस विकि का पृष्ठ नहीं दिखाया जाएगा।",
+	"globaluserpage-central-editnotice": "अगर दूसरे विकियों पर एक लोकल सदस्य पृष्ठ न हो, इस सदस्य पृष्ठ को वहाँ पर [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage दिखाया] जाएगा।",
+	"globaluserpage-footer": "आपको इस पृष्ठ पर जो दिख रहा है उसे [$2 $2] से [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage लाया गया] था।"
+}
