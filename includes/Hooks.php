@@ -17,9 +17,9 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Article;
-use ConfigFactory;
 use IContextSource;
 use LinksUpdate;
+use MediaWiki\MediaWikiServices;
 use Title;
 use WikiMap;
 use WikiPage;
@@ -40,7 +40,7 @@ class Hooks {
 		) {
 			$page = new GlobalUserPage(
 				$title,
-				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
+				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
 			);
 		}
 
@@ -158,7 +158,7 @@ class Hooks {
 		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
 			$page = new WikiGlobalUserPage(
 				$title,
-				ConfigFactory::getDefaultInstance()->makeConfig( 'globaluserpage' )
+				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
 			);
 
 			return false;
