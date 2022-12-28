@@ -8,5 +8,5 @@
 	"globaluserpage-desc": "Samodejno pridobiva uporabniške strani iz osrednjega vikija",
 	"globaluserpage-editnotice": "Ta stran trenutno prikazuje uporabniško stran iz drugega vikija. Če boste tu ustvarili novo stran, tamkajšnja ne bo več prikazana.",
 	"globaluserpage-central-editnotice": "Ta uporabniška stran bo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] v drugih vikijih, če lokalne uporabniške strani tam še ne obstajajo.",
-	"globaluserpage-footer": "Vsebina na tej strani je samodejno [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] iz strani [$2 $2]."
+	"globaluserpage-footer": "Vsebina te strani je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopija] strani [$2 $2]."
 }
