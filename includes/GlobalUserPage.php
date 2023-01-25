@@ -21,6 +21,7 @@ use Config;
 use Hooks as MWHooks;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\ParserOutputFlags;
 use OutputPage;
 use ParserOutput;
 use Title;
@@ -28,6 +29,7 @@ use User;
 use WANObjectCache;
 use WikiMap;
 use Wikimedia\IPUtils;
+use Wikimedia\Parsoid\Core\TOCData;
 
 /**
  * @property WikiGlobalUserPage $mPage Set by overwritten newPage() in this class
@@ -107,6 +109,15 @@ class GlobalUserPage extends Article {
 
 		// Add indicators (T149286)
 		$out->setIndicators( $parsedOutput['indicators'] );
+		// Add sections for new style of table of contents (T327942)
+		$sections = $parsedOutput['sections'] ?? null;
+		if ( $sections ) {
+			$tocPout = new ParserOutput;
+			// FIXME: The action=parse API only outputs sections in the legacy format
+			$tocPout->setTOCData( TOCData::fromLegacy( $sections ) );
+			$tocPout->setOutputFlag( ParserOutputFlags::SHOW_TOC, $parsedOutput['showtoc'] ?? true );
+			$out->addParserOutputMetadata( $tocPout );
+		}
 
 		// Make sure we set the correct robot policy
 		$policy = $this->getRobotPolicy( 'view' );
@@ -289,20 +300,22 @@ class GlobalUserPage extends Article {
 	 */
 	public function getRemoteParsedText( $touched ) {
 		$langCode = $this->getContext()->getLanguage()->getCode();
+		$skinName = $this->getContext()->getSkin()->getSkinName();
 
 		$cache = $this->cache;
 
 		return $cache->getWithSetCallback(
-			// Need language code in the key since we pass &uselang= to the API
+			// Need language and skin in the key since we pass them to the API
 			$cache->makeGlobalKey(
 				'globaluserpage-parsed',
 				$touched,
 				$langCode,
+				$skinName,
 				md5( $this->getUsername() )
 			),
 			$this->config->get( 'GlobalUserPageCacheExpiry' ),
-			function ( $oldValue, &$ttl ) use ( $langCode, $cache ) {
-				$data = $this->parseWikiText( $this->getTitle(), $langCode );
+			function ( $oldValue, &$ttl ) use ( $langCode, $skinName, $cache ) {
+				$data = $this->parseWikiText( $this->getTitle(), $langCode, $skinName );
 				if ( !$data ) {
 					// Cache failure for 10 seconds
 					$ttl = $cache::TTL_UNCACHEABLE;
@@ -359,9 +372,10 @@ class GlobalUserPage extends Article {
 	 *
 	 * @param Title $title
 	 * @param string $langCode
+	 * @param string $skinName
 	 * @return array|bool
 	 */
-	protected function parseWikiText( Title $title, $langCode ) {
+	protected function parseWikiText( Title $title, $langCode, $skinName ) {
 		$unLocalizedName = MediaWikiServices::getInstance()
 			->getNamespaceInfo()
 			->getCanonicalName( NS_USER ) . ':' . $title->getText();
@@ -373,7 +387,8 @@ class GlobalUserPage extends Article {
 			'disableeditsection' => 1,
 			'disablelimitreport' => 1,
 			'uselang' => $langCode,
-			'prop' => 'text|modules|jsconfigvars|indicators',
+			'useskin' => $skinName,
+			'prop' => 'text|modules|jsconfigvars|indicators|sections',
 			'formatversion' => 2,
 		];
 		$data = $this->mPage->makeAPIRequest( $params );
