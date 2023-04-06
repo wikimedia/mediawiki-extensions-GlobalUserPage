@@ -4,11 +4,12 @@
 			"Liuxinyu970226",
 			"Pseudo Classes",
 			"Shizhao",
-			"Yfdyh000"
+			"Yfdyh000",
+			"Stang"
 		]
 	},
 	"globaluserpage-desc": "自动从中央wiki获取用户页面",
 	"globaluserpage-editnotice": "此页面当前显示来自另一个wiki的用户页。如果您在这里创建一个新页面，它将不再显示另一个wiki的页面。",
 	"globaluserpage-central-editnotice": "如果本地用户页不存在，将会[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 显示]另一个wiki上的用户页。",
-	"globaluserpage-footer": "您在此页面上看到的是来自[ $2 $2 ]的[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 副本]。"
+	"globaluserpage-footer": "您在此页面上看到的是来自[$2 $2]的[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 副本]。"
 }
