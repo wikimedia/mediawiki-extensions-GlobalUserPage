@@ -393,7 +393,8 @@ class GlobalUserPage extends Article {
 		];
 		$data = $this->mPage->makeAPIRequest( $params );
 
-		return $data !== false ? $data['parse'] : false;
+		// (T328694) Don't read 'parse' key blindly, it might not be set
+		return $data !== false ? ( $data['parse'] ?? false ) : false;
 	}
 
 	/**
