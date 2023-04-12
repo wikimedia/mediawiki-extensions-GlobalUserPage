@@ -19,6 +19,7 @@ namespace MediaWiki\GlobalUserPage;
 use Article;
 use Config;
 use Hooks as MWHooks;
+use Html;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Parser\ParserOutputFlags;
@@ -97,11 +98,16 @@ class GlobalUserPage extends Article {
 		$out->setCanonicalUrl( $sourceURL );
 		$footerKey = $this->config->get( 'GlobalUserPageFooterKey' );
 		if ( $footerKey ) {
-			$out->addHTML( '<div class="mw-globaluserpage-footer plainlinks">' .
-				"\n" . $out->msg( $footerKey )
-					->params( $this->getUsername(), $sourceURL )->parse() .
-				"\n</div>"
-			);
+			$userLang = $this->getContext()->getLanguage();
+			$out->addHTML( Html::rawElement(
+				'div',
+				[
+					'lang' => $userLang->getHtmlCode(),
+					'dir' => $userLang->getDir(),
+					'class' => 'mw-globaluserpage-footer plainlinks'
+				],
+				"\n" . $out->msg( $footerKey )->params( $this->getUsername(), $sourceURL )->parse() . "\n"
+			) );
 		}
 
 		// Load ParserOutput modules...
