@@ -20,8 +20,8 @@ use Article;
 use IContextSource;
 use LinksUpdate;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\WikiMap\WikiMap;
 use Title;
-use WikiMap;
 use WikiPage;
 
 class Hooks {

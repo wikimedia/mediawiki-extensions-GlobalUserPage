@@ -22,12 +22,12 @@ use Hooks as MWHooks;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Parser\ParserOutputFlags;
+use MediaWiki\WikiMap\WikiMap;
 use OutputPage;
 use ParserOutput;
 use Title;
 use User;
 use WANObjectCache;
-use WikiMap;
 use Wikimedia\IPUtils;
 use Wikimedia\Parsoid\Core\TOCData;
 
