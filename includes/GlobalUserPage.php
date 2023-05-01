@@ -109,15 +109,23 @@ class GlobalUserPage extends Article {
 
 		// Add indicators (T149286)
 		$out->setIndicators( $parsedOutput['indicators'] );
+
+		$pout = new ParserOutput;
+
 		// Add sections for new style of table of contents (T327942)
 		$sections = $parsedOutput['sections'] ?? null;
 		if ( $sections ) {
-			$tocPout = new ParserOutput;
 			// FIXME: The action=parse API only outputs sections in the legacy format
-			$tocPout->setTOCData( TOCData::fromLegacy( $sections ) );
-			$tocPout->setOutputFlag( ParserOutputFlags::SHOW_TOC, $parsedOutput['showtoc'] ?? true );
-			$out->addParserOutputMetadata( $tocPout );
+			$pout->setTOCData( TOCData::fromLegacy( $sections ) );
+			$pout->setOutputFlag( ParserOutputFlags::SHOW_TOC, $parsedOutput['showtoc'] ?? true );
 		}
+
+		// Add external links (T334805)
+		foreach ( $parsedOutput['externallinks'] ?? [] as $extLink ) {
+			$pout->addExternalLink( $extLink );
+		}
+
+		$out->addParserOutputMetadata( $pout );
 
 		// Make sure we set the correct robot policy
 		$policy = $this->getRobotPolicy( 'view' );
@@ -388,7 +396,7 @@ class GlobalUserPage extends Article {
 			'disablelimitreport' => 1,
 			'uselang' => $langCode,
 			'useskin' => $skinName,
-			'prop' => 'text|modules|jsconfigvars|indicators|sections',
+			'prop' => 'text|modules|jsconfigvars|indicators|sections|externallinks',
 			'formatversion' => 2,
 		];
 		$data = $this->mPage->makeAPIRequest( $params );
