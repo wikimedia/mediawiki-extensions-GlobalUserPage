@@ -18,7 +18,6 @@ namespace MediaWiki\GlobalUserPage;
 
 use Article;
 use Config;
-use Hooks as MWHooks;
 use Html;
 use MapCacheLRU;
 use MediaWiki\MediaWikiServices;
@@ -418,7 +417,7 @@ class GlobalUserPage extends Article {
 		static $list = null;
 		if ( $list === null ) {
 			$list = [];
-			if ( MWHooks::run( 'GlobalUserPageWikis', [ &$list ] ) ) {
+			if ( MediaWikiServices::getInstance()->getHookContainer()->run( 'GlobalUserPageWikis', [ &$list ] ) ) {
 				// Fallback if no hook override
 				global $wgLocalDatabases;
 				$list = $wgLocalDatabases;
