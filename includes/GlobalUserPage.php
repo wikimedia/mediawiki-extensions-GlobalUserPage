@@ -20,6 +20,7 @@ use Article;
 use Config;
 use Html;
 use MapCacheLRU;
+use MediaWiki\GlobalUserPage\Hooks\HookRunner;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\WikiMap\WikiMap;
@@ -417,7 +418,8 @@ class GlobalUserPage extends Article {
 		static $list = null;
 		if ( $list === null ) {
 			$list = [];
-			if ( MediaWikiServices::getInstance()->getHookContainer()->run( 'GlobalUserPageWikis', [ &$list ] ) ) {
+			$hookRunner = new HookRunner( MediaWikiServices::getInstance()->getHookContainer() );
+			if ( $hookRunner->onGlobalUserPageWikis( $list ) ) {
 				// Fallback if no hook override
 				global $wgLocalDatabases;
 				$list = $wgLocalDatabases;
