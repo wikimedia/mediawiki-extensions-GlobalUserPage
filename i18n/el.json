@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Geraki"
+			"Geraki",
+			"Iakovos Iason Tountas"
 		]
 	},
 	"globaluserpage-desc": "Ανακτά αυτόματα σελίδες χρηστών από ένα κεντρικό wiki",
-	"globaluserpage-editnotice": "Αυτή η σελίδα εμφανίζει αυτήν τη στιγμή μια σελίδα χρήστη από άλλο wiki. Εάν δημιουργήσετε μια νέα σελίδα εδώ, δεν θα εμφανίζεται πλέον η σελίδα του άλλου wiki.",
+	"globaluserpage-editnotice": "Αυτή η σελίδα εμφανίζει προς το παρόν μια σελίδα χρήστη από άλλο wiki. Εάν δημιουργήσετε μια νέα σελίδα εδώ, δεν θα εμφανίζεται πλέον η σελίδα του άλλου wiki.",
 	"globaluserpage-central-editnotice": "Αυτή η σελίδα χρήστη θα  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage  εμφανίζεται] σε άλλα wiki εάν δεν υπάρχει εκεί μια τοπική σελίδα χρήστη.",
 	"globaluserpage-footer": "Ό,τι βλέπετε σε αυτή τη σελίδα  [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage αντιγράφτηκε] από τη [$2 $2]."
 }
