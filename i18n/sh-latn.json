@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Winston Sung"
+		]
+	},
+	"globaluserpage-desc": "Automatski daje korisničke stranice sa centralnog wikija",
+	"globaluserpage-editnotice": "Ova stranica prikazuje korisničku stranicu s drugog wikija. Ako ovdje stvorite novu stranicu, više se neće prikazivati stranica iz drugog wikija.",
+	"globaluserpage-central-editnotice": "Ova korisnička stranica bit će [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prikazana] na drugim wikijima ako korisnik nema stranicu tamo.",
+	"globaluserpage-footer": "Ono što gledate na ovoj stranici je [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage prekopirano] iz [$2 $2]."
+}
