@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Winston Sung"
+		]
+	},
+	"globaluserpage-desc": "自動由中心維基去攞用户頁",
+	"globaluserpage-editnotice": "呢版顯示緊來自另一個wiki嘅用戶頁。如果你喺度開版新嘅，就唔會再顯示來自另一個wiki嗰版。",
+	"globaluserpage-central-editnotice": "如果其他 wiki 嘅本地用戶頁唔存在，將會[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 顯示]呢版用戶頁。",
+	"globaluserpage-footer": "你睇到嘅呢一版內容係[https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage 嚟自][$2 $2]。"
+}
