@@ -246,7 +246,7 @@ class GlobalUserPage extends Article {
 		$factory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
 		$mainLB = $factory->getMainLB( $wgGlobalUserPageDBname );
 
-		$dbr = $mainLB->getConnectionRef( DB_REPLICA, [], $wgGlobalUserPageDBname );
+		$dbr = $mainLB->getConnection( DB_REPLICA, [], $wgGlobalUserPageDBname );
 		$row = $dbr->selectRow(
 			[ 'page', 'page_props' ],
 			[ 'page_touched', 'pp_propname' ],
