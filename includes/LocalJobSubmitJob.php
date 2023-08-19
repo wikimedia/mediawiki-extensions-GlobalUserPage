@@ -18,7 +18,7 @@ namespace MediaWiki\GlobalUserPage;
 
 use Job;
 use MediaWiki\MediaWikiServices;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * Job class that submits LocalCacheUpdateJob jobs

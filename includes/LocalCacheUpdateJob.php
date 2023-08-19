@@ -19,7 +19,7 @@ namespace MediaWiki\GlobalUserPage;
 use HTMLFileCache;
 use Job;
 use MediaWiki\MediaWikiServices;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * A job that runs on local wikis to purge squid and possibly

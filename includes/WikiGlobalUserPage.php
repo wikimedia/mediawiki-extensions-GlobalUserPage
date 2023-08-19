@@ -19,9 +19,9 @@ namespace MediaWiki\GlobalUserPage;
 use Config;
 use FormatJson;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use MediaWiki\WikiMap\WikiMap;
 use Status;
-use Title;
 use WANObjectCache;
 use WikiPage;
 

@@ -17,7 +17,7 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\MediaWikiServices;
-use Title;
+use MediaWiki\Title\Title;
 
 class CacheInvalidator {
 	/**
