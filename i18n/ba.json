@@ -3,11 +3,12 @@
 		"authors": [
 			"Азат Хәлилов",
 			"Ләйсән",
-			"Янмурза Баки"
+			"Янмурза Баки",
+			"З. ӘЙЛЕ"
 		]
 	},
-	"globaluserpage-desc": "Үҙәк викинан ҡатнашыусы биттәрен автоматик рәүештә тартып ала",
-	"globaluserpage-editnotice": "Хәҙер бында икенсе вики-проектан ҡатнашыусының шәхси бите күрһәтелгән. Әгәр яңы бит булдырһағыҙ, икенсе вики-проекттағы бит бында күрһәтелмәйәсәк.",
+	"globaluserpage-desc": "Үҙәк викиҙан ҡатнашыусы биттәрен автоматик рәүештә сығарып ала",
+	"globaluserpage-editnotice": "Әлеге ваҡытта бында икенсе вики-проект ҡатнашыусыһының шәхси бите күрһәтелгән. Әгәр яңы бит булдырһағыҙ, икенсе вики-проекттағы бит бында күрһәтелмәйәсәк.",
 	"globaluserpage-central-editnotice": "Әгәр унда ҡатнашыусының локаль бите булмаһа, был ҡатнашыусы бите икенсе вики-проекттарҙа [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күрһәтеләсәк].",
-	"globaluserpage-footer": "Был биттә нимә күрәһегеҙ, барыһы ла [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күсерелгән]"
+	"globaluserpage-footer": "Был биттә нимә күрәһегеҙ, барыһы ла [$2 $2] битенән [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage күсерелгән]"
 }
