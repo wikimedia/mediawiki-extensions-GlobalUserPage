@@ -21,14 +21,19 @@
 		"GlobalUserPageMagic": "GlobalUserPage.i18n.magic.php"
 	},
 	"Hooks": {
-		"TitleIsAlwaysKnown": "MediaWiki\\GlobalUserPage\\Hooks::onTitleIsAlwaysKnown",
-		"ArticleFromTitle": "MediaWiki\\GlobalUserPage\\Hooks::onArticleFromTitle",
-		"LinksUpdateComplete": "MediaWiki\\GlobalUserPage\\Hooks::onLinksUpdateComplete",
-		"PageSaveComplete": "MediaWiki\\GlobalUserPage\\Hooks::onPageSaveComplete",
-		"ArticleDeleteComplete": "MediaWiki\\GlobalUserPage\\Hooks::onArticleDeleteComplete",
-		"TitleGetEditNotices": "MediaWiki\\GlobalUserPage\\Hooks::onTitleGetEditNotices",
-		"GetDoubleUnderscoreIDs": "MediaWiki\\GlobalUserPage\\Hooks::onGetDoubleUnderscoreIDs",
-		"WikiPageFactory": "MediaWiki\\GlobalUserPage\\Hooks::onWikiPageFactory"
+		"TitleIsAlwaysKnown": "main",
+		"ArticleFromTitle": "main",
+		"LinksUpdateComplete": "main",
+		"PageSaveComplete": "main",
+		"ArticleDeleteComplete": "main",
+		"TitleGetEditNotices": "main",
+		"GetDoubleUnderscoreIDs": "main",
+		"WikiPageFactory": "main"
+	},
+	"HookHandlers": {
+		"main": {
+			"class": "MediaWiki\\GlobalUserPage\\Hooks"
+		}
 	},
 	"config": {
 		"GlobalUserPageCacheExpiry": {

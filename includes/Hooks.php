@@ -17,22 +17,44 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Article;
+use Content;
 use IContextSource;
 use LinksUpdate;
+use ManualLogEntry;
+use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
+use MediaWiki\Hook\LinksUpdateCompleteHook;
+use MediaWiki\Hook\TitleGetEditNoticesHook;
+use MediaWiki\Hook\TitleIsAlwaysKnownHook;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
+use MediaWiki\Page\Hook\ArticleFromTitleHook;
+use MediaWiki\Page\Hook\WikiPageFactoryHook;
+use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Storage\EditResult;
+use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\Title\Title;
+use MediaWiki\User\User;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\WikiMap\WikiMap;
 use WikiPage;
 
-class Hooks {
+class Hooks implements
+	TitleIsAlwaysKnownHook,
+	ArticleFromTitleHook,
+	LinksUpdateCompleteHook,
+	PageSaveCompleteHook,
+	ArticleDeleteCompleteHook,
+	TitleGetEditNoticesHook,
+	GetDoubleUnderscoreIDsHook,
+	WikiPageFactoryHook
+{
 
 	/**
-	 * @param Title &$title
+	 * @param Title $title
 	 * @param Article|null &$page
 	 * @param IContextSource $context
-	 * @return bool
 	 */
-	public static function onArticleFromTitle( Title &$title, &$page, $context ) {
+	public function onArticleFromTitle( $title, &$page, $context ) {
 		// If another extension's hook has already run, don't override it
 		if ( $page === null
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
@@ -43,8 +65,6 @@ class Hooks {
 				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
 			);
 		}
-
-		return true;
 	}
 
 	/**
@@ -52,14 +72,11 @@ class Hooks {
 	 *
 	 * @param Title $title title to check
 	 * @param bool &$isKnown Whether the page should be considered known
-	 * @return bool
 	 */
-	public static function onTitleIsAlwaysKnown( $title, &$isKnown ) {
+	public function onTitleIsAlwaysKnown( $title, &$isKnown ) {
 		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
 			$isKnown = true;
 		}
-
-		return true;
 	}
 
 	/**
@@ -79,46 +96,54 @@ class Hooks {
 	/**
 	 * After a LinksUpdate runs for a user page, queue remote squid purges
 	 *
-	 * @param LinksUpdate &$lu
-	 * @return bool
+	 * @param LinksUpdate $lu
+	 * @param mixed $ticket
 	 */
-	public static function onLinksUpdateComplete( LinksUpdate &$lu ) {
+	public function onLinksUpdateComplete( $lu, $ticket ) {
 		$title = $lu->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
 			$inv = new CacheInvalidator( $title->getText() );
 			$inv->invalidate();
 		}
-
-		return true;
 	}
 
-	/**
-	 * Invalidate cache on remote wikis when a new page is created
-	 * Also handles the ArticleDeleteComplete hook
-	 *
-	 * @note other parameters are also passed by the hook, but none of them are used
-	 *
-	 * @param WikiPage $page
-	 * @return bool
-	 */
-	public static function onPageSaveComplete( WikiPage $page ) {
+	private function invalidCacheIfGlobal( WikiPage $page ): void {
 		$title = $page->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
 			$inv = new CacheInvalidator( $title->getText(), [ 'links' ] );
 			$inv->invalidate();
 		}
+	}
 
-		return true;
+	/**
+	 * Invalidate cache on remote wikis when a new page is created
+	 *
+	 * @param WikiPage $page
+	 * @param UserIdentity $user
+	 * @param string $summary
+	 * @param int $flags
+	 * @param RevisionRecord $revisionRecord
+	 * @param EditResult $editResult
+	 */
+	public function onPageSaveComplete( $page, $user, $summary, $flags, $revisionRecord, $editResult ) {
+		$this->invalidCacheIfGlobal( $page );
 	}
 
 	/**
 	 * Invalidate cache on remote wikis when a user page is deleted
 	 *
 	 * @param WikiPage $page
-	 * @return bool
+	 * @param User $user
+	 * @param string $reason
+	 * @param int $id
+	 * @param Content|null $content
+	 * @param ManualLogEntry $logEntry
+	 * @param int $archivedRevisionCount
 	 */
-	public static function onArticleDeleteComplete( WikiPage $page ) {
-		return self::onPageSaveComplete( $page );
+	public function onArticleDeleteComplete(
+		$page, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
+	) {
+		$this->invalidCacheIfGlobal( $page );
 	}
 
 	/**
@@ -128,9 +153,8 @@ class Hooks {
 	 * @param Title $title
 	 * @param int $oldid
 	 * @param array &$notices
-	 * @return true
 	 */
-	public static function onTitleGetEditNotices( Title $title, $oldid, array &$notices ) {
+	public function onTitleGetEditNotices( $title, $oldid, &$notices ) {
 		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
 			$notices['globaluserpage'] = '<p><strong>' .
 				wfMessage( 'globaluserpage-editnotice' )->parse()
@@ -138,14 +162,12 @@ class Hooks {
 		} elseif ( self::isGlobalUserPage( $title ) ) {
 			$notices['centraluserpage'] = wfMessage( 'globaluserpage-central-editnotice' )->parseAsBlock();
 		}
-
-		return true;
 	}
 
 	/**
 	 * @param array &$ids
 	 */
-	public static function onGetDoubleUnderscoreIDs( array &$ids ) {
+	public function onGetDoubleUnderscoreIDs( &$ids ) {
 		$ids[] = 'noglobal';
 	}
 
@@ -154,7 +176,7 @@ class Hooks {
 	 * @param WikiPage &$page
 	 * @return bool
 	 */
-	public static function onWikiPageFactory( Title $title, &$page ) {
+	public function onWikiPageFactory( $title, &$page ) {
 		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
 			$page = new WikiGlobalUserPage(
 				$title,
