@@ -17,17 +17,17 @@
 namespace MediaWiki\GlobalUserPage;
 
 use Article;
-use Config;
-use Html;
 use MapCacheLRU;
+use MediaWiki\Config\Config;
 use MediaWiki\GlobalUserPage\Hooks\HookRunner;
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\Title\Title;
+use MediaWiki\User\User;
 use MediaWiki\WikiMap\WikiMap;
-use OutputPage;
-use ParserOutput;
-use User;
 use WANObjectCache;
 use Wikimedia\IPUtils;
 use Wikimedia\Parsoid\Core\TOCData;

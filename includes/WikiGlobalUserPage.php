@@ -16,12 +16,12 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use Config;
 use FormatJson;
+use MediaWiki\Config\Config;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Status\Status;
 use MediaWiki\Title\Title;
 use MediaWiki\WikiMap\WikiMap;
-use Status;
 use WANObjectCache;
 use WikiPage;
 
