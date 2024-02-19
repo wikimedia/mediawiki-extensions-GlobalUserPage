@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Snævar"
+			"Snævar",
+			"Stefán Örvar Sigmundsson"
 		]
 	},
-	"globaluserpage-editnotice": "Þessi síða sýnir í augnablikinu notendasíðu frá öðru wiki vefsvæði. Ef þú býrð til nýja síðu hérna mun hún ekki lengur sýna síðuna frá hinu vefsvæðinu.",
+	"globaluserpage-editnotice": "Þessi síða sýnir í augnablikinu notandasíðu frá öðrum wiki. Ef þú býrð til nýja síðu hérna mun hún ekki lengur sýna síðuna frá hinum wiki.",
 	"globaluserpage-footer": "Það sem þú sérð á þessari síðu var [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage afritað] af [$2 $2]."
 }
