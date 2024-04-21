@@ -247,19 +247,16 @@ class GlobalUserPage extends Article {
 		$mainLB = $factory->getMainLB( $wgGlobalUserPageDBname );
 
 		$dbr = $mainLB->getConnection( DB_REPLICA, [], $wgGlobalUserPageDBname );
-		$row = $dbr->selectRow(
-			[ 'page', 'page_props' ],
-			[ 'page_touched', 'pp_propname' ],
-			[
+		$row = $dbr->newSelectQueryBuilder()
+			->select( [ 'page_touched', 'pp_propname' ] )
+			->from( 'page' )
+			->leftJoin( 'page_props', null, [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] )
+			->where( [
 				'page_namespace' => NS_USER,
 				'page_title' => $user->getUserPage()->getDBkey(),
-			],
-			__METHOD__,
-			[],
-			[ 'page_props' =>
-				[ 'LEFT JOIN', [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] ],
-			]
-		);
+			] )
+			->caller( __METHOD__ )
+			->fetchRow();
 		if ( $row ) {
 			if ( $row->pp_propname == 'noglobal' ) {
 				$touched = false;
