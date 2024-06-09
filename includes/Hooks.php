@@ -18,8 +18,8 @@ namespace MediaWiki\GlobalUserPage;
 
 use Article;
 use Content;
-use IContextSource;
 use ManualLogEntry;
+use MediaWiki\Context\IContextSource;
 use MediaWiki\Deferred\LinksUpdate\LinksUpdate;
 use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
