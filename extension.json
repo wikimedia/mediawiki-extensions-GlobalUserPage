@@ -65,9 +65,6 @@
 		"GlobalUserPageLocalJobSubmitJob": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
 		"LocalGlobalUserPageCacheUpdateJob": "MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob"
 	},
-	"DefaultUserOptions": {
-		"globaluserpage": true
-	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\GlobalUserPage\\": "includes/"
 	},
