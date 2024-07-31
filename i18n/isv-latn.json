@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"IJzeren Jan"
+		]
+	},
+	"globaluserpage-desc": "Avtomatično iztegaje koristničske stranice iz centralnoj viki",
+	"globaluserpage-editnotice": "Tuta stranica tutčas izobražaje koristničsku stranicu iz drugoj viki. Ako stvorite tu novu stranicu, ona veče ne bude izobražati stranicu iz drugoj viki.",
+	"globaluserpage-central-editnotice": "Tuta koristničska stranica bude [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage izobražena] v drugyh viki, ako nemaje v njih lokalnoj koristničskoj stranice.",
+	"globaluserpage-footer": "Vse, čto vy vidite na tutoj stranici, bylo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopirovano] iz [$2 $2]."
+}
