@@ -54,7 +54,7 @@
 	},
 	"ResourceModules": {
 		"ext.GlobalUserPage": {
-			"styles": "ext.GlobalUserPage.css"
+			"styles": "ext.GlobalUserPage.less"
 		}
 	},
 	"ResourceFileModulePaths": {
