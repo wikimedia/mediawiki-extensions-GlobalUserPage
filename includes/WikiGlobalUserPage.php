@@ -16,13 +16,13 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use FormatJson;
 use MediaWiki\Config\Config;
+use MediaWiki\Json\FormatJson;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Status\Status;
 use MediaWiki\Title\Title;
 use MediaWiki\WikiMap\WikiMap;
-use WANObjectCache;
+use Wikimedia\ObjectCache\WANObjectCache;
 use WikiPage;
 
 class WikiGlobalUserPage extends WikiPage {
