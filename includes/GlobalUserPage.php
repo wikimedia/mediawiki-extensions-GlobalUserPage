@@ -146,7 +146,7 @@ class GlobalUserPage extends Article {
 	 * @param ParserOutput|null $pOutput
 	 * @return array
 	 */
-	public function getRobotPolicy( $action, ParserOutput $pOutput = null ) {
+	public function getRobotPolicy( $action, ?ParserOutput $pOutput = null ) {
 		$policy = parent::getRobotPolicy( $action, $pOutput );
 		if ( self::shouldDisplayGlobalPage( $this->getTitle() ) ) {
 			// Set noindex if this page is global
