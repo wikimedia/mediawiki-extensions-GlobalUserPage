@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"NGC 54"
+			"NGC 54",
+			"Paloi Sciurala"
 		]
 	},
 	"globaluserpage-footer": "Ceea ce vedeți pe această pagină a fost [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage copiat] de la [$2 $2]."
