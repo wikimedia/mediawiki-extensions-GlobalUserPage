@@ -22,24 +22,20 @@ use MediaWiki\Title\Title;
 class CacheInvalidator {
 	/**
 	 * Username of the user who's userpage needs to be invalidated
-	 *
-	 * @var string
 	 */
-	private $username;
+	private string $username;
 
 	/**
 	 * Array of string options
-	 *
-	 * @var array
 	 */
-	private $options;
+	private array $options;
 
-	public function __construct( $username, array $options = [] ) {
+	public function __construct( string $username, array $options = [] ) {
 		$this->username = $username;
 		$this->options = $options;
 	}
 
-	public function invalidate() {
+	public function invalidate(): void {
 		global $wgUseCdn, $wgUseFileCache;
 
 		if ( !$wgUseCdn && !$wgUseFileCache && !$this->options ) {
