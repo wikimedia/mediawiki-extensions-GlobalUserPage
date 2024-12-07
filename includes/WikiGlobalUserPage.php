@@ -43,6 +43,7 @@ class WikiGlobalUserPage extends WikiPage {
 		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 	}
 
+	/** @inheritDoc */
 	public function isLocal() {
 		return $this->getTitle()->exists();
 	}
