@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Gadir",
+			"Nemoralis",
 			"Wertuose"
 		]
 	},
+	"globaluserpage-desc": "Mərkəzi vikidən istifadəçi səhifələrini avtomatik gətirir",
 	"globaluserpage-editnotice": "Bu səhifə hazırda başqa bir vikidən bir istifadəçi səhifəsini göstərir. Əgər bu səhifəni yaratsanız, digər viki səhifəsi artıq görünməyəcək.",
-	"globaluserpage-central-editnotice": "Digər viki-layihələrdə istifadəçi səhifəsi mövcud olmadığı hallarda, bu istifadəçi səhifəsi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage göstəriləcək]."
+	"globaluserpage-central-editnotice": "Digər viki-layihələrdə istifadəçi səhifəsi mövcud olmadığı hallarda, bu istifadəçi səhifəsi [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage göstəriləcək].",
+	"globaluserpage-footer": "Bu səhifədə gördükləriniz [$2 $2] səhifəsindən [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopyalanıb]"
 }
