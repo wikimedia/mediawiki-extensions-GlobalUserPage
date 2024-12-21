@@ -88,9 +88,12 @@ class Hooks implements
 	protected static function isGlobalUserPage( Title $title ) {
 		global $wgGlobalUserPageDBname;
 
-		return $wgGlobalUserPageDBname === WikiMap::getCurrentWikiId() // On the central wiki
-			&& $title->inNamespace( NS_USER ) // is a user page
-			&& $title->getRootTitle()->equals( $title ); // and is a root page.
+		// On the central wiki
+		return $wgGlobalUserPageDBname === WikiMap::getCurrentWikiId()
+			// is a user page
+			&& $title->inNamespace( NS_USER )
+			// and is a root page.
+			&& $title->getRootTitle()->equals( $title );
 	}
 
 	/**
