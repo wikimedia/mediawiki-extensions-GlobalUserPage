@@ -34,6 +34,7 @@ class LocalCacheUpdateJob extends Job {
 		parent::__construct( 'LocalGlobalUserPageCacheUpdateJob', $title, $params );
 	}
 
+	/** @inheritDoc */
 	public function run() {
 		$title = Title::makeTitleSafe( NS_USER, $this->params['username'] );
 		// We want to purge the cache of the accompanying page so the tabs change colors

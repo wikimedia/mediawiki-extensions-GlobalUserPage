@@ -28,6 +28,7 @@ class LocalJobSubmitJob extends Job {
 		parent::__construct( 'GlobalUserPageLocalJobSubmitJob', $title, $params );
 	}
 
+	/** @inheritDoc */
 	public function run() {
 		$job = new LocalCacheUpdateJob(
 			Title::newFromText( 'User:' . $this->params['username'] ),
