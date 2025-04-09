@@ -3,10 +3,12 @@
 		"authors": [
 			"Les Meloures",
 			"Robby",
-			"Soued031"
+			"Soued031",
+			"Volvox"
 		]
 	},
 	"globaluserpage-desc": "Luet automatesch Benotzerssäite vun enger zentraler Wiki erof",
-	"globaluserpage-editnotice": "Dës Säit weist elo eng Benotzersäit vun enger anerer Wiki. Wann Dir hei eng nei Säit uleet, da gëtt d'Säit vun där anerer Wiki net méi gewisen.",
-	"globaluserpage-footer": "Wat Dir op dëser Säit gesitt gouf vu(n) [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopéiert]."
+	"globaluserpage-editnotice": "Dës Säit weist am Moment eng Benotzersäit vun enger anerer Wiki. Wann Dir hei eng nei Säit uleet, da gëtt d'Säit vun där anerer Wiki net méi gewisen.",
+	"globaluserpage-central-editnotice": "Dës Benotzersäit gëtt op anere Wikie [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage gewisen], wann et do keng lokal Benotzersäit gëtt.",
+	"globaluserpage-footer": "Wat Dir op dëser Säit gesitt, gouf vu(n) [$2 $2] [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopéiert]."
 }
