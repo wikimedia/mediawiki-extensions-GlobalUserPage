@@ -17,7 +17,7 @@
 namespace MediaWiki\GlobalUserPage;
 
 use HTMLFileCache;
-use Job;
+use MediaWiki\JobQueue\Job;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 

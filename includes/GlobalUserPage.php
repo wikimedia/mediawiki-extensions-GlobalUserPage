@@ -16,13 +16,13 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use Article;
 use MapCacheLRU;
 use MediaWiki\Config\Config;
 use MediaWiki\GlobalUserPage\Hooks\HookRunner;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Page\Article;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\Title\Title;

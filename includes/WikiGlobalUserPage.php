@@ -19,11 +19,11 @@ namespace MediaWiki\GlobalUserPage;
 use MediaWiki\Config\Config;
 use MediaWiki\Json\FormatJson;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\WikiPage;
 use MediaWiki\Status\Status;
 use MediaWiki\Title\Title;
 use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\WANObjectCache;
-use WikiPage;
 
 class WikiGlobalUserPage extends WikiPage {
 

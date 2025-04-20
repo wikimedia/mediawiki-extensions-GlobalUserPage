@@ -16,7 +16,7 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use Job;
+use MediaWiki\JobQueue\Job;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 
