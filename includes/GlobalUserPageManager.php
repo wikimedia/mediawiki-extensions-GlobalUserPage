@@ -5,15 +5,12 @@ namespace MediaWiki\GlobalUserPage;
 use MapCacheLRU;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Linker\LinkTarget;
-use MediaWiki\Title\TitleFactory;
-use MediaWiki\Title\TitleFormatter;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserNameUtils;
 use MediaWiki\WikiMap\WikiMap;
-use Wikimedia\IPUtils;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 class GlobalUserPageManager {
@@ -23,8 +20,6 @@ class GlobalUserPageManager {
 	private UserFactory $userFactory;
 	private UserNameUtils $userNameUtils;
 	private CentralIdLookup $centralIdLookup;
-	private TitleFormatter $titleFormatter;
-	private TitleFactory $titleFactory;
 	private ServiceOptions $options;
 
 	private MapCacheLRU $displayCache;
@@ -35,8 +30,6 @@ class GlobalUserPageManager {
 		UserFactory $userFactory,
 		UserNameUtils $userNameUtils,
 		CentralIdLookup $centralIdLookup,
-		TitleFormatter $titleFormatter,
-		TitleFactory $titleFactory,
 		ServiceOptions $options
 	) {
 		$options->assertRequiredOptions( self::CONSTRUCTOR_OPTIONS );
@@ -45,8 +38,6 @@ class GlobalUserPageManager {
 		$this->userFactory = $userFactory;
 		$this->userNameUtils = $userNameUtils;
 		$this->centralIdLookup = $centralIdLookup;
-		$this->titleFormatter = $titleFormatter;
-		$this->titleFactory = $titleFactory;
 		$this->options = $options;
 
 		// Do some instance caching since this can be
@@ -67,16 +58,16 @@ class GlobalUserPageManager {
 			return false;
 		}
 
-		$text = $this->titleFormatter->getPrefixedText( $title );
-		if ( $this->displayCache->has( $text ) ) {
-			return $this->displayCache->get( $text );
+		$cacheKey = "{$title->getNamespace()}:{$title->getDBkey()}";
+		if ( $this->displayCache->has( $cacheKey ) ) {
+			return $this->displayCache->get( $cacheKey );
 		}
 
 		// Normalize the username
 		$user = $this->userFactory->newFromName( $title->getText() );
 
 		if ( !$user ) {
-			$this->displayCache->set( $text, false );
+			$this->displayCache->set( $cacheKey, false );
 
 			return false;
 		}
@@ -87,13 +78,13 @@ class GlobalUserPageManager {
 			!$this->centralIdLookup->isAttached( $user ) ||
 			!$this->centralIdLookup->isAttached( $user, $this->options->get( 'GlobalUserPageDBname' ) )
 		) {
-			$this->displayCache->set( $text, false );
+			$this->displayCache->set( $cacheKey, false );
 
 			return false;
 		}
 
 		$touched = (bool)$this->getCentralTouched( $user );
-		$this->displayCache->set( $text, $touched );
+		$this->displayCache->set( $cacheKey, $touched );
 
 		return $touched;
 	}
@@ -151,28 +142,13 @@ class GlobalUserPageManager {
 			return false;
 		}
 
-		// Must be a user page
-		if ( !$title->inNamespace( NS_USER ) ) {
-			return false;
-		}
-
-		$title = $this->titleFactory->newFromLinkTarget( $title );
-		// Check it's a root user page
-		if ( $title->getRootText() !== $title->getText() ) {
-			return false;
-		}
-
-		// Check valid username
-		if ( !$this->userNameUtils->isValid( $title->getText() ) ) {
-			return false;
-		}
-
-		// Temporary accounts cannot have global userpages (T326920).
-		if ( $this->userNameUtils->isTemp( $title->getText() ) ) {
-			return false;
-		}
-
-		// IPs don't get global userpages
-		return !IPUtils::isIPAddress( $title->getText() );
+		return (
+			// Must be a user page
+			$title->inNamespace( NS_USER ) &&
+			// Check valid username (also handles IP usernames and user subpages)
+			$this->userNameUtils->isValid( $title->getText() ) &&
+			// Temporary accounts cannot have global userpages (T326920).
+			!$this->userNameUtils->isTemp( $title->getText() )
+		);
 	}
 }

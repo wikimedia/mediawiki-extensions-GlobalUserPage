@@ -16,8 +16,6 @@ return [
 			$services->getUserFactory(),
 			$services->getUserNameUtils(),
 			$services->getCentralIdLookup(),
-			$services->getTitleFormatter(),
-			$services->getTitleFactory(),
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, $config )
 		);
 	}

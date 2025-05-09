@@ -137,8 +137,6 @@ class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getUserFactory(),
 			$this->getServiceContainer()->getUserNameUtils(),
 			$centralIdLookup,
-			$this->getServiceContainer()->getTitleFormatter(),
-			$this->getServiceContainer()->getTitleFactory(),
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, [
 				'GlobalUserPageDBname' => $globalUserPageDBname,
 			] )
