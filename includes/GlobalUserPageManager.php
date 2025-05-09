@@ -167,6 +167,11 @@ class GlobalUserPageManager {
 			return false;
 		}
 
+		// Temporary accounts cannot have global userpages (T326920).
+		if ( $this->userNameUtils->isTemp( $title->getText() ) ) {
+			return false;
+		}
+
 		// IPs don't get global userpages
 		return !IPUtils::isIPAddress( $title->getText() );
 	}

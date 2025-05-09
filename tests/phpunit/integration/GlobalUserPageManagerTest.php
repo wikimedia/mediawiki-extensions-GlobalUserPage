@@ -4,6 +4,7 @@ namespace MediaWiki\GlobalUserPage\Tests\Integration;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\GlobalUserPage\GlobalUserPageManager;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\Tests\User\TempUser\TempUserTestTrait;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\User\UserIdentity;
@@ -18,9 +19,12 @@ use Wikimedia\Timestamp\ConvertibleTimestamp;
  * @group Database
  */
 class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
+	use TempUserTestTrait;
+
 	private const TEST_TIMESTAMP = '20230101000000';
 
 	private const IP_WITH_GLOBAL_USERPAGE = '127.0.0.2';
+	private const TEMP_ACCOUNT_WITH_GLOBAL_USERPAGE = '~2025-3';
 	private const USER_WITH_GLOBAL_USERPAGE = 'UserWithGlobalUserPage';
 	private const USER_WITH_DISABLED_GLOBAL_USERPAGE = 'UserWithDisabledGlobalUserPage';
 
@@ -29,6 +33,10 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
+		$this->enableAutoCreateTempUser( [
+			'genPattern' => '~$1',
+			'reservedPattern' => '~$1',
+		] );
 
 		$this->connectionProvider = $this->createMock( IConnectionProvider::class );
 		$this->centralIdLookup = $this->createMock( CentralIdLookup::class );
@@ -45,6 +53,10 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 			);
 			$this->editPage(
 				new TitleValue( NS_USER, self::IP_WITH_GLOBAL_USERPAGE ),
+				'Global user page content'
+			);
+			$this->editPage(
+				new TitleValue( NS_USER, self::TEMP_ACCOUNT_WITH_GLOBAL_USERPAGE ),
 				'Global user page content'
 			);
 			$this->editPage(
@@ -179,6 +191,14 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 
 		yield 'user with no global userpage' => [
 			new TitleValue( NS_USER, 'OtherUser' ),
+			'some_other_wiki',
+			true,
+			true,
+			false
+		];
+
+		yield 'temporary account userpage' => [
+			new TitleValue( NS_USER, self::TEMP_ACCOUNT_WITH_GLOBAL_USERPAGE ),
 			'some_other_wiki',
 			true,
 			true,
