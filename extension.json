@@ -71,5 +71,8 @@
 	"ConfigRegistry": {
 		"globaluserpage": "GlobalVarConfig::newInstance"
 	},
+	"ServiceWiringFiles": [
+		"includes/ServiceWiring.php"
+	],
 	"manifest_version": 2
 }

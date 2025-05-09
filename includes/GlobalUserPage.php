@@ -16,7 +16,6 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use MapCacheLRU;
 use MediaWiki\Config\Config;
 use MediaWiki\GlobalUserPage\Hooks\HookRunner;
 use MediaWiki\Html\Html;
@@ -28,7 +27,6 @@ use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MediaWiki\WikiMap\WikiMap;
-use Wikimedia\IPUtils;
 use Wikimedia\ObjectCache\WANObjectCache;
 use Wikimedia\Parsoid\Core\TOCData;
 
@@ -52,16 +50,6 @@ class GlobalUserPage extends Article {
 	 * @var WANObjectCache
 	 */
 	private $cache;
-
-	/**
-	 * @var MapCacheLRU
-	 */
-	private static $displayCache;
-
-	/**
-	 * @var MapCacheLRU
-	 */
-	private static $touchedCache;
 
 	public function __construct( Title $title, Config $config ) {
 		$this->config = $config;
@@ -188,43 +176,8 @@ class GlobalUserPage extends Article {
 	 * @return bool
 	 */
 	public static function shouldDisplayGlobalPage( Title $title ) {
-		global $wgGlobalUserPageDBname;
-		if ( !self::canBeGlobal( $title ) ) {
-			return false;
-		}
-		// Do some instance caching since this can be
-		// called frequently due do the Linker hook
-		if ( !self::$displayCache ) {
-			self::$displayCache = new MapCacheLRU( 100 );
-		}
-
-		$text = $title->getPrefixedText();
-		if ( self::$displayCache->has( $text ) ) {
-			return self::$displayCache->get( $text );
-		}
-
-		// Normalize the username
-		$user = User::newFromName( $title->getText() );
-
-		if ( !$user ) {
-			self::$displayCache->set( $text, false );
-
-			return false;
-		}
-
-		// Make sure that the username represents the same
-		// user on both wikis.
-		$lookup = MediaWikiServices::getInstance()->getCentralIdLookupFactory()->getLookup();
-		if ( !$lookup->isAttached( $user ) || !$lookup->isAttached( $user, $wgGlobalUserPageDBname ) ) {
-			self::$displayCache->set( $text, false );
-
-			return false;
-		}
-
-		$touched = (bool)self::getCentralTouched( $user );
-		self::$displayCache->set( $text, $touched );
-
-		return $touched;
+		return MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' )
+			->shouldDisplayGlobalPage( $title );
 	}
 
 	/**
@@ -235,41 +188,8 @@ class GlobalUserPage extends Article {
 	 * @return string|bool
 	 */
 	protected static function getCentralTouched( User $user ) {
-		if ( !self::$touchedCache ) {
-			self::$touchedCache = new MapCacheLRU( 100 );
-		}
-		if ( self::$touchedCache->has( $user->getName() ) ) {
-			return self::$touchedCache->get( $user->getName() );
-		}
-
-		global $wgGlobalUserPageDBname;
-		$factory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
-		$mainLB = $factory->getMainLB( $wgGlobalUserPageDBname );
-
-		$dbr = $mainLB->getConnection( DB_REPLICA, [], $wgGlobalUserPageDBname );
-		$row = $dbr->newSelectQueryBuilder()
-			->select( [ 'page_touched', 'pp_propname' ] )
-			->from( 'page' )
-			->leftJoin( 'page_props', null, [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] )
-			->where( [
-				'page_namespace' => NS_USER,
-				'page_title' => $user->getUserPage()->getDBkey(),
-			] )
-			->caller( __METHOD__ )
-			->fetchRow();
-		if ( $row ) {
-			if ( $row->pp_propname == 'noglobal' ) {
-				$touched = false;
-			} else {
-				$touched = $row->page_touched;
-			}
-		} else {
-			$touched = false;
-		}
-
-		self::$touchedCache->set( $user->getName(), $touched );
-
-		return $touched;
+		return MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' )
+			->getCentralTouched( $user );
 	}
 
 	/**
@@ -336,38 +256,6 @@ class GlobalUserPage extends Article {
 			},
 			[ 'version' => self::PARSED_CACHE_VERSION ]
 		);
-	}
-
-	/**
-	 * Checks whether the given page can be global
-	 * doesn't check the actual database
-	 * @param Title $title
-	 * @return bool
-	 */
-	protected static function canBeGlobal( Title $title ) {
-		global $wgGlobalUserPageDBname;
-		// Don't run this code for Hub.
-		if ( WikiMap::getCurrentWikiId() === $wgGlobalUserPageDBname ) {
-			return false;
-		}
-
-		// Must be a user page
-		if ( !$title->inNamespace( NS_USER ) ) {
-			return false;
-		}
-
-		// Check it's a root user page
-		if ( $title->getRootText() !== $title->getText() ) {
-			return false;
-		}
-
-		// Check valid username
-		if ( !MediaWikiServices::getInstance()->getUserNameUtils()->isValid( $title->getText() ) ) {
-			return false;
-		}
-
-		// IPs don't get global userpages
-		return !IPUtils::isIPAddress( $title->getText() );
 	}
 
 	/**
