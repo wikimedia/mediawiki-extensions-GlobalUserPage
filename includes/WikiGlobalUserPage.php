@@ -54,7 +54,8 @@ class WikiGlobalUserPage extends WikiPage {
 	public function getWikiDisplayName() {
 		$url = $this->getSourceURL();
 
-		return wfParseUrl( $url )['host'];
+		return ( MediaWikiServices::getInstance()->getUrlUtils()
+			->parse( $url ) ?? [] )['host'];
 	}
 
 	/**
