@@ -32,7 +32,10 @@
 	},
 	"HookHandlers": {
 		"main": {
-			"class": "MediaWiki\\GlobalUserPage\\Hooks"
+			"class": "MediaWiki\\GlobalUserPage\\Hooks",
+			"services": [
+				"GlobalUserPage.GlobalUserPageManager"
+			]
 		}
 	},
 	"config": {

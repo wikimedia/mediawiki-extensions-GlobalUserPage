@@ -51,16 +51,20 @@ class GlobalUserPage extends Article {
 	 */
 	private $cache;
 
+	private GlobalUserPageManager $manager;
+
 	public function __construct( Title $title, Config $config ) {
 		$this->config = $config;
 		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$this->manager = MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' );
+
 		parent::__construct( $title );
 	}
 
 	public function showMissingArticle() {
 		$title = $this->getTitle();
 
-		if ( !self::shouldDisplayGlobalPage( $title ) ) {
+		if ( !$this->manager->shouldDisplayGlobalPage( $title ) ) {
 			parent::showMissingArticle();
 
 			return;
@@ -69,7 +73,7 @@ class GlobalUserPage extends Article {
 		$user = User::newFromName( $this->getUsername() );
 
 		$out = $this->getContext()->getOutput();
-		$parsedOutput = $this->getRemoteParsedText( self::getCentralTouched( $user ) );
+		$parsedOutput = $this->getRemoteParsedText( $this->manager->getCentralTouched( $user ) );
 
 		// If the user page is empty or the API request failed, show the normal
 		// missing article page
@@ -136,7 +140,7 @@ class GlobalUserPage extends Article {
 	 */
 	public function getRobotPolicy( $action, ?ParserOutput $pOutput = null ) {
 		$policy = parent::getRobotPolicy( $action, $pOutput );
-		if ( self::shouldDisplayGlobalPage( $this->getTitle() ) ) {
+		if ( $this->manager->shouldDisplayGlobalPage( $this->getTitle() ) ) {
 			// Set noindex if this page is global
 			$policy['index'] = 'noindex';
 		}
@@ -166,30 +170,6 @@ class GlobalUserPage extends Article {
 		}
 
 		$out->addJsConfigVars( $parsedOutput['jsconfigvars'] );
-	}
-
-	/**
-	 * Given a Title, assuming it doesn't exist, should
-	 * we display a global user page on it
-	 *
-	 * @param Title $title
-	 * @return bool
-	 */
-	public static function shouldDisplayGlobalPage( Title $title ) {
-		return MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' )
-			->shouldDisplayGlobalPage( $title );
-	}
-
-	/**
-	 * Get the page_touched of the central user page
-	 *
-	 * @todo this probably shouldn't be static
-	 * @param User $user
-	 * @return string|bool
-	 */
-	protected static function getCentralTouched( User $user ) {
-		return MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' )
-			->getCentralTouched( $user );
 	}
 
 	/**

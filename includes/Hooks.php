@@ -48,6 +48,13 @@ class Hooks implements
 	GetDoubleUnderscoreIDsHook,
 	WikiPageFactoryHook
 {
+	private GlobalUserPageManager $manager;
+
+	public function __construct(
+		GlobalUserPageManager $manager
+	) {
+		$this->manager = $manager;
+	}
 
 	/**
 	 * @param Title $title
@@ -58,7 +65,7 @@ class Hooks implements
 		// If another extension's hook has already run, don't override it
 		if ( $page === null
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
-			&& GlobalUserPage::shouldDisplayGlobalPage( $title )
+			&& $this->manager->shouldDisplayGlobalPage( $title )
 		) {
 			$page = new GlobalUserPage(
 				$title,
@@ -74,7 +81,7 @@ class Hooks implements
 	 * @param bool &$isKnown Whether the page should be considered known
 	 */
 	public function onTitleIsAlwaysKnown( $title, &$isKnown ) {
-		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$isKnown = true;
 		}
 	}
@@ -158,7 +165,7 @@ class Hooks implements
 	 * @param array &$notices
 	 */
 	public function onTitleGetEditNotices( $title, $oldid, &$notices ) {
-		if ( !$title->exists() && GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+		if ( !$title->exists() && $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$notices['globaluserpage'] = '<p><strong>' .
 				wfMessage( 'globaluserpage-editnotice' )->parse()
 				. '</strong></p>';
@@ -180,7 +187,7 @@ class Hooks implements
 	 * @return bool
 	 */
 	public function onWikiPageFactory( $title, &$page ) {
-		if ( GlobalUserPage::shouldDisplayGlobalPage( $title ) ) {
+		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$page = new WikiGlobalUserPage(
 				$title,
 				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
