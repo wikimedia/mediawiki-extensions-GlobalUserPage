@@ -19,13 +19,16 @@ namespace MediaWiki\GlobalUserPage;
 use MediaWiki\Config\Config;
 use MediaWiki\GlobalUserPage\Hooks\HookRunner;
 use MediaWiki\Html\Html;
+use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\Article;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Parser\ParserOutputFlags;
+use MediaWiki\Title\NamespaceInfo;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
+use MediaWiki\Utils\UrlUtils;
 use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\WANObjectCache;
 use Wikimedia\Parsoid\Core\TOCData;
@@ -41,22 +44,28 @@ class GlobalUserPage extends Article {
 	 */
 	private const PARSED_CACHE_VERSION = 4;
 
-	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
-	 * @var WANObjectCache
-	 */
-	private $cache;
-
+	private Config $config;
+	private WANObjectCache $cache;
 	private GlobalUserPageManager $manager;
+	private HttpRequestFactory $httpRequestFactory;
+	private UrlUtils $urlUtils;
+	private NamespaceInfo $namespaceInfo;
 
-	public function __construct( Title $title, Config $config ) {
+	public function __construct(
+		Title $title,
+		Config $config,
+		WANObjectCache $mainWANObjectCache,
+		GlobalUserPageManager $globalUserPageManager,
+		HttpRequestFactory $httpRequestFactory,
+		UrlUtils $urlUtils,
+		NamespaceInfo $namespaceInfo
+	) {
 		$this->config = $config;
-		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$this->manager = MediaWikiServices::getInstance()->getService( 'GlobalUserPage.GlobalUserPageManager' );
+		$this->cache = $mainWANObjectCache;
+		$this->manager = $globalUserPageManager;
+		$this->httpRequestFactory = $httpRequestFactory;
+		$this->urlUtils = $urlUtils;
+		$this->namespaceInfo = $namespaceInfo;
 
 		parent::__construct( $title );
 	}
@@ -243,7 +252,13 @@ class GlobalUserPage extends Article {
 	 * @return WikiGlobalUserPage
 	 */
 	public function newPage( Title $title ) {
-		return new WikiGlobalUserPage( $title, $this->config );
+		return new WikiGlobalUserPage(
+			$title,
+			$this->config,
+			$this->cache,
+			$this->httpRequestFactory,
+			$this->urlUtils
+		);
 	}
 
 	/**
@@ -255,9 +270,7 @@ class GlobalUserPage extends Article {
 	 * @return array|bool
 	 */
 	protected function parseWikiText( Title $title, $langCode, $skinName ) {
-		$unLocalizedName = MediaWikiServices::getInstance()
-			->getNamespaceInfo()
-			->getCanonicalName( NS_USER ) . ':' . $title->getText();
+		$unLocalizedName = $this->namespaceInfo->getCanonicalName( NS_USER ) . ':' . $title->getText();
 		$wikitext = '{{:' . $unLocalizedName . '}}';
 		$params = [
 			'action' => 'parse',

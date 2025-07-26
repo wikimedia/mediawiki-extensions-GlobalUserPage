@@ -34,7 +34,12 @@
 		"main": {
 			"class": "MediaWiki\\GlobalUserPage\\Hooks",
 			"services": [
-				"GlobalUserPage.GlobalUserPageManager"
+				"GlobalUserPage.GlobalUserPageManager",
+				"ConfigFactory",
+				"MainWANObjectCache",
+				"HttpRequestFactory",
+				"UrlUtils",
+				"NamespaceInfo"
 			]
 		}
 	},

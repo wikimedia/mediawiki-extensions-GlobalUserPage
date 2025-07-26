@@ -16,6 +16,8 @@
 
 namespace MediaWiki\GlobalUserPage;
 
+use MediaWiki\Config\Config;
+use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Content\Content;
 use MediaWiki\Context\IContextSource;
 use MediaWiki\Deferred\LinksUpdate\LinksUpdate;
@@ -23,8 +25,8 @@ use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
 use MediaWiki\Hook\TitleGetEditNoticesHook;
 use MediaWiki\Hook\TitleIsAlwaysKnownHook;
+use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Logging\ManualLogEntry;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\Article;
 use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
 use MediaWiki\Page\Hook\ArticleFromTitleHook;
@@ -33,10 +35,13 @@ use MediaWiki\Page\WikiPage;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Storage\EditResult;
 use MediaWiki\Storage\Hook\PageSaveCompleteHook;
+use MediaWiki\Title\NamespaceInfo;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
+use MediaWiki\Utils\UrlUtils;
 use MediaWiki\WikiMap\WikiMap;
+use Wikimedia\ObjectCache\WANObjectCache;
 
 class Hooks implements
 	TitleIsAlwaysKnownHook,
@@ -49,11 +54,26 @@ class Hooks implements
 	WikiPageFactoryHook
 {
 	private GlobalUserPageManager $manager;
+	private Config $config;
+	private WANObjectCache $mainWANObjectCache;
+	private HttpRequestFactory $httpRequestFactory;
+	private UrlUtils $urlUtils;
+	private NamespaceInfo $namespaceInfo;
 
 	public function __construct(
-		GlobalUserPageManager $manager
+		GlobalUserPageManager $manager,
+		ConfigFactory $configFactory,
+		WANObjectCache $mainWANObjectCache,
+		HttpRequestFactory $httpRequestFactory,
+		UrlUtils $urlUtils,
+		NamespaceInfo $namespaceInfo
 	) {
 		$this->manager = $manager;
+		$this->config = $configFactory->makeConfig( 'globaluserpage' );
+		$this->mainWANObjectCache = $mainWANObjectCache;
+		$this->httpRequestFactory = $httpRequestFactory;
+		$this->urlUtils = $urlUtils;
+		$this->namespaceInfo = $namespaceInfo;
 	}
 
 	/**
@@ -69,7 +89,12 @@ class Hooks implements
 		) {
 			$page = new GlobalUserPage(
 				$title,
-				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
+				$this->config,
+				$this->mainWANObjectCache,
+				$this->manager,
+				$this->httpRequestFactory,
+				$this->urlUtils,
+				$this->namespaceInfo
 			);
 		}
 	}
@@ -190,7 +215,10 @@ class Hooks implements
 		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$page = new WikiGlobalUserPage(
 				$title,
-				MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globaluserpage' )
+				$this->config,
+				$this->mainWANObjectCache,
+				$this->httpRequestFactory,
+				$this->urlUtils
 			);
 
 			return false;

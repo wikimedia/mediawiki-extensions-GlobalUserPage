@@ -17,30 +17,34 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Config\Config;
+use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Json\FormatJson;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\WikiPage;
 use MediaWiki\Status\Status;
 use MediaWiki\Title\Title;
+use MediaWiki\Utils\UrlUtils;
 use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\WANObjectCache;
 
 class WikiGlobalUserPage extends WikiPage {
 
-	/**
-	 * @var Config
-	 */
-	private $config;
+	private Config $config;
+	private WANObjectCache $cache;
+	private HttpRequestFactory $httpRequestFactory;
+	private UrlUtils $urlUtils;
 
-	/**
-	 * @var WANObjectCache
-	 */
-	private $cache;
-
-	public function __construct( Title $title, Config $config ) {
+	public function __construct(
+		Title $title,
+		Config $config,
+		WANObjectCache $mainWANObjectCache,
+		HttpRequestFactory $httpRequestFactory,
+		UrlUtils $urlUtils
+	) {
 		parent::__construct( $title );
 		$this->config = $config;
-		$this->cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$this->cache = $mainWANObjectCache;
+		$this->httpRequestFactory = $httpRequestFactory;
+		$this->urlUtils = $urlUtils;
 	}
 
 	/** @inheritDoc */
@@ -54,8 +58,7 @@ class WikiGlobalUserPage extends WikiPage {
 	public function getWikiDisplayName() {
 		$url = $this->getSourceURL();
 
-		return ( MediaWikiServices::getInstance()->getUrlUtils()
-			->parse( $url ) ?? [] )['host'];
+		return ( $this->urlUtils->parse( $url ) ?? [] )['host'];
 	}
 
 	/**
@@ -130,7 +133,7 @@ class WikiGlobalUserPage extends WikiPage {
 		$params['format'] = 'json';
 		$url = wfAppendQuery( $this->config->get( 'GlobalUserPageAPIUrl' ), $params );
 		wfDebugLog( 'GlobalUserPage', "Making a request to $url" );
-		$req = MediaWikiServices::getInstance()->getHttpRequestFactory()->create(
+		$req = $this->httpRequestFactory->create(
 			$url,
 			[ 'timeout' => $this->config->get( 'GlobalUserPageTimeout' ) ],
 			__METHOD__
