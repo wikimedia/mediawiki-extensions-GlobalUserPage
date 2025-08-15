@@ -77,7 +77,7 @@
 		"MediaWiki\\GlobalUserPage\\": "includes/"
 	},
 	"ConfigRegistry": {
-		"globaluserpage": "GlobalVarConfig::newInstance"
+		"globaluserpage": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
 	"ServiceWiringFiles": [
 		"includes/ServiceWiring.php"
