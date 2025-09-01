@@ -44,29 +44,15 @@ class GlobalUserPage extends Article {
 	 */
 	private const PARSED_CACHE_VERSION = 4;
 
-	private Config $config;
-	private WANObjectCache $cache;
-	private GlobalUserPageManager $manager;
-	private HttpRequestFactory $httpRequestFactory;
-	private UrlUtils $urlUtils;
-	private NamespaceInfo $namespaceInfo;
-
 	public function __construct(
 		Title $title,
-		Config $config,
-		WANObjectCache $mainWANObjectCache,
-		GlobalUserPageManager $globalUserPageManager,
-		HttpRequestFactory $httpRequestFactory,
-		UrlUtils $urlUtils,
-		NamespaceInfo $namespaceInfo
+		private readonly Config $config,
+		private readonly WANObjectCache $cache,
+		private readonly GlobalUserPageManager $manager,
+		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly UrlUtils $urlUtils,
+		private readonly NamespaceInfo $namespaceInfo,
 	) {
-		$this->config = $config;
-		$this->cache = $mainWANObjectCache;
-		$this->manager = $globalUserPageManager;
-		$this->httpRequestFactory = $httpRequestFactory;
-		$this->urlUtils = $urlUtils;
-		$this->namespaceInfo = $namespaceInfo;
-
 		parent::__construct( $title );
 	}
 

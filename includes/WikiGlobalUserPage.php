@@ -28,23 +28,14 @@ use Wikimedia\ObjectCache\WANObjectCache;
 
 class WikiGlobalUserPage extends WikiPage {
 
-	private Config $config;
-	private WANObjectCache $cache;
-	private HttpRequestFactory $httpRequestFactory;
-	private UrlUtils $urlUtils;
-
 	public function __construct(
 		Title $title,
-		Config $config,
-		WANObjectCache $mainWANObjectCache,
-		HttpRequestFactory $httpRequestFactory,
-		UrlUtils $urlUtils
+		private readonly Config $config,
+		private readonly WANObjectCache $cache,
+		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly UrlUtils $urlUtils,
 	) {
 		parent::__construct( $title );
-		$this->config = $config;
-		$this->cache = $mainWANObjectCache;
-		$this->httpRequestFactory = $httpRequestFactory;
-		$this->urlUtils = $urlUtils;
 	}
 
 	/** @inheritDoc */

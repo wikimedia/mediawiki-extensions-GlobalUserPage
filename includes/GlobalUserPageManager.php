@@ -16,29 +16,17 @@ use Wikimedia\Rdbms\IConnectionProvider;
 class GlobalUserPageManager {
 	public const CONSTRUCTOR_OPTIONS = [ 'GlobalUserPageDBname' ];
 
-	private IConnectionProvider $connectionProvider;
-	private UserFactory $userFactory;
-	private UserNameUtils $userNameUtils;
-	private CentralIdLookup $centralIdLookup;
-	private ServiceOptions $options;
-
 	private MapCacheLRU $displayCache;
 	private MapCacheLRU $touchedCache;
 
 	public function __construct(
-		IConnectionProvider $connectionProvider,
-		UserFactory $userFactory,
-		UserNameUtils $userNameUtils,
-		CentralIdLookup $centralIdLookup,
-		ServiceOptions $options
+		private readonly IConnectionProvider $connectionProvider,
+		private readonly UserFactory $userFactory,
+		private readonly UserNameUtils $userNameUtils,
+		private readonly CentralIdLookup $centralIdLookup,
+		private readonly ServiceOptions $options,
 	) {
 		$options->assertRequiredOptions( self::CONSTRUCTOR_OPTIONS );
-
-		$this->connectionProvider = $connectionProvider;
-		$this->userFactory = $userFactory;
-		$this->userNameUtils = $userNameUtils;
-		$this->centralIdLookup = $centralIdLookup;
-		$this->options = $options;
 
 		// Do some instance caching since this can be
 		// called frequently due do the Linker hook

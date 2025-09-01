@@ -53,27 +53,17 @@ class Hooks implements
 	GetDoubleUnderscoreIDsHook,
 	WikiPageFactoryHook
 {
-	private GlobalUserPageManager $manager;
-	private Config $config;
-	private WANObjectCache $mainWANObjectCache;
-	private HttpRequestFactory $httpRequestFactory;
-	private UrlUtils $urlUtils;
-	private NamespaceInfo $namespaceInfo;
+	private readonly Config $config;
 
 	public function __construct(
-		GlobalUserPageManager $manager,
+		private readonly GlobalUserPageManager $manager,
 		ConfigFactory $configFactory,
-		WANObjectCache $mainWANObjectCache,
-		HttpRequestFactory $httpRequestFactory,
-		UrlUtils $urlUtils,
-		NamespaceInfo $namespaceInfo
+		private readonly WANObjectCache $mainWANObjectCache,
+		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly UrlUtils $urlUtils,
+		private readonly NamespaceInfo $namespaceInfo,
 	) {
-		$this->manager = $manager;
 		$this->config = $configFactory->makeConfig( 'globaluserpage' );
-		$this->mainWANObjectCache = $mainWANObjectCache;
-		$this->httpRequestFactory = $httpRequestFactory;
-		$this->urlUtils = $urlUtils;
-		$this->namespaceInfo = $namespaceInfo;
 	}
 
 	/**
