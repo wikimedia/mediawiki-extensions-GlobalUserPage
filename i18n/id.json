@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Gombang"
+			"Gombang",
+			"Penyuwangi"
 		]
 	},
 	"globaluserpage-desc": "Secara otomatis mengambil halaman pengguna dari sebuah wiki terpusat",
 	"globaluserpage-editnotice": "Halaman ini sekarang menampilkan halaman pengguna dari wiki lain. Bila Anda membuat halaman baru di sini, halaman wiki tersebut tidak akan lagi ditampilkan.",
-	"globaluserpage-central-editnotice": "Halaman pengguna ini akan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ditampilkan] pada wiki lain bila halaman pengguna setempat tidak dibuat di sana.",
+	"globaluserpage-central-editnotice": "Halaman pengguna ini akan [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage ditampilkan] pada wiki lain bila halaman pengguna lokal tidak dibuat di sana.",
 	"globaluserpage-footer": "Yang Anda baca di halaman ini [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage disalin] dari [$2 $2]."
 }
