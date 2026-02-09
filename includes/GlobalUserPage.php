@@ -17,10 +17,8 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Config\Config;
-use MediaWiki\GlobalUserPage\Hooks\HookRunner;
 use MediaWiki\Html\Html;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Page\Article;
 use MediaWiki\Parser\ParserOutput;
@@ -273,23 +271,5 @@ class GlobalUserPage extends Article {
 
 		// (T328694) Don't read 'parse' key blindly, it might not be set
 		return $data !== false ? ( $data['parse'] ?? false ) : false;
-	}
-
-	/**
-	 * @return array
-	 */
-	public static function getEnabledWikis() {
-		static $list = null;
-		if ( $list === null ) {
-			$list = [];
-			$hookRunner = new HookRunner( MediaWikiServices::getInstance()->getHookContainer() );
-			if ( $hookRunner->onGlobalUserPageWikis( $list ) ) {
-				// Fallback if no hook override
-				global $wgLocalDatabases;
-				$list = $wgLocalDatabases;
-			}
-		}
-
-		return $list;
 	}
 }

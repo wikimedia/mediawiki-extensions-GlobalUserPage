@@ -13,7 +13,7 @@ interface GlobalUserPageWikisHook {
 	/**
 	 * Return a list of enabled wikis
 	 *
-	 * @param array &$list
+	 * @param string[] &$list
 	 * @return bool Return false when list gets set
 	 */
 	public function onGlobalUserPageWikis( array &$list ): bool;

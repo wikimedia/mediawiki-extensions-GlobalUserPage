@@ -76,7 +76,8 @@
 			"services": [
 				"CentralIdLookup",
 				"JobQueueGroupFactory",
-				"UserFactory"
+				"UserFactory",
+				"GlobalUserPage.GlobalUserPageManager"
 			],
 			"needsPage": false
 		},

@@ -8,6 +8,7 @@ use MediaWiki\GlobalUserPage\GlobalUserPage;
 use MediaWiki\GlobalUserPage\GlobalUserPageManager;
 use MediaWiki\GlobalUserPage\WikiGlobalUserPage;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Page\Article;
 use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleValue;
@@ -139,7 +140,9 @@ class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 			$centralIdLookup,
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, [
 				'GlobalUserPageDBname' => $globalUserPageDBname,
-			] )
+				MainConfigNames::LocalDatabases => [],
+			] ),
+			$this->getServiceContainer()->getHookContainer(),
 		);
 
 		$this->setService( 'GlobalUserPage.GlobalUserPageManager', $globalUserPageManager );

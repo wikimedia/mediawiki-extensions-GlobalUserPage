@@ -4,6 +4,7 @@ namespace MediaWiki\GlobalUserPage\Tests\Integration;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\GlobalUserPage\GlobalUserPageManager;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Tests\User\TempUser\TempUserTestTrait;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
@@ -68,7 +69,10 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 		}
 	}
 
-	private function getObjectUnderTest( string $globalUserPageDBname ): GlobalUserPageManager {
+	private function getObjectUnderTest(
+		string $globalUserPageDBname,
+		array $localDatabases = []
+	): GlobalUserPageManager {
 		return new GlobalUserPageManager(
 			$this->connectionProvider,
 			$this->getServiceContainer()->getUserFactory(),
@@ -76,7 +80,9 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 			$this->centralIdLookup,
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, [
 				'GlobalUserPageDBname' => $globalUserPageDBname,
-			] )
+				MainConfigNames::LocalDatabases => $localDatabases,
+			] ),
+			$this->getServiceContainer()->getHookContainer(),
 		);
 	}
 
@@ -248,5 +254,24 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 			new UserIdentityValue( 1, self::USER_WITH_GLOBAL_USERPAGE ),
 			self::TEST_TIMESTAMP
 		];
+	}
+
+	public function testGetEnabledWikisViaHook() {
+		$this->setTemporaryHook( 'GlobalUserPageWikis', static function ( array &$list ): bool {
+			$list[] = 'hook-wiki';
+			return false;
+		} );
+
+		$globalUserPageManager = $this->getObjectUnderTest( WikiMap::getCurrentWikiId(), [ 'unused-wiki' ] );
+
+		$this->assertSame( [ 'hook-wiki' ], $globalUserPageManager->getEnabledWikis() );
+	}
+
+	public function testGetEnabledWikisViaFallback() {
+		$this->clearHook( 'GlobalUserPageWikis' );
+
+		$globalUserPageManager = $this->getObjectUnderTest( WikiMap::getCurrentWikiId(), [ 'fallback-wiki' ] );
+
+		$this->assertSame( [ 'fallback-wiki' ], $globalUserPageManager->getEnabledWikis() );
 	}
 }

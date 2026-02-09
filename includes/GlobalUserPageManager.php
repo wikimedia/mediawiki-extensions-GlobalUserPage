@@ -3,7 +3,10 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\GlobalUserPage\Hooks\HookRunner;
+use MediaWiki\HookContainer\HookContainer;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\User\UserFactory;
@@ -14,10 +17,16 @@ use Wikimedia\ObjectCache\MapCacheLRU;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 class GlobalUserPageManager {
-	public const CONSTRUCTOR_OPTIONS = [ 'GlobalUserPageDBname' ];
+	public const CONSTRUCTOR_OPTIONS = [
+		'GlobalUserPageDBname',
+		MainConfigNames::LocalDatabases,
+	];
 
 	private MapCacheLRU $displayCache;
 	private MapCacheLRU $touchedCache;
+	private readonly HookRunner $hookRunner;
+	/** @var string[]|null */
+	private ?array $enabledWikisList = null;
 
 	public function __construct(
 		private readonly IConnectionProvider $connectionProvider,
@@ -25,8 +34,10 @@ class GlobalUserPageManager {
 		private readonly UserNameUtils $userNameUtils,
 		private readonly CentralIdLookup $centralIdLookup,
 		private readonly ServiceOptions $options,
+		HookContainer $hookContainer,
 	) {
 		$options->assertRequiredOptions( self::CONSTRUCTOR_OPTIONS );
+		$this->hookRunner = new HookRunner( $hookContainer );
 
 		// Do some instance caching since this can be
 		// called frequently due do the Linker hook
@@ -138,5 +149,18 @@ class GlobalUserPageManager {
 			// Temporary accounts cannot have global userpages (T326920).
 			!$this->userNameUtils->isTemp( $title->getText() )
 		);
+	}
+
+	public function getEnabledWikis(): array {
+		if ( $this->enabledWikisList === null ) {
+			$list = [];
+			if ( $this->hookRunner->onGlobalUserPageWikis( $list ) ) {
+				// Fallback if no hook override
+				$list = $this->options->get( MainConfigNames::LocalDatabases );
+			}
+			$this->enabledWikisList = $list;
+		}
+
+		return $this->enabledWikisList;
 	}
 }

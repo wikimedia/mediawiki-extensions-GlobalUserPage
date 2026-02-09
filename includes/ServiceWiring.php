@@ -16,7 +16,8 @@ return [
 			$services->getUserFactory(),
 			$services->getUserNameUtils(),
 			$services->getCentralIdLookup(),
-			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, $config )
+			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, $config ),
+			$services->getHookContainer(),
 		);
 	}
 ];
