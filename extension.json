@@ -70,8 +70,20 @@
 		"remoteExtPath": "GlobalUserPage/modules"
 	},
 	"JobClasses": {
-		"GlobalUserPageLocalJobSubmitJob": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
-		"LocalGlobalUserPageCacheUpdateJob": "MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob"
+		"GlobalUserPageLocalJobSubmitJob": {
+			"class": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
+			"services": [
+				"JobQueueGroupFactory"
+			],
+			"needsPage": false
+		},
+		"LocalGlobalUserPageCacheUpdateJob": {
+			"class": "MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob",
+			"services": [
+				"HTMLCacheUpdater"
+			],
+			"needsPage": false
+		}
 	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\GlobalUserPage\\": "includes/"

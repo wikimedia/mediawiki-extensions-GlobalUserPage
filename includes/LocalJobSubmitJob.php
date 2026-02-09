@@ -17,26 +17,25 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\JobQueue\Job;
-use MediaWiki\MediaWikiServices;
-use MediaWiki\Title\Title;
+use MediaWiki\JobQueue\JobQueueGroupFactory;
+use MediaWiki\JobQueue\JobSpecification;
 
 /**
  * Job class that submits LocalCacheUpdateJob jobs
  */
 class LocalJobSubmitJob extends Job {
-	public function __construct( Title $title, array $params ) {
-		parent::__construct( 'GlobalUserPageLocalJobSubmitJob', $title, $params );
+	public function __construct(
+		array $params,
+		private readonly JobQueueGroupFactory $jobQueueGroupFactory,
+	) {
+		parent::__construct( 'GlobalUserPageLocalJobSubmitJob', $params );
 	}
 
 	/** @inheritDoc */
 	public function run() {
-		$job = new LocalCacheUpdateJob(
-			Title::newFromText( 'User:' . $this->params['username'] ),
-			$this->params
-		);
-		$jobQueueGroupFactory = MediaWikiServices::getInstance()->getJobQueueGroupFactory();
+		$job = new JobSpecification( 'LocalGlobalUserPageCacheUpdateJob', $this->params );
 		foreach ( GlobalUserPage::getEnabledWikis() as $wiki ) {
-			$jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
+			$this->jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
 		}
 		return true;
 	}
