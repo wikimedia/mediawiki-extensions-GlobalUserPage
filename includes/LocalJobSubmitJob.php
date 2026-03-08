@@ -16,9 +16,12 @@
 
 namespace MediaWiki\GlobalUserPage;
 
+use LogicException;
 use MediaWiki\JobQueue\Job;
 use MediaWiki\JobQueue\JobQueueGroupFactory;
 use MediaWiki\JobQueue\JobSpecification;
+use MediaWiki\User\CentralId\CentralIdLookup;
+use MediaWiki\User\UserFactory;
 
 /**
  * Job class that submits LocalCacheUpdateJob jobs
@@ -26,7 +29,9 @@ use MediaWiki\JobQueue\JobSpecification;
 class LocalJobSubmitJob extends Job {
 	public function __construct(
 		array $params,
+		private readonly CentralIdLookup $centralIdLookup,
 		private readonly JobQueueGroupFactory $jobQueueGroupFactory,
+		private readonly UserFactory $userFactory,
 	) {
 		parent::__construct( 'GlobalUserPageLocalJobSubmitJob', $params );
 	}
@@ -34,7 +39,13 @@ class LocalJobSubmitJob extends Job {
 	/** @inheritDoc */
 	public function run() {
 		$job = new JobSpecification( 'LocalGlobalUserPageCacheUpdateJob', $this->params );
-		foreach ( GlobalUserPage::getEnabledWikis() as $wiki ) {
+		$wikis = GlobalUserPage::getEnabledWikis();
+		$user = $this->userFactory->newFromName( $this->params['username'] );
+		if ( $user === null ) {
+			throw new LogicException( 'User instance could not be created for ' . $this->params['username'] );
+		}
+		$wikis = array_filter( $wikis, fn ( $wiki ) => $this->centralIdLookup->isAttached( $user, $wiki ) );
+		foreach ( $wikis as $wiki ) {
 			$this->jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
 		}
 		return true;

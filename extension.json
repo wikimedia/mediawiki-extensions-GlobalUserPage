@@ -73,7 +73,9 @@
 		"GlobalUserPageLocalJobSubmitJob": {
 			"class": "MediaWiki\\GlobalUserPage\\LocalJobSubmitJob",
 			"services": [
-				"JobQueueGroupFactory"
+				"CentralIdLookup",
+				"JobQueueGroupFactory",
+				"UserFactory"
 			],
 			"needsPage": false
 		},
