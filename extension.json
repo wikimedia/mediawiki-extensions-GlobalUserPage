@@ -80,7 +80,7 @@
 		"LocalGlobalUserPageCacheUpdateJob": {
 			"class": "MediaWiki\\GlobalUserPage\\LocalCacheUpdateJob",
 			"services": [
-				"HTMLCacheUpdater"
+				"HtmlCacheUpdater"
 			],
 			"needsPage": false
 		}
