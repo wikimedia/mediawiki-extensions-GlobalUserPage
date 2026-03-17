@@ -30,6 +30,7 @@
 		"GetDoubleUnderscoreIDs": "main",
 		"WikiPageFactory": "main"
 	},
+	"callback": "\\MediaWiki\\GlobalUserPage\\Hooks::onRegistration",
 	"HookHandlers": {
 		"main": {
 			"class": "MediaWiki\\GlobalUserPage\\Hooks",
@@ -57,7 +58,7 @@
 			"value": "globaluserpage-footer"
 		},
 		"GlobalUserPageDBname": {
-			"value": "examplewiki"
+			"value": null
 		}
 	},
 	"ResourceModules": {

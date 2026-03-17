@@ -17,6 +17,7 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Config\Config;
+use MediaWiki\Config\ConfigException;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Content\Content;
 use MediaWiki\Context\IContextSource;
@@ -64,6 +65,19 @@ class Hooks implements
 		private readonly NamespaceInfo $namespaceInfo,
 	) {
 		$this->config = $configFactory->makeConfig( 'globaluserpage' );
+	}
+
+	public static function onRegistration(): void {
+		// Use globals instead of Config, accessing it so early does not work (T255704)
+		global $wgGlobalUserPageDBname, $wgDBname;
+
+		if ( defined( 'MW_PHPUNIT_TEST' ) || defined( 'MW_QUIBBLE_CI' ) ) {
+			$wgGlobalUserPageDBname = $wgDBname;
+		}
+
+		if ( !$wgGlobalUserPageDBname ) {
+			throw new ConfigException( 'GlobalUserPage requires $wgGlobalUserPageDBname to be set' );
+		}
 	}
 
 	/**
