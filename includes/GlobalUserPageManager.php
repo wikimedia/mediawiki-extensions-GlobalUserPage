@@ -2,7 +2,6 @@
 
 namespace MediaWiki\GlobalUserPage;
 
-use MapCacheLRU;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\Title\TitleValue;
@@ -11,6 +10,7 @@ use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserNameUtils;
 use MediaWiki\WikiMap\WikiMap;
+use Wikimedia\ObjectCache\MapCacheLRU;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 class GlobalUserPageManager {
