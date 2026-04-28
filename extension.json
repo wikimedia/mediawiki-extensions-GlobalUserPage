@@ -37,10 +37,12 @@
 			"services": [
 				"GlobalUserPage.GlobalUserPageManager",
 				"ConfigFactory",
+				"MainConfig",
 				"MainWANObjectCache",
 				"HttpRequestFactory",
 				"UrlUtils",
-				"NamespaceInfo"
+				"NamespaceInfo",
+				"JobQueueGroup"
 			]
 		}
 	},

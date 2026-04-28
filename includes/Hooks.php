@@ -27,6 +27,7 @@ use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
 use MediaWiki\Hook\TitleGetEditNoticesHook;
 use MediaWiki\Hook\TitleIsAlwaysKnownHook;
 use MediaWiki\Http\HttpRequestFactory;
+use MediaWiki\JobQueue\JobQueueGroup;
 use MediaWiki\Logging\ManualLogEntry;
 use MediaWiki\Page\Article;
 use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
@@ -59,10 +60,12 @@ class Hooks implements
 	public function __construct(
 		private readonly GlobalUserPageManager $manager,
 		ConfigFactory $configFactory,
+		private readonly Config $mainConfig,
 		private readonly WANObjectCache $mainWANObjectCache,
 		private readonly HttpRequestFactory $httpRequestFactory,
 		private readonly UrlUtils $urlUtils,
 		private readonly NamespaceInfo $namespaceInfo,
+		private readonly JobQueueGroup $jobQueueGroup,
 	) {
 		$this->config = $configFactory->makeConfig( 'globaluserpage' );
 	}
@@ -141,7 +144,11 @@ class Hooks implements
 	public function onLinksUpdateComplete( $lu, $ticket ) {
 		$title = $lu->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
-			$inv = new CacheInvalidator( $title->getText() );
+			$inv = new CacheInvalidator(
+				$this->jobQueueGroup,
+				$this->mainConfig,
+				$title->getText()
+			);
 			$inv->invalidate();
 		}
 	}
@@ -149,7 +156,12 @@ class Hooks implements
 	private function invalidCacheIfGlobal( WikiPage $page ): void {
 		$title = $page->getTitle();
 		if ( self::isGlobalUserPage( $title ) ) {
-			$inv = new CacheInvalidator( $title->getText(), [ 'links' ] );
+			$inv = new CacheInvalidator(
+				$this->jobQueueGroup,
+				$this->mainConfig,
+				$title->getText(),
+				[ 'links' ],
+			);
 			$inv->invalidate();
 		}
 	}

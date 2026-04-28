@@ -16,34 +16,36 @@
 
 namespace MediaWiki\GlobalUserPage;
 
+use MediaWiki\Config\Config;
+use MediaWiki\JobQueue\JobQueueGroup;
 use MediaWiki\JobQueue\JobSpecification;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\MainConfigNames;
 
 class CacheInvalidator {
 	/**
-	 * Username of the user who's userpage needs to be invalidated
+	 * @param JobQueueGroup $jobQueueGroup
+	 * @param Config $mainConfig
+	 * @param string $username Username of the user who's userpage needs to be invalidated
+	 * @param string[] $options Array of string options
 	 */
-	private string $username;
-
-	/**
-	 * Array of string options
-	 */
-	private array $options;
-
-	public function __construct( string $username, array $options = [] ) {
-		$this->username = $username;
-		$this->options = $options;
+	public function __construct(
+		private readonly JobQueueGroup $jobQueueGroup,
+		private readonly Config $mainConfig,
+		private readonly string $username,
+		private readonly array $options = [],
+	) {
 	}
 
 	public function invalidate(): void {
-		global $wgUseCdn, $wgUseFileCache;
-
-		if ( !$wgUseCdn && !$wgUseFileCache && !$this->options ) {
+		if ( !$this->mainConfig->get( MainConfigNames::UseCdn ) &&
+			!$this->mainConfig->get( MainConfigNames::UseFileCache ) &&
+			!$this->options
+		) {
 			// No CDN and no options means nothing to do!
 			return;
 		}
 
-		MediaWikiServices::getInstance()->getJobQueueGroup()->push( new JobSpecification(
+		$this->jobQueueGroup->push( new JobSpecification(
 			'GlobalUserPageLocalJobSubmitJob',
 			[
 				'username' => $this->username,
