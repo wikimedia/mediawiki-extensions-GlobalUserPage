@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Red Winged Duck",
-			"Renessaince"
+			"Renessaince",
+			"Ucukor"
 		]
 	},
 	"globaluserpage-desc": "Аўтаматычна падцягвае старонкі ўдзельніка з цэнтральнай вікі",
-	"globaluserpage-editnotice": "Цяпер на гэтай старонцы адлюстроўваецца старонка ўдзельніка зь іншага разьдзелу вікі. Калі Вы створыце тут новую старонку, яна больш ня будзе паказваць старонку зь іншай вікі.",
+	"globaluserpage-editnotice": "Цяпер на гэтай старонцы паказаная старонка ўдзельніка зь іншага разьдзелу вікі. Калі Вы створыце тут новую старонку, яна больш ня будзе паказваць старонку зь іншай вікі.",
 	"globaluserpage-central-editnotice": "Гэтая старонка ўдзельніка будзе [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage паказаная] ў іншых вікі, калі там ня створаная лякальная старонка ўдзельніка.",
 	"globaluserpage-footer": "Усё, што Вы бачыце на гэтай старонцы, [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage скапіявана] з [$2 $2]."
 }
