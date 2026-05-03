@@ -42,7 +42,6 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\Utils\UrlUtils;
-use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\WANObjectCache;
 
 class Hooks implements
@@ -119,23 +118,6 @@ class Hooks implements
 	}
 
 	/**
-	 * Whether a page is the global user page on the central wiki
-	 *
-	 * @param Title $title
-	 * @return bool
-	 */
-	protected static function isGlobalUserPage( Title $title ) {
-		global $wgGlobalUserPageDBname;
-
-		// On the central wiki
-		return $wgGlobalUserPageDBname === WikiMap::getCurrentWikiId()
-			// is a user page
-			&& $title->inNamespace( NS_USER )
-			// and is a root page.
-			&& $title->getRootTitle()->equals( $title );
-	}
-
-	/**
 	 * After a LinksUpdate runs for a user page, queue remote squid purges
 	 *
 	 * @param LinksUpdate $lu
@@ -143,7 +125,7 @@ class Hooks implements
 	 */
 	public function onLinksUpdateComplete( $lu, $ticket ) {
 		$title = $lu->getTitle();
-		if ( self::isGlobalUserPage( $title ) ) {
+		if ( $this->manager->isGlobalPage( $title ) ) {
 			$inv = new CacheInvalidator(
 				$this->jobQueueGroup,
 				$this->mainConfig,
@@ -155,7 +137,7 @@ class Hooks implements
 
 	private function invalidCacheIfGlobal( WikiPage $page ): void {
 		$title = $page->getTitle();
-		if ( self::isGlobalUserPage( $title ) ) {
+		if ( $this->manager->isGlobalPage( $title ) ) {
 			$inv = new CacheInvalidator(
 				$this->jobQueueGroup,
 				$this->mainConfig,
@@ -210,7 +192,7 @@ class Hooks implements
 			$notices['globaluserpage'] = '<p><strong>' .
 				wfMessage( 'globaluserpage-editnotice' )->parse()
 				. '</strong></p>';
-		} elseif ( self::isGlobalUserPage( $title ) ) {
+		} elseif ( $this->manager->isGlobalPage( $title ) ) {
 			$notices['centraluserpage'] = wfMessage( 'globaluserpage-central-editnotice' )->parseAsBlock();
 		}
 	}

@@ -27,6 +27,7 @@ class GlobalUserPageManager {
 	private readonly HookRunner $hookRunner;
 	/** @var string[]|null */
 	private ?array $enabledWikisList = null;
+	private readonly bool $isCentralWiki;
 
 	public function __construct(
 		private readonly IConnectionProvider $connectionProvider,
@@ -43,6 +44,8 @@ class GlobalUserPageManager {
 		// called frequently due do the Linker hook
 		$this->displayCache = new MapCacheLRU( 100 );
 		$this->touchedCache = new MapCacheLRU( 100 );
+
+		$this->isCentralWiki = WikiMap::isCurrentWikiId( $options->get( 'GlobalUserPageDBname' ) );
 	}
 
 	/**
@@ -53,6 +56,11 @@ class GlobalUserPageManager {
 	 * @return bool
 	 */
 	public function shouldDisplayGlobalPage( LinkTarget $title ): bool {
+		// Don't run this code for Hub.
+		if ( $this->isCentralWiki ) {
+			return false;
+		}
+
 		if ( !$this->canBeGlobal( $title ) ) {
 			return false;
 		}
@@ -130,17 +138,22 @@ class GlobalUserPageManager {
 	}
 
 	/**
+	 * Whether a page is the global user page on the central wiki
+	 */
+	public function isGlobalPage( LinkTarget $title ): bool {
+		// Global user page must be on the central wiki
+		return $this->isCentralWiki
+			// and match some more criteria
+			&& $this->canBeGlobal( $title );
+	}
+
+	/**
 	 * Checks whether the given page can be global
 	 * doesn't check the actual database
 	 * @param LinkTarget $title
 	 * @return bool
 	 */
 	private function canBeGlobal( LinkTarget $title ): bool {
-		// Don't run this code for Hub.
-		if ( WikiMap::getCurrentWikiId() === $this->options->get( 'GlobalUserPageDBname' ) ) {
-			return false;
-		}
-
 		return (
 			// Must be a user page
 			$title->inNamespace( NS_USER ) &&

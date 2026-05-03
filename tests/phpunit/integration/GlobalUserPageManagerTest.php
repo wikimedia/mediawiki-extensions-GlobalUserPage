@@ -256,6 +256,60 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 		];
 	}
 
+	/**
+	 * @dataProvider provideIsGlobalPage
+	 */
+	public function testIsGlobalPage(
+		LinkTarget $title,
+		?string $globalUserPageDBname,
+		bool $expected
+	): void {
+		$globalUserPageDBname ??= WikiMap::getCurrentWikiId();
+		$globalUserPageManager = $this->getObjectUnderTest( $globalUserPageDBname );
+
+		$this->assertSame( $expected, $globalUserPageManager->isGlobalPage( $title ) );
+	}
+
+	public static function provideIsGlobalPage(): iterable {
+		$validGlobalUserPage = new TitleValue( NS_USER, self::USER_WITH_GLOBAL_USERPAGE );
+
+		yield 'local userpage on configured global wiki' => [
+			$validGlobalUserPage,
+			null,
+			true
+		];
+
+		yield 'non-userpage' => [
+			new TitleValue( NS_MAIN, self::USER_WITH_GLOBAL_USERPAGE ),
+			null,
+			false
+		];
+
+		yield 'user subpage' => [
+			new TitleValue( NS_USER, self::USER_WITH_GLOBAL_USERPAGE . '/Test' ),
+			null,
+			false
+		];
+
+		yield 'IP userpage' => [
+			new TitleValue( NS_USER, self::IP_WITH_GLOBAL_USERPAGE ),
+			null,
+			false
+		];
+
+		yield 'temporary account userpage' => [
+			new TitleValue( NS_USER, self::TEMP_ACCOUNT_WITH_GLOBAL_USERPAGE ),
+			null,
+			false
+		];
+
+		yield 'user on other wiki' => [
+			$validGlobalUserPage,
+			'some_other_wiki',
+			false
+		];
+	}
+
 	public function testGetEnabledWikisViaHook() {
 		$this->setTemporaryHook( 'GlobalUserPageWikis', static function ( array &$list ): bool {
 			$list[] = 'hook-wiki';
