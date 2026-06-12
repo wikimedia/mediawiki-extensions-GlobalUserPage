@@ -8,7 +8,7 @@
 	"url": "https://www.mediawiki.org/wiki/Extension:GlobalUserPage",
 	"descriptionmsg": "globaluserpage-desc",
 	"license-name": "GPL-3.0-or-later",
-	"type": "other",
+	"type": "wikifamily",
 	"requires": {
 		"MediaWiki": ">= 1.47.0"
 	},
