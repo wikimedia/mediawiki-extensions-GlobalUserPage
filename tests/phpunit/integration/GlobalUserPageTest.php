@@ -10,11 +10,11 @@ use MediaWiki\GlobalUserPage\WikiGlobalUserPage;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\MainConfigNames;
 use MediaWiki\Page\Article;
-use MediaWiki\Title\Title;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWikiIntegrationTestCase;
 use MockHttpTrait;
+use MockTitleTrait;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 /**
@@ -27,6 +27,7 @@ use Wikimedia\Rdbms\IConnectionProvider;
  */
 class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 	use MockHttpTrait;
+	use MockTitleTrait;
 
 	private const WIKI_DEFINED_IN_SITECONFIGURATION = 'wiki_in_siteconfiguration';
 	private const FOREIGN_WIKI = 'some_foreign_wiki';
@@ -147,25 +148,13 @@ class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 
 		$this->setService( 'GlobalUserPage.GlobalUserPageManager', $globalUserPageManager );
 
-		// Set up a stubbed userpage title that doesn't exist.
+		// Set up a stubbed userpage title that doesn't exist (id=0).
 		// This is needed because the "global" userpage lives on the local wiki in tests,
 		// since tests do not support more than one wiki.
-		$title = $this->createMock( Title::class );
-		$title->method( 'inNamespace' )
-			->with( NS_USER )
-			->willReturn( true );
-		$title->method( 'canExist' )
-			->willReturn( true );
-		$title->method( 'exists' )
-			->willReturn( false );
-		$title->method( 'getText' )
-			->willReturn( self::USER_WITH_GLOBAL_USERPAGE );
-		$title->method( 'getRootText' )
-			->willReturn( self::USER_WITH_GLOBAL_USERPAGE );
-		$title->method( 'getContentModel' )
-			->willReturn( CONTENT_MODEL_WIKITEXT );
-		$title->method( 'getWikiId' )
-			->willReturn( $title::LOCAL );
+		$title = $this->makeMockTitle(
+			self::USER_WITH_GLOBAL_USERPAGE,
+			[ 'namespace' => NS_USER, 'id' => 0 ]
+		);
 
 		$context = RequestContext::getMain();
 		$context->setTitle( $title );
