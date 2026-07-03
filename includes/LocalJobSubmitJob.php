@@ -45,9 +45,10 @@ class LocalJobSubmitJob extends Job {
 		if ( $user === null ) {
 			throw new LogicException( 'User instance could not be created for ' . $this->params['username'] );
 		}
-		$wikis = array_filter( $wikis, fn ( $wiki ) => $this->centralIdLookup->isAttached( $user, $wiki ) );
 		foreach ( $wikis as $wiki ) {
-			$this->jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
+			if ( $this->centralIdLookup->isAttached( $user, $wiki ) ) {
+				$this->jobQueueGroupFactory->makeJobQueueGroup( $wiki )->push( $job );
+			}
 		}
 		return true;
 	}
