@@ -136,7 +136,7 @@ class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 
 		$globalUserPageManager = new GlobalUserPageManager(
 			$connectionProvider,
-			$this->getServiceContainer()->getUserFactory(),
+			$this->getServiceContainer()->getUserIdentityLookup(),
 			$this->getServiceContainer()->getUserNameUtils(),
 			$centralIdLookup,
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, [

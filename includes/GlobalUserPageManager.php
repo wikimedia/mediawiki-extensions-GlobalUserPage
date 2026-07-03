@@ -9,8 +9,9 @@ use MediaWiki\Linker\LinkTarget;
 use MediaWiki\MainConfigNames;
 use MediaWiki\Title\TitleValue;
 use MediaWiki\User\CentralId\CentralIdLookup;
-use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserIdentity;
+use MediaWiki\User\UserIdentityLookup;
+use MediaWiki\User\UserIdentityValue;
 use MediaWiki\User\UserNameUtils;
 use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\MapCacheLRU;
@@ -31,7 +32,7 @@ class GlobalUserPageManager {
 
 	public function __construct(
 		private readonly IConnectionProvider $connectionProvider,
-		private readonly UserFactory $userFactory,
+		private readonly UserIdentityLookup $userIdentityLookup,
 		private readonly UserNameUtils $userNameUtils,
 		private readonly CentralIdLookup $centralIdLookup,
 		private readonly ServiceOptions $options,
@@ -71,7 +72,7 @@ class GlobalUserPageManager {
 		}
 
 		// Normalize the username
-		$user = $this->userFactory->newFromName( $title->getText() );
+		$user = $this->getUserIdentity( $title->getText() );
 
 		if ( !$user ) {
 			$this->displayCache->set( $cacheKey, false );
@@ -162,6 +163,22 @@ class GlobalUserPageManager {
 			// Temporary accounts cannot have global userpages (T326920).
 			!$this->userNameUtils->isTemp( $title->getText() )
 		);
+	}
+
+	public function getUserIdentity( string $userName ): ?UserIdentity {
+		$user = $this->userIdentityLookup->getUserIdentityByName( $userName );
+		if ( $user ) {
+			return $user;
+		}
+
+		// Check if user is invalid, UserIdentityLookup also calls getCanonical, so do this only in the bad case
+		$userName = $this->userNameUtils->getCanonical( $userName );
+		if ( $userName !== false ) {
+			// User does not exists locally, create anonymous
+			return UserIdentityValue::newAnonymous( $userName );
+		}
+
+		return null;
 	}
 
 	public function getEnabledWikis(): array {

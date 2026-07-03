@@ -13,7 +13,7 @@ return [
 
 		return new GlobalUserPageManager(
 			$services->getConnectionProvider(),
-			$services->getUserFactory(),
+			$services->getUserIdentityLookup(),
 			$services->getUserNameUtils(),
 			$services->getCentralIdLookup(),
 			new ServiceOptions( GlobalUserPageManager::CONSTRUCTOR_OPTIONS, $config ),
