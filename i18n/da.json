@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Saederup92",
-			"Sarrus"
+			"Sarrus",
+			"Steenth"
 		]
 	},
 	"globaluserpage-desc": "Henter automatisk brugersider fra en central wiki",
+	"globaluserpage-editnotice": "Denne side viser i øjeblikket en brugerside fra en anden wiki. Hvis du opretter en ny side her, vil den ikke længere vise den anden wikis side.",
+	"globaluserpage-central-editnotice": "Denne brugerside vil blive [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage vist] på andre wikier, hvis der ikke findes en lokal brugerside der.",
 	"globaluserpage-footer": "Indholdet på denne side er [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage kopieret] fra [$2 $2]."
 }
