@@ -3,8 +3,10 @@
 		"authors": [
 			"Af420",
 			"Amjad Khan",
-			"Baloch Khan"
+			"Baloch Khan",
+			"شاه زمان پټان"
 		]
 	},
+	"globaluserpage-desc": "د مرکزي ويکي څخه د کارن مخونه په خپلکاري ډول راوباسي",
 	"globaluserpage-footer": "هغه څه چې تاسې په دي مخ کې ويني د [$2 $2] څخه [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage را نقل] شوي دي."
 }
