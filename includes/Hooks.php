@@ -19,28 +19,18 @@ namespace MediaWiki\GlobalUserPage;
 use MediaWiki\Config\Config;
 use MediaWiki\Config\ConfigException;
 use MediaWiki\Config\ConfigFactory;
-use MediaWiki\Content\Content;
-use MediaWiki\Context\IContextSource;
 use MediaWiki\Deferred\Hook\LinksUpdateCompleteHook;
-use MediaWiki\Deferred\LinksUpdate\LinksUpdate;
 use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
 use MediaWiki\Hook\TitleGetEditNoticesHook;
 use MediaWiki\Hook\TitleIsAlwaysKnownHook;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\JobQueueGroup;
-use MediaWiki\Logging\ManualLogEntry;
-use MediaWiki\Page\Article;
 use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
 use MediaWiki\Page\Hook\ArticleFromTitleHook;
 use MediaWiki\Page\Hook\WikiPageFactoryHook;
 use MediaWiki\Page\WikiPage;
-use MediaWiki\Revision\RevisionRecord;
-use MediaWiki\Storage\EditResult;
 use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\Title\NamespaceInfo;
-use MediaWiki\Title\Title;
-use MediaWiki\User\User;
-use MediaWiki\User\UserIdentity;
 use MediaWiki\Utils\UrlUtils;
 use Wikimedia\ObjectCache\WANObjectCache;
 
@@ -83,17 +73,15 @@ class Hooks implements
 	}
 
 	/**
-	 * @param Title $title
-	 * @param Article|null &$page
-	 * @param IContextSource $context
+	 * @inheritDoc
 	 */
-	public function onArticleFromTitle( $title, &$page, $context ) {
+	public function onArticleFromTitle( $title, &$article, $context ): void {
 		// If another extension's hook has already run, don't override it
-		if ( $page === null
+		if ( $article === null
 			&& $title->inNamespace( NS_USER ) && !$title->exists()
 			&& $this->manager->shouldDisplayGlobalPage( $title )
 		) {
-			$page = new GlobalUserPage(
+			$article = new GlobalUserPage(
 				$title,
 				$this->config,
 				$this->mainWANObjectCache,
@@ -108,10 +96,9 @@ class Hooks implements
 	/**
 	 * Mark global user pages as known so they appear in blue
 	 *
-	 * @param Title $title title to check
-	 * @param bool &$isKnown Whether the page should be considered known
+	 * @inheritDoc
 	 */
-	public function onTitleIsAlwaysKnown( $title, &$isKnown ) {
+	public function onTitleIsAlwaysKnown( $title, &$isKnown ): void {
 		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$isKnown = true;
 		}
@@ -120,11 +107,10 @@ class Hooks implements
 	/**
 	 * After a LinksUpdate runs for a user page, queue remote squid purges
 	 *
-	 * @param LinksUpdate $lu
-	 * @param mixed $ticket
+	 * @inheritDoc
 	 */
-	public function onLinksUpdateComplete( $lu, $ticket ) {
-		$title = $lu->getTitle();
+	public function onLinksUpdateComplete( $linksUpdate, $ticket ): void {
+		$title = $linksUpdate->getTitle();
 		if ( $this->manager->isGlobalPage( $title ) ) {
 			$inv = new CacheInvalidator(
 				$this->jobQueueGroup,
@@ -151,43 +137,30 @@ class Hooks implements
 	/**
 	 * Invalidate cache on remote wikis when a new page is created
 	 *
-	 * @param WikiPage $page
-	 * @param UserIdentity $user
-	 * @param string $summary
-	 * @param int $flags
-	 * @param RevisionRecord $revisionRecord
-	 * @param EditResult $editResult
+	 * @inheritDoc
 	 */
-	public function onPageSaveComplete( $page, $user, $summary, $flags, $revisionRecord, $editResult ) {
-		$this->invalidCacheIfGlobal( $page );
+	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ): void {
+		$this->invalidCacheIfGlobal( $wikiPage );
 	}
 
 	/**
 	 * Invalidate cache on remote wikis when a user page is deleted
 	 *
-	 * @param WikiPage $page
-	 * @param User $user
-	 * @param string $reason
-	 * @param int $id
-	 * @param Content|null $content
-	 * @param ManualLogEntry $logEntry
-	 * @param int $archivedRevisionCount
+	 * @inheritDoc
 	 */
 	public function onArticleDeleteComplete(
-		$page, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
-	) {
-		$this->invalidCacheIfGlobal( $page );
+		$wikiPage, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
+	): void {
+		$this->invalidCacheIfGlobal( $wikiPage );
 	}
 
 	/**
 	 * Show an edit notice on user pages which displays global user pages
 	 * or on the central global user page.
 	 *
-	 * @param Title $title
-	 * @param int $oldid
-	 * @param array &$notices
+	 * @inheritDoc
 	 */
-	public function onTitleGetEditNotices( $title, $oldid, &$notices ) {
+	public function onTitleGetEditNotices( $title, $oldid, &$notices ): void {
 		if ( !$title->exists() && $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$notices['globaluserpage'] = '<p><strong>' .
 				wfMessage( 'globaluserpage-editnotice' )->parse()
@@ -198,18 +171,16 @@ class Hooks implements
 	}
 
 	/**
-	 * @param array &$ids
+	 * @inheritDoc
 	 */
-	public function onGetDoubleUnderscoreIDs( &$ids ) {
-		$ids[] = 'noglobal';
+	public function onGetDoubleUnderscoreIDs( &$doubleUnderscoreIDs ): void {
+		$doubleUnderscoreIDs[] = 'noglobal';
 	}
 
 	/**
-	 * @param Title $title
-	 * @param WikiPage &$page
-	 * @return bool
+	 * @inheritDoc
 	 */
-	public function onWikiPageFactory( $title, &$page ) {
+	public function onWikiPageFactory( $title, &$page ): bool {
 		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
 			$page = new WikiGlobalUserPage(
 				$title,
