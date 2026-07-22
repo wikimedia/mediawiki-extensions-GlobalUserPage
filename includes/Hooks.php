@@ -25,12 +25,17 @@ use MediaWiki\Hook\TitleGetEditNoticesHook;
 use MediaWiki\Hook\TitleIsAlwaysKnownHook;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\JobQueueGroup;
-use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
+use MediaWiki\Logging\ManualLogEntry;
 use MediaWiki\Page\Hook\ArticleFromTitleHook;
+use MediaWiki\Page\Hook\PageDeleteCompleteHook;
 use MediaWiki\Page\Hook\WikiPageFactoryHook;
-use MediaWiki\Page\WikiPage;
+use MediaWiki\Page\PageReference;
+use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Permissions\Authority;
+use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\Title\NamespaceInfo;
+use MediaWiki\Title\TitleValue;
 use MediaWiki\Utils\UrlUtils;
 use Wikimedia\ObjectCache\WANObjectCache;
 
@@ -39,7 +44,7 @@ class Hooks implements
 	ArticleFromTitleHook,
 	LinksUpdateCompleteHook,
 	PageSaveCompleteHook,
-	ArticleDeleteCompleteHook,
+	PageDeleteCompleteHook,
 	TitleGetEditNoticesHook,
 	GetDoubleUnderscoreIDsHook,
 	WikiPageFactoryHook
@@ -121,13 +126,12 @@ class Hooks implements
 		}
 	}
 
-	private function invalidCacheIfGlobal( WikiPage $page ): void {
-		$title = $page->getTitle();
-		if ( $this->manager->isGlobalPage( $title ) ) {
+	private function invalidCacheIfGlobal( PageReference $page ): void {
+		if ( $this->manager->isGlobalPage( TitleValue::newFromPage( $page ) ) ) {
 			$inv = new CacheInvalidator(
 				$this->jobQueueGroup,
 				$this->mainConfig,
-				$title->getText(),
+				$page->getDBkey(),
 				[ 'links' ],
 			);
 			$inv->invalidate();
@@ -144,14 +148,13 @@ class Hooks implements
 	}
 
 	/**
-	 * Invalidate cache on remote wikis when a user page is deleted
-	 *
 	 * @inheritDoc
 	 */
-	public function onArticleDeleteComplete(
-		$wikiPage, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
+	public function onPageDeleteComplete(
+		ProperPageIdentity $page, Authority $deleter, string $reason, int $pageID, RevisionRecord $deletedRev,
+		ManualLogEntry $logEntry, int $archivedRevisionCount
 	): void {
-		$this->invalidCacheIfGlobal( $wikiPage );
+		$this->invalidCacheIfGlobal( $page );
 	}
 
 	/**
