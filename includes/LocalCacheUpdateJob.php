@@ -18,6 +18,7 @@ namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Cache\HTMLCacheUpdater;
 use MediaWiki\JobQueue\Job;
+use MediaWiki\Page\PageReferenceValue;
 use MediaWiki\Title\Title;
 
 /**
@@ -38,8 +39,8 @@ class LocalCacheUpdateJob extends Job {
 	/** @inheritDoc */
 	public function run() {
 		$title = Title::makeTitleSafe( NS_USER, $this->params['username'] );
-		// We want to purge the cache of the accompanying page so the tabs change colors
-		$other = $title->getOtherPage();
+		// We want to purge the cache of the talk page so the tabs change colors
+		$other = PageReferenceValue::localReference( NS_USER_TALK, $this->params['username'] );
 		$this->htmlCacheUpdater->purgeTitleUrls( [ $title, $other ], HTMLCacheUpdater::PURGE_INTENT_TXROUND_REFLECTED );
 		if ( $this->params['touch'] ) {
 			$title->touchLinks();
