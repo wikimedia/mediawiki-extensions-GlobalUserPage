@@ -16,6 +16,7 @@ use MediaWiki\User\UserNameUtils;
 use MediaWiki\WikiMap\WikiMap;
 use Wikimedia\ObjectCache\MapCacheLRU;
 use Wikimedia\Rdbms\IConnectionProvider;
+use Wikimedia\Rdbms\IDBAccessObject;
 
 class GlobalUserPageManager {
 	public const CONSTRUCTOR_OPTIONS = [
@@ -57,44 +58,109 @@ class GlobalUserPageManager {
 	 * @return bool
 	 */
 	public function shouldDisplayGlobalPage( LinkTarget $title ): bool {
+		return $this->shouldDisplayGlobalPageBatched( [ $title ] )[0];
+	}
+
+	/**
+	 * Batched variant of {@link shouldDisplayGlobalPage}, resolving many titles in a bounded
+	 * number of queries (at most two CentralAuth attachment lookups and one central-touched query).
+	 *
+	 * @param iterable<LinkTarget> $titles
+	 * @return bool[] One entry per input, preserving the input keys.
+	 */
+	public function shouldDisplayGlobalPageBatched( iterable $titles ): array {
+		// Materialize so we can iterate more than once (input may be a generator).
+		$titlesByKey = [];
+		foreach ( $titles as $key => $title ) {
+			$titlesByKey[$key] = $title;
+		}
+
+		$results = [];
+
 		// Don't run this code for Hub.
 		if ( $this->isCentralWiki ) {
-			return false;
+			foreach ( $titlesByKey as $key => $title ) {
+				$results[$key] = false;
+			}
+			return $results;
 		}
 
-		if ( !$this->canBeGlobal( $title ) ) {
-			return false;
+		// Titles that still need a username -> attachment -> touched resolution, keyed the same
+		// as the input. Value is the normalized username.
+		$candidateUserNames = [];
+
+		// First pass: apply the cheap cache and canBeGlobal checks, collecting the raw usernames
+		// that still need resolving so we can look them all up in one query below.
+		$namesToResolve = [];
+		foreach ( $titlesByKey as $key => $title ) {
+			$cacheKey = "{$title->getNamespace()}:{$title->getDBkey()}";
+			if ( $this->displayCache->has( $cacheKey ) ) {
+				$results[$key] = $this->displayCache->get( $cacheKey );
+				continue;
+			}
+
+			if ( !$this->canBeGlobal( $title ) ) {
+				$this->displayCache->set( $cacheKey, false );
+				$results[$key] = false;
+				continue;
+			}
+
+			$namesToResolve[$key] = $title->getText();
 		}
 
-		$cacheKey = "{$title->getNamespace()}:{$title->getDBkey()}";
-		if ( $this->displayCache->has( $cacheKey ) ) {
-			return $this->displayCache->get( $cacheKey );
+		// Normalize all remaining usernames in a single query.
+		foreach ( $this->getUserIdentities( $namesToResolve ) as $key => $user ) {
+			if ( !$user ) {
+				$title = $titlesByKey[$key];
+				$this->displayCache->set( "{$title->getNamespace()}:{$title->getDBkey()}", false );
+				$results[$key] = false;
+				continue;
+			}
+
+			$candidateUserNames[$key] = $user->getName();
 		}
 
-		// Normalize the username
-		$user = $this->getUserIdentity( $title->getText() );
-
-		if ( !$user ) {
-			$this->displayCache->set( $cacheKey, false );
-
-			return false;
+		if ( !$candidateUserNames ) {
+			return $results;
 		}
 
-		// Make sure that the username represents the same
-		// user on both wikis.
-		if (
-			!$this->centralIdLookup->isAttached( $user ) ||
-			!$this->centralIdLookup->isAttached( $user, $this->options->get( 'GlobalUserPageDBname' ) )
-		) {
-			$this->displayCache->set( $cacheKey, false );
+		$uniqueNames = array_map(
+			'strval',
+			array_values( array_unique( $candidateUserNames ) )
+		);
 
-			return false;
+		// Make sure that the username represents the same user on both wikis.
+		$seed = array_fill_keys( $uniqueNames, 0 );
+		$attachedLocal = $this->centralIdLookup->lookupAttachedUserNames(
+			$seed, CentralIdLookup::AUDIENCE_RAW );
+		$attachedCentral = $this->centralIdLookup->lookupAttachedUserNames(
+			$seed, CentralIdLookup::AUDIENCE_RAW, IDBAccessObject::READ_NORMAL,
+			$this->options->get( 'GlobalUserPageDBname' ) );
+
+		$attachedBoth = [];
+		foreach ( $uniqueNames as $name ) {
+			if ( $attachedLocal[$name] !== 0 && $attachedCentral[$name] !== 0 ) {
+				$attachedBoth[] = $name;
+			}
 		}
 
-		$touched = (bool)$this->getCentralTouched( $user );
-		$this->displayCache->set( $cacheKey, $touched );
+		$touchedByName = $this->getCentralTouchedBatch( $attachedBoth );
 
-		return $touched;
+		foreach ( $candidateUserNames as $key => $name ) {
+			$display = isset( $touchedByName[$name] ) && (bool)$touchedByName[$name];
+			$results[$key] = $display;
+
+			$title = $titlesByKey[$key];
+			$this->displayCache->set( "{$title->getNamespace()}:{$title->getDBkey()}", $display );
+		}
+
+		// Return in input order; the loops above populate non-candidates and candidates
+		// in separate passes, so $results is not necessarily in the original order.
+		$ordered = [];
+		foreach ( array_keys( $titlesByKey ) as $key ) {
+			$ordered[$key] = $results[$key];
+		}
+		return $ordered;
 	}
 
 	/**
@@ -105,37 +171,58 @@ class GlobalUserPageManager {
 	 * the __NOGLOBAL__ magic word.
 	 */
 	public function getCentralTouched( UserIdentity $user ) {
-		if ( $this->touchedCache->has( $user->getName() ) ) {
-			return $this->touchedCache->get( $user->getName() );
+		return $this->getCentralTouchedBatch( [ $user->getName() ] )[$user->getName()];
+	}
+
+	/**
+	 * Batched variant of {@link getCentralTouched}, resolving many usernames in one query.
+	 *
+	 * @param string[] $userNames
+	 * @return array<string,string|false> Map of username to MediaWiki timestamp, or `false` if the
+	 * page does not exist or is excluded via the __NOGLOBAL__ magic word.
+	 */
+	public function getCentralTouchedBatch( array $userNames ): array {
+		$results = [];
+		$dbKeyToName = [];
+
+		foreach ( $userNames as $name ) {
+			if ( $this->touchedCache->has( $name ) ) {
+				$results[$name] = $this->touchedCache->get( $name );
+				continue;
+			}
+			$dbKey = ( new TitleValue( NS_USER, $name ) )->getDBkey();
+			$dbKeyToName[$dbKey] = $name;
+		}
+
+		if ( !$dbKeyToName ) {
+			return $results;
 		}
 
 		$dbr = $this->connectionProvider->getReplicaDatabase( $this->options->get( 'GlobalUserPageDBname' ) );
 
-		$userPage = new TitleValue( NS_USER, $user->getName() );
-
-		$row = $dbr->newSelectQueryBuilder()
-			->select( [ 'page_touched', 'pp_propname' ] )
+		$rows = $dbr->newSelectQueryBuilder()
+			->select( [ 'page_title', 'page_touched', 'pp_propname' ] )
 			->from( 'page' )
 			->leftJoin( 'page_props', null, [ 'page_id=pp_page', 'pp_propname' => 'noglobal' ] )
 			->where( [
 				'page_namespace' => NS_USER,
-				'page_title' => $userPage->getDBkey(),
+				'page_title' => array_map( 'strval', array_keys( $dbKeyToName ) ),
 			] )
 			->caller( __METHOD__ )
-			->fetchRow();
-		if ( $row ) {
-			if ( $row->pp_propname == 'noglobal' ) {
-				$touched = false;
-			} else {
-				$touched = $row->page_touched;
-			}
-		} else {
-			$touched = false;
+			->fetchResultSet();
+
+		$touchedByDbKey = [];
+		foreach ( $rows as $row ) {
+			$touchedByDbKey[$row->page_title] = $row->pp_propname == 'noglobal' ? false : $row->page_touched;
 		}
 
-		$this->touchedCache->set( $user->getName(), $touched );
+		foreach ( $dbKeyToName as $dbKey => $name ) {
+			$touched = $touchedByDbKey[$dbKey] ?? false;
+			$this->touchedCache->set( $name, $touched );
+			$results[$name] = $touched;
+		}
 
-		return $touched;
+		return $results;
 	}
 
 	/**
@@ -166,19 +253,54 @@ class GlobalUserPageManager {
 	}
 
 	public function getUserIdentity( string $userName ): ?UserIdentity {
-		$user = $this->userIdentityLookup->getUserIdentityByName( $userName );
-		if ( $user ) {
-			return $user;
+		return $this->getUserIdentities( [ $userName ] )[0];
+	}
+
+	/**
+	 * Batched variant of {@link getUserIdentity}, resolving many usernames in a single
+	 * {@link UserIdentityLookup} query.
+	 *
+	 * @param string[] $userNames Raw user names (e.g. from {@link LinkTarget::getText()}).
+	 * @return array<UserIdentity|null> One entry per input, preserving the input keys. The value is
+	 * `null` for names that are not valid usernames.
+	 */
+	private function getUserIdentities( array $userNames ): array {
+		// Canonicalize up front; invalid names resolve to null. UserIdentityLookup canonicalizes
+		// internally too, but we need the canonical form both to map query rows back to inputs and
+		// to build anonymous identities for users that don't exist locally.
+		$canonicalByKey = [];
+		foreach ( $userNames as $key => $userName ) {
+			$canonical = $this->userNameUtils->getCanonical( $userName );
+			$canonicalByKey[$key] = $canonical === false ? null : $canonical;
 		}
 
-		// Check if user is invalid, UserIdentityLookup also calls getCanonical, so do this only in the bad case
-		$userName = $this->userNameUtils->getCanonical( $userName );
-		if ( $userName !== false ) {
-			// User does not exists locally, create anonymous
-			return UserIdentityValue::newAnonymous( $userName );
+		$uniqueNames = array_values( array_unique(
+			array_filter( $canonicalByKey, static fn ( ?string $name ) => $name !== null )
+		) );
+
+		// Look up all locally-existing identities in a single query.
+		$identitiesByName = [];
+		if ( $uniqueNames ) {
+			$identities = $this->userIdentityLookup->newSelectQueryBuilder()
+				->whereUserNames( array_map( 'strval', $uniqueNames ) )
+				->caller( __METHOD__ )
+				->fetchUserIdentities();
+			foreach ( $identities as $identity ) {
+				$identitiesByName[$identity->getName()] = $identity;
+			}
 		}
 
-		return null;
+		$results = [];
+		foreach ( $canonicalByKey as $key => $canonical ) {
+			if ( $canonical === null ) {
+				$results[$key] = null;
+			} else {
+				// Fall back to an anonymous identity when the user does not exist locally.
+				$results[$key] = $identitiesByName[$canonical]
+					?? UserIdentityValue::newAnonymous( $canonical );
+			}
+		}
+		return $results;
 	}
 
 	public function getEnabledWikis(): array {

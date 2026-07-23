@@ -21,8 +21,8 @@ use MediaWiki\Config\ConfigException;
 use MediaWiki\Config\ConfigFactory;
 use MediaWiki\Deferred\Hook\LinksUpdateCompleteHook;
 use MediaWiki\Hook\GetDoubleUnderscoreIDsHook;
+use MediaWiki\Hook\LinkTargetIsAlwaysKnownBatchHook;
 use MediaWiki\Hook\TitleGetEditNoticesHook;
-use MediaWiki\Hook\TitleIsAlwaysKnownHook;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\JobQueue\JobQueueGroup;
 use MediaWiki\Logging\ManualLogEntry;
@@ -40,7 +40,7 @@ use MediaWiki\Utils\UrlUtils;
 use Wikimedia\ObjectCache\WANObjectCache;
 
 class Hooks implements
-	TitleIsAlwaysKnownHook,
+	LinkTargetIsAlwaysKnownBatchHook,
 	ArticleFromTitleHook,
 	LinksUpdateCompleteHook,
 	PageSaveCompleteHook,
@@ -99,13 +99,15 @@ class Hooks implements
 	}
 
 	/**
-	 * Mark global user pages as known so they appear in blue
+	 * Mark global user pages as known so they appear in blue, in batch.
 	 *
 	 * @inheritDoc
 	 */
-	public function onTitleIsAlwaysKnown( $title, &$isKnown ): void {
-		if ( $this->manager->shouldDisplayGlobalPage( $title ) ) {
-			$isKnown = true;
+	public function onLinkTargetIsAlwaysKnownBatch( array $links, array &$isAlwaysKnown ): void {
+		foreach ( $this->manager->shouldDisplayGlobalPageBatched( $links ) as $i => $shouldDisplay ) {
+			if ( $shouldDisplay ) {
+				$isAlwaysKnown[$i] = true;
+			}
 		}
 	}
 

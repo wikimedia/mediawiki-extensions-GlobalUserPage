@@ -87,6 +87,44 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * Mock CentralIdLookup::lookupAttachedUserNames for both the local and central-wiki calls.
+	 *
+	 * @param string $globalUserPageDBname Wiki id used for the central-wiki attachment call
+	 * @param array<string,array{0:bool,1:bool}> $attachment Map of normalized username to
+	 * [ attachedLocally, attachedOnGlobalWiki ]
+	 * @param int|null $expectedCalls Exact number of lookupAttachedUserNames calls to assert, or
+	 * null for no expectation
+	 */
+	private function mockLookupAttachedUserNames(
+		string $globalUserPageDBname,
+		array $attachment,
+		?int $expectedCalls = null
+	): void {
+		$matcher = $expectedCalls !== null ? $this->exactly( $expectedCalls ) : $this->any();
+		$this->centralIdLookup->expects( $matcher )
+			->method( 'lookupAttachedUserNames' )
+			->willReturnCallback(
+				static function (
+					array $nameToId,
+					$audience,
+					$flags = 0,
+					$wikiId = UserIdentity::LOCAL
+				) use ( $globalUserPageDBname, $attachment ): array {
+					$isCentralCall = $wikiId === $globalUserPageDBname;
+					$result = $nameToId;
+					foreach ( array_keys( $nameToId ) as $name ) {
+						$attachedFlags = $attachment[$name] ?? [ false, false ];
+						$attached = $isCentralCall ? $attachedFlags[1] : $attachedFlags[0];
+						if ( $attached ) {
+							$result[$name] = 42;
+						}
+					}
+					return $result;
+				}
+			);
+	}
+
+	/**
 	 * @dataProvider provideShouldDisplayGlobalPage
 	 *
 	 * @param LinkTarget $title Title of the page to check
@@ -107,23 +145,10 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 	): void {
 		$globalUserPageDBname ??= WikiMap::getCurrentWikiId();
 		$globalUserPageManager = $this->getObjectUnderTest( $globalUserPageDBname );
-		$localUser = new UserIdentityValue( 1, $title->getText() );
 
-		$this->centralIdLookup->method( 'isAttached' )
-			->willReturnCallback(
-				function ( UserIdentity $user, $wikiId ) use (
-					$localUser,
-					$userAttachedLocally,
-					$userAttachedOnGlobalWiki
-				): bool {
-					$this->assertTrue(
-						$localUser->equals( $user ),
-						'Incorrect user passed to isAttached()'
-					);
-
-					return $wikiId === $user::LOCAL ? $userAttachedLocally : $userAttachedOnGlobalWiki;
-				}
-			);
+		$this->mockLookupAttachedUserNames( $globalUserPageDBname, [
+			$title->getText() => [ $userAttachedLocally, $userAttachedOnGlobalWiki ],
+		] );
 
 		$this->connectionProvider->method( 'getReplicaDatabase' )
 			->with( $globalUserPageDBname )
@@ -218,6 +243,48 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 		];
 	}
 
+	public function testShouldDisplayGlobalPageBatched(): void {
+		$globalUserPageDBname = 'some_other_wiki';
+		$globalUserPageManager = $this->getObjectUnderTest( $globalUserPageDBname );
+
+		$validGlobalUserPage = new TitleValue( NS_USER, self::USER_WITH_GLOBAL_USERPAGE );
+		$nonUserPage = new TitleValue( NS_MAIN, self::USER_WITH_GLOBAL_USERPAGE );
+		$userWithNoGlobalPage = new TitleValue( NS_USER, 'OtherUser' );
+		$userWithDisabledPage = new TitleValue( NS_USER, self::USER_WITH_DISABLED_GLOBAL_USERPAGE );
+
+		// Every candidate username is attached on both wikis; the outcome is driven by the
+		// central-touched state. Assert exactly two attachment lookups (local + central) for the
+		// whole batch, regardless of how many titles are passed.
+		$this->mockLookupAttachedUserNames( $globalUserPageDBname, [
+			self::USER_WITH_GLOBAL_USERPAGE => [ true, true ],
+			'OtherUser' => [ true, true ],
+			self::USER_WITH_DISABLED_GLOBAL_USERPAGE => [ true, true ],
+		], 2 );
+
+		$this->connectionProvider->method( 'getReplicaDatabase' )
+			->with( $globalUserPageDBname )
+			->willReturn( $this->getDb() );
+
+		$titles = [
+			'valid' => $validGlobalUserPage,
+			'non-userpage' => $nonUserPage,
+			'no-global-page' => $userWithNoGlobalPage,
+			'disabled' => $userWithDisabledPage,
+		];
+
+		$results = $globalUserPageManager->shouldDisplayGlobalPageBatched( $titles );
+
+		$this->assertSame(
+			[
+				'valid' => true,
+				'non-userpage' => false,
+				'no-global-page' => false,
+				'disabled' => false,
+			],
+			$results
+		);
+	}
+
 	/**
 	 * @dataProvider provideGetCentralTouched
 	 *
@@ -254,6 +321,31 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 			new UserIdentityValue( 1, self::USER_WITH_GLOBAL_USERPAGE ),
 			self::TEST_TIMESTAMP
 		];
+	}
+
+	public function testGetCentralTouchedBatch(): void {
+		$globalUserPageDBname = 'some_other_wiki';
+
+		$this->connectionProvider->method( 'getReplicaDatabase' )
+			->with( $globalUserPageDBname )
+			->willReturn( $this->getDb() );
+
+		$globalUserPageManager = $this->getObjectUnderTest( $globalUserPageDBname );
+
+		$touched = $globalUserPageManager->getCentralTouchedBatch( [
+			self::USER_WITH_GLOBAL_USERPAGE,
+			self::USER_WITH_DISABLED_GLOBAL_USERPAGE,
+			'OtherUser',
+		] );
+
+		$this->assertSame(
+			[
+				self::USER_WITH_GLOBAL_USERPAGE => self::TEST_TIMESTAMP,
+				self::USER_WITH_DISABLED_GLOBAL_USERPAGE => false,
+				'OtherUser' => false,
+			],
+			$touched
+		);
 	}
 
 	/**

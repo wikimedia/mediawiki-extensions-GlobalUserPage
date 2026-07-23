@@ -124,8 +124,11 @@ class GlobalUserPageTest extends MediaWikiIntegrationTestCase {
 		] );
 
 		$centralIdLookup = $this->createMock( CentralIdLookup::class );
-		$centralIdLookup->method( 'isAttached' )
-			->willReturn( true );
+		$centralIdLookup->method( 'lookupAttachedUserNames' )
+			->willReturnCallback( static function ( array $nameToId ): array {
+				// Mark every user as attached by giving it an ID
+				return array_fill_keys( array_keys( $nameToId ), 42 );
+			} );
 
 		// Use the local DB connection for simulated connections to the wiki storing global user pages,
 		// since tests do not support more than one wiki.

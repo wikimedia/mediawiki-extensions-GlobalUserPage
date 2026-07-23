@@ -21,7 +21,7 @@
 		"GlobalUserPageMagic": "GlobalUserPage.i18n.magic.php"
 	},
 	"Hooks": {
-		"TitleIsAlwaysKnown": "main",
+		"LinkTargetIsAlwaysKnownBatch": "main",
 		"ArticleFromTitle": "main",
 		"LinksUpdateComplete": "main",
 		"PageSaveComplete": "main",
