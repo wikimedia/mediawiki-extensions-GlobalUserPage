@@ -85,13 +85,13 @@ class GlobalUserPageManager {
 			return $results;
 		}
 
-		// Titles that still need a username -> attachment -> touched resolution, keyed the same
+		// Titles that still need an attachment -> touched resolution, keyed the same
 		// as the input. Value is the normalized username.
 		$candidateUserNames = [];
 
-		// First pass: apply the cheap cache and canBeGlobal checks, collecting the raw usernames
-		// that still need resolving so we can look them all up in one query below.
-		$namesToResolve = [];
+		// First pass: apply the cheap cache and canBeGlobal checks and canonicalize the
+		// remaining usernames. The attachment and central-touched lookups below key on
+		// the canonical name only, so no local user table lookup is needed (T408666).
 		foreach ( $titlesByKey as $key => $title ) {
 			$cacheKey = "{$title->getNamespace()}:{$title->getDBkey()}";
 			if ( $this->displayCache->has( $cacheKey ) ) {
@@ -99,25 +99,16 @@ class GlobalUserPageManager {
 				continue;
 			}
 
-			if ( !$this->canBeGlobal( $title ) ) {
+			$canonical = $this->canBeGlobal( $title )
+				? $this->userNameUtils->getCanonical( $title->getText() )
+				: false;
+			if ( $canonical === false ) {
 				$this->displayCache->set( $cacheKey, false );
 				$results[$key] = false;
 				continue;
 			}
 
-			$namesToResolve[$key] = $title->getText();
-		}
-
-		// Normalize all remaining usernames in a single query.
-		foreach ( $this->getUserIdentities( $namesToResolve ) as $key => $user ) {
-			if ( !$user ) {
-				$title = $titlesByKey[$key];
-				$this->displayCache->set( "{$title->getNamespace()}:{$title->getDBkey()}", false );
-				$results[$key] = false;
-				continue;
-			}
-
-			$candidateUserNames[$key] = $user->getName();
+			$candidateUserNames[$key] = $canonical;
 		}
 
 		if ( !$candidateUserNames ) {
@@ -253,54 +244,19 @@ class GlobalUserPageManager {
 	}
 
 	public function getUserIdentity( string $userName ): ?UserIdentity {
-		return $this->getUserIdentities( [ $userName ] )[0];
-	}
-
-	/**
-	 * Batched variant of {@link getUserIdentity}, resolving many usernames in a single
-	 * {@link UserIdentityLookup} query.
-	 *
-	 * @param string[] $userNames Raw user names (e.g. from {@link LinkTarget::getText()}).
-	 * @return array<UserIdentity|null> One entry per input, preserving the input keys. The value is
-	 * `null` for names that are not valid usernames.
-	 */
-	private function getUserIdentities( array $userNames ): array {
-		// Canonicalize up front; invalid names resolve to null. UserIdentityLookup canonicalizes
-		// internally too, but we need the canonical form both to map query rows back to inputs and
-		// to build anonymous identities for users that don't exist locally.
-		$canonicalByKey = [];
-		foreach ( $userNames as $key => $userName ) {
-			$canonical = $this->userNameUtils->getCanonical( $userName );
-			$canonicalByKey[$key] = $canonical === false ? null : $canonical;
+		$user = $this->userIdentityLookup->getUserIdentityByName( $userName );
+		if ( $user ) {
+			return $user;
 		}
 
-		$uniqueNames = array_values( array_unique(
-			array_filter( $canonicalByKey, static fn ( ?string $name ) => $name !== null )
-		) );
-
-		// Look up all locally-existing identities in a single query.
-		$identitiesByName = [];
-		if ( $uniqueNames ) {
-			$identities = $this->userIdentityLookup->newSelectQueryBuilder()
-				->whereUserNames( array_map( 'strval', $uniqueNames ) )
-				->caller( __METHOD__ )
-				->fetchUserIdentities();
-			foreach ( $identities as $identity ) {
-				$identitiesByName[$identity->getName()] = $identity;
-			}
+		// Check if user is invalid, UserIdentityLookup also calls getCanonical, so do this only in the bad case
+		$canonical = $this->userNameUtils->getCanonical( $userName );
+		if ( $canonical !== false ) {
+			// User does not exist locally, create an anonymous identity
+			return UserIdentityValue::newAnonymous( $canonical );
 		}
 
-		$results = [];
-		foreach ( $canonicalByKey as $key => $canonical ) {
-			if ( $canonical === null ) {
-				$results[$key] = null;
-			} else {
-				// Fall back to an anonymous identity when the user does not exist locally.
-				$results[$key] = $identitiesByName[$canonical]
-					?? UserIdentityValue::newAnonymous( $canonical );
-			}
-		}
-		return $results;
+		return null;
 	}
 
 	public function getEnabledWikis(): array {
