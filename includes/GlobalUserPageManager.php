@@ -120,25 +120,37 @@ class GlobalUserPageManager {
 			array_values( array_unique( $candidateUserNames ) )
 		);
 
-		// Make sure that the username represents the same user on both wikis.
-		$seed = array_fill_keys( $uniqueNames, 0 );
-		$attachedLocal = $this->centralIdLookup->lookupAttachedUserNames(
-			$seed, CentralIdLookup::AUDIENCE_RAW );
-		$attachedCentral = $this->centralIdLookup->lookupAttachedUserNames(
-			$seed, CentralIdLookup::AUDIENCE_RAW, IDBAccessObject::READ_NORMAL,
-			$this->options->get( 'GlobalUserPageDBname' ) );
+		// Check for an existing central user page first: it is the more selective filter
+		// (most users have no central user page) and a cheaper query than the CentralAuth
+		// attachment lookups, which then only need to cover the names that pass it.
+		$touchedByName = $this->getCentralTouchedBatch( $uniqueNames );
 
-		$attachedBoth = [];
+		$namesWithCentralPage = [];
 		foreach ( $uniqueNames as $name ) {
-			if ( $attachedLocal[$name] !== 0 && $attachedCentral[$name] !== 0 ) {
-				$attachedBoth[] = $name;
+			if ( $touchedByName[$name] ) {
+				$namesWithCentralPage[] = $name;
 			}
 		}
 
-		$touchedByName = $this->getCentralTouchedBatch( $attachedBoth );
+		// Make sure that the username represents the same user on both wikis.
+		$attachedBoth = [];
+		if ( $namesWithCentralPage ) {
+			$seed = array_fill_keys( $namesWithCentralPage, 0 );
+			$attachedLocal = $this->centralIdLookup->lookupAttachedUserNames(
+				$seed, CentralIdLookup::AUDIENCE_RAW );
+			$attachedCentral = $this->centralIdLookup->lookupAttachedUserNames(
+				$seed, CentralIdLookup::AUDIENCE_RAW, IDBAccessObject::READ_NORMAL,
+				$this->options->get( 'GlobalUserPageDBname' ) );
+
+			foreach ( $namesWithCentralPage as $name ) {
+				if ( $attachedLocal[$name] !== 0 && $attachedCentral[$name] !== 0 ) {
+					$attachedBoth[$name] = true;
+				}
+			}
+		}
 
 		foreach ( $candidateUserNames as $key => $name ) {
-			$display = isset( $touchedByName[$name] ) && (bool)$touchedByName[$name];
+			$display = isset( $attachedBoth[$name] );
 			$results[$key] = $display;
 
 			$title = $titlesByKey[$key];

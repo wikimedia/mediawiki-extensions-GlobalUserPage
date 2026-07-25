@@ -285,6 +285,26 @@ class GlobalUserPageManagerTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
+	public function testShouldDisplayGlobalPageBatchedNoCentralPages(): void {
+		$globalUserPageDBname = 'some_other_wiki';
+		$globalUserPageManager = $this->getObjectUnderTest( $globalUserPageDBname );
+
+		// No candidate has a central user page, so the attachment lookups must be skipped.
+		$this->centralIdLookup->expects( $this->never() )
+			->method( 'lookupAttachedUserNames' );
+
+		$this->connectionProvider->method( 'getReplicaDatabase' )
+			->with( $globalUserPageDBname )
+			->willReturn( $this->getDb() );
+
+		$results = $globalUserPageManager->shouldDisplayGlobalPageBatched( [
+			new TitleValue( NS_USER, 'OtherUser' ),
+			new TitleValue( NS_USER, self::USER_WITH_DISABLED_GLOBAL_USERPAGE ),
+		] );
+
+		$this->assertSame( [ false, false ], $results );
+	}
+
 	/**
 	 * @dataProvider provideGetCentralTouched
 	 *
