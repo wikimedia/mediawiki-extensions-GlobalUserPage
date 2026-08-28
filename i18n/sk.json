@@ -2,9 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Luky001",
-			"Matthew Greg"
+			"Matthew Greg",
+			"Wizzard"
 		]
 	},
 	"globaluserpage-desc": "Automaticky zbiera užívateľské stránky z hlavnej wiki",
+	"globaluserpage-editnotice": "Táto stránka momentálne zobrazuje používateľskú stránku z inej wiki. Ak tu vytvoríte novú stránku, stránka z druhej wiki sa už nebude zobrazovať.",
+	"globaluserpage-central-editnotice": "Táto používateľská stránka sa bude [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage zobrazovať] na iných wiki, ak tam neexistuje lokálna používateľská stránka.",
 	"globaluserpage-footer": "To, čo vidíte na tejto stránke, bolo [https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Extension:GlobalUserPage skopírované] z [$2 $2]."
 }
