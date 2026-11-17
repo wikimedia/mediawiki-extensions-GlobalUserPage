@@ -17,7 +17,6 @@
 namespace MediaWiki\GlobalUserPage;
 
 use MediaWiki\Config\Config;
-use MediaWiki\Context\RequestContext;
 use MediaWiki\Html\Html;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Output\OutputPage;
@@ -204,9 +203,7 @@ class GlobalUserPage extends Article {
 	 * @return-taint escaped
 	 */
 	public function getRemoteParsedText( $touched ) {
-		$langCode = RequestContext::sanitizeLangCode(
-			$this->getContext()->getLanguage()->getCode()
-		);
+		$langCode = $this->getContext()->getLanguage()->getCode();
 		$skinName = $this->getContext()->getSkin()->getSkinName();
 
 		$cache = $this->cache;
